@@ -1,0 +1,53 @@
+[
+	{
+		"label": "About",
+		"entries":[
+			
+			{
+				"label": "All About SysVisionz",
+				"link":"/about/sysvisionz",
+				"type":"link"
+			},
+			{
+				"label":"SVZ Github",
+				"link":"https://github.com/SysVisionz/",
+				"type":"a"
+			},
+			{
+				"label":"SVZ NPM Modules",
+				"link":"https://www.npmjs.com/~sysvisionz",
+				"type":"a"
+			}
+		]
+	},
+	{
+		"label": "Services",
+		"entries":[
+			{
+				"label": "Build A Page",
+				"link":"/service/page",
+				"type":"link"
+			},
+			{
+				"label": "Build A Mobile App",
+				"link":"/service/app",
+				"type":"link"
+			},
+			{
+				"label":"Build A Wordpress Page",
+				"link":"/service/wp",
+				"type":"link"
+			},
+			{
+				"label":"Build An Email Server",
+				"link":"/service/email",
+				"type":"link"
+			},
+			{
+				"label":"Build A Backend",
+				"link":"/service/backend",
+				"type":"link"
+			}
+		]
+	}
+]

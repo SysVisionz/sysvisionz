@@ -1,18 +1,57 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 80px;
-}
 
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  padding: 5px;
   color: white;
+}
+.App-logo {
+  height:35px;
+  float: left;
+  padding: 5px;
+}
+.App-header > div {
+	bottom: 0px;
 }
 
 .App-intro {
   font-size: large;
+}
+
+#mainSection,
+#mainSection > div{
+  transition: opacity 0.2s ease;
+  flex:9;
+  z-index: -1000
+}
+
+.dim {
+  opacity: .1;
+  z-index: -1000
+}
+
+.dropButton {
+  text-shadow: 1px 1px 5px black;
+  font-family: "Treubuchet MS";
+  opacity: .7;
+  transition: all 0.2s ease;
+}
+
+.inactive {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.dropButton:hover {
+  opacity:1;
+  text-shadow: 0px 0px 5px white;
+  transition: all 0.2s ease;
+}
+
+body {
+  background-color: black;
+  background-image: url('images/bgWires.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: right bottom;
 }

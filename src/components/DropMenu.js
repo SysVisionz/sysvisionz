@@ -16,8 +16,10 @@ export default class DropMenu extends Component {
 	}
 
 	componentWillUpdate(){
-		this.state.wasOpen = this.state.isOpen;
+ 		this.state.wasOpen = this.state.isOpen;
 	}
+
+	topSide = (initial) => [initial, this.props.topBar ? 'top' : 'side'].join(' ');
 
 	render() {
 		const {label, topBar} = this.props;
@@ -32,68 +34,26 @@ export default class DropMenu extends Component {
 		entries = entries.map((entry, index) => {
 			switch(entry.type){
 				case 'a':
-					return (<a className={'dropButton' + this.state.isOpen ? ' menuItem' : void 0} style={{textDecoration: 'none', color: '#fff', fontStyle: 'italic'}} href={entry.link}>{entry.label.toUpperCase()}</a>)
+					return (<a className={'dropButton sub'} href={entry.link}>{entry.label.toUpperCase()}</a>)
 				case 'link':
 				default:
-					return (<Link className={'dropButton' + this.state.isOpen ? ' menuItem' : void 0} style={{textDecoration: 'none', color: '#fff', fontStyle: 'italic'}} to={entry.link}>{entry.label.toUpperCase()}</Link>)
+					return (<Link className={'dropButton sub'} to={entry.link}>{entry.label.toUpperCase()}</Link>)
 			}
 		});
-		let buttonStyle = { 
-			paddingRight: 5,
-			paddingLeft:5,
-			paddingTop:5,
-			paddingBottom:5,
-			margin: 5, 
-			width:100, 
-			dropShadow: '2px 2px 5px black',
-			textShadow: '1px 1px 5px black'
-		};
-		if (topBar){ 
-			buttonStyle = this.state.isOpen ? {
-				...buttonStyle,
-				paddingBottom: '5px'
-			}
-			: {
-				...buttonStyle,
-				paddingBottom: '4px',
-				marginBottom: '1px',
-			}
-		}
-		else {
-			buttonStyle = this.state.isOpen ? {
-				...buttonStyle,
-			}
-			: {
-				...buttonStyle,
-				paddingRight: '3px',
-				marginRight: '2px'
-			}
-		};
 		let menuStyle = {
 			justifyContent: 'center', 
-			backgroundSize: '100% 100%'
-		};
-		menuStyle = topBar
-		? {
-			...menuStyle,
-			marginLeft: '5px',
-		}
-		: {
-			...menuStyle,
-			marginTop: '5px',
+			backgroundSize: '100% 100%',
 		};
 		return(
 			<Dropdown
-				label={<span className='dropButton'>{label.toUpperCase()}</span>}
+				label={<span className={[this.topSide('dropButton main'), this.state.isOpen ? 'open' : void 0].join(' ')}>{label.toUpperCase()}</span>}
 				entries={entries}
 				style={{marginLeft: '5px'}}
 				dropDirection = {dropDirection}
 				popDirection = 'down'
 				menuStyle={menuStyle}
-				buttonStyle={buttonStyle}
-				listItemStyle={{whiteSpace:'nowrap', padding:'5px 10px 5px 10px'}}
+				listItemStyle={{padding: topBar ? '5px 10px 5px 0px' : '5px 10px 5px 10px'}}
 				onToggle={isOpen => this.setState({isOpen})}
-				delay={200}
 			/>
 		)
 	}

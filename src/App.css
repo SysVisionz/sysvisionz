@@ -1,20 +1,58 @@
+.App {
+  transition: opacity 0.2s ease;
+}
 
 .App-header {
+  display:flex;
   background-color: #222;
-  padding: 5px;
   color: white;
+  background: rgba(10,61,160,.9); 
 }
+
+.App-header.top{
+  flex-direction: row; 
+  height:50px;
+}
+
+.App-header.side{
+  flex-direction: column;
+  width:135px;
+  background: rgba(10,61,160,.9); 
+}
+
 .App-logo {
   height:35px;
   float: left;
-  padding: 5px;
-}
-.App-header > div {
-	bottom: 0px;
+  padding: 5px 0px 0px 5px;
+  left: 10px;
+  align-self: flex-start; 
+  width: 100px;
 }
 
 .App-intro {
   font-size: large;
+}
+
+.dropButton.sub {
+  text-decoration: none;
+  color: #fff; 
+  font-style: italic;
+}
+
+.dropButton.main {
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.dropButton.main.side {
+  float:right;
+  padding-right:5px;
+  text-align:right;
+}
+
+.dropButton.main.top {
+  padding-bottom: 15px;
 }
 
 #mainSection,
@@ -30,15 +68,22 @@
 }
 
 .dropButton {
+  color:#fff;
   text-shadow: 1px 1px 5px black;
-  font-family: "Treubuchet MS";
+  font-family: "Trebuchet MS";
   opacity: .7;
   transition: all 0.2s ease;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom :5px;
+  margin: 5px;
+  width: 110px;
+  text-shadow: 1px 1px 5px black;
 }
 
 .inactive {
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.2s ease;
 }
 
 .dropButton:hover {
@@ -51,7 +96,66 @@ body {
   background-color: black;
   background-image: url('images/bgWires.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: auto 100%;
   background-attachment: fixed;
-  background-position: right bottom;
+  background-position: bottom;
+}
+
+.App.top {
+  display: flex; 
+  flex-direction:column;
+}
+
+.App.side {
+  display: flex; 
+  flex-direction: row;
+}
+
+.mainSection {
+  margin: 25px;
+  padding: 20px;
+  color: white;
+  font-family: Bookman;
+  font-size: 20px;
+}
+
+.headerContainer {
+  position:fixed;
+}
+
+.listEntry {
+  white-space: nowrap;
+}
+
+.menusDiv.side > div > div > div{
+  margin-top: 35px;
+}
+
+.mainSection.top {
+  margin-left: 75px;
+  margin-right: 75px; 
+  margin-top: 75px;
+}
+
+.mainSection.side {
+  margin-top:50px;
+  margin-left: 150px;
+}
+
+.menusDiv.top {
+  padding-left: 100px;
+  flex-direction:row;
+  flex: 10;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.menusDiv.side {
+  justify-content: flex-end;
+  padding-top: 100px;
+  flex-direction: column; 
+}
+.menusDiv.side > div {
+  padding-top: 25px;
 }

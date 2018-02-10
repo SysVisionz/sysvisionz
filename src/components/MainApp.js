@@ -12,7 +12,8 @@ import {
 	Projects, 
 	NewProject, 
 	Details, 
-	Settings
+	Settings,
+	Contact
 } from './';
 
 
@@ -43,7 +44,7 @@ export default class MainApp extends Component {
 	
 	render() {
 		return (
-			<div style = {this.state.style}>
+			<div className={this.props.className}>
 				<Route exact path = '/' render = {props => (<Home {...this.props} />)} />
 				<Route path = '/about/sysvisionz' render = {props => (<Sysvisionz {...this.props} />)} />
 				<Route path = '/service/page' render = {props => (<Page {...this.props} />)} />

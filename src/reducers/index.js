@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import siteReducer from './siteReducer';
+import authReducer from './authReducer';
+import blogReducer from './blogReducer';
 
 export default combineReducers({
-	site: siteReducer
+	auth: authReducer,
+	blog: blogReducer
 });

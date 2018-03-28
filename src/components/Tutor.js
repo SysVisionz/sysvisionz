@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const Email = () => {
+export const Tutor = () => {
 	return (
 		<div>
-			Email
+			Tutor
 		</div>
 	)
 }

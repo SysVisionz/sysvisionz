@@ -1,3 +1,12 @@
+body {
+  background-color: rgb(0,0,0);
+}
+
+html {
+  overflow: hidden;
+}
+
+
 .App {
   transition: opacity 0.2s ease;
 }
@@ -20,13 +29,27 @@
   background: rgba(10,61,160,.9); 
 }
 
-.App-logo {
-  height:35px;
+.leftImg{
   float: left;
-  padding: 5px 0px 0px 5px;
+}
+
+.App-logo {
+  float: left;
   left: 10px;
   align-self: flex-start; 
-  width: 100px;
+}
+
+.App-logo.top {
+  padding-top: 5px;
+  padding-left: 10px;
+  height: 40px;
+  top:0;
+}
+
+.App-logo.side {
+  padding-top: 10px;
+  width: 90%;
+  align-self: center;
 }
 
 .App-intro {
@@ -49,22 +72,18 @@
   float:right;
   padding-right:5px;
   text-align:right;
+  font-size: 15px;
 }
 
 .dropButton.main.top {
   padding-bottom: 15px;
-}
-
-#mainSection,
-#mainSection > div{
-  transition: opacity 0.2s ease;
-  flex:9;
-  z-index: -1000
+  margin-bottom: 20px;
 }
 
 .dim {
   opacity: .1;
-  z-index: -1000
+  z-index: -1000;
+  pointer-events: none;
 }
 
 .dropButton {
@@ -82,6 +101,7 @@
 }
 
 .inactive {
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -92,13 +112,20 @@
   transition: all 0.2s ease;
 }
 
-body {
+.bgDiv {
   background-color: black;
-  background-image: url('images/bgWires.png');
   background-repeat: no-repeat;
   background-size: auto 100%;
-  background-attachment: fixed;
-  background-position: bottom;
+  transition: opacity 0.2s ease;
+  height: 100%;
+  z-index: 1;
+}
+
+#bgImage {
+  z-index: -1001;
+  position: fixed;
+  width: 100%;
+  right: 0;
 }
 
 .App.top {
@@ -112,11 +139,22 @@ body {
 }
 
 .mainSection {
-  margin: 25px;
   padding: 20px;
   color: white;
   font-family: Bookman;
-  font-size: 20px;
+  font-size: 18px;
+  position: relative;
+  transition: opacity 0.2s ease;
+  position:relative;
+  z-index: -1000;
+}
+
+.wideImg {
+  width: 100%;
+}
+
+.smImg {
+  width: 50%;
 }
 
 .headerContainer {
@@ -131,15 +169,35 @@ body {
   margin-top: 35px;
 }
 
+.headerContainer.xSmall.open {
+  transition: left 0.3s ease;
+  left:0px;
+}
+
+.headerContainer.xSmall.div {
+  position:relative;
+}
+
+.headerContainer.xSmall:not(.open){
+  transition: left 0.3s ease;
+  left: -135px;
+  right: 0;
+}
+
 .mainSection.top {
   margin-left: 75px;
-  margin-right: 75px; 
-  margin-top: 75px;
+  margin-top: 55px;
 }
 
 .mainSection.side {
   margin-top:50px;
   margin-left: 150px;
+  font-size: 15px;
+}
+
+.mainSection.xSmall {
+  margin-top: 50px;
+  margin-left: 50px;
 }
 
 .menusDiv.top {
@@ -152,10 +210,71 @@ body {
 }
 
 .menusDiv.side {
-  justify-content: flex-end;
-  padding-top: 100px;
+  justify-content: flex-start;
+  padding-top: 20px;
   flex-direction: column; 
 }
+
 .menusDiv.side > div {
   padding-top: 25px;
+}
+
+.bottomBar {
+  padding: 20px;
+  background-color: rgba(100, 125, 200, .8);
+  position: fixed;
+  bottom:0;
+  z-index: 1;
+}
+
+.dropButton.main.side {
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+.openButton {
+  position: fixed;
+  left:135px;
+  transition: all .3s ease;
+  top: 180px;
+  opacity:0;
+  pointer-events: none;
+}
+.openButton:not(.open){
+  pointer-events: auto;
+  left:0px;
+  opacity: 1;
+}
+#popSideButton {
+  height:150px;
+}
+.fade-appear {
+  opacity: 0;
+}
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease;
+  transition-delay: 200ms;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease;
+  transition-delay: 200ms;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.auth{
+  right: 0;
+  position: fixed;
+  z-index: 10001;
+  font-size: 20px;
+  color: white;
+  background-color: rgba(50, 50, 50, .2);
 }

@@ -1,9 +1,12 @@
 import React from 'react'
+import Fader from './Fader';
 
 export const Details = () => {
 	return (
-		<div>
-			Details
-		</div>
+		<Fader>
+			<div>
+				Details
+			</div>
+		</Fader>
 	)
 }

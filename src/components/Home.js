@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react';
+import Fader from './Fader';
 
-export const Home = () => {
+export const Home = (props) => {
 	return (
-		<div>
-			Home
-		</div>
+	<Fader {...props}>
+			<div>
+				Home
+			</div>
+		</Fader>
 	)
 }

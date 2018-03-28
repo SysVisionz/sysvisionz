@@ -3,9 +3,6 @@ export const ajaxJson = (html, data, returnVariables) => {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			var returnValue = JSON.parse(this.responseText);
-			if (returnVariables !== 'undefined') {
-				return arrayFind(returnValue,returnVariables);
-			}
 			return returnValue;
 		}
 	}
@@ -19,3 +16,5 @@ export const arrayFind = (arrayToSearch, arrayToFind) => {
 	}
 	return arrayToSearch;
 }
+
+export const encodeEmail = (email, subject, body) => window.open('mailto:' + email +'?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body));

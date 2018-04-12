@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import firebase from 'firebase';
-import Dropdown from 'sysvisionz-react-dropdown';
-import {DropMenu} from './components/';
+import {BottomBar} from './components/';
+import AuthModal from './components/AuthModal';
+import AuthBox from './components/AuthBox';
 import data from './data.json';
 import logo from './images/minilogo.png';
 import './App.css';
 import './components/common';
-import menuImage from './images/menuImage.jpg';
 import {MainApp} from './components/MainApp';
 import bgWires from './images/bgWires.png';
 import popButton from './images/popButton.png';
 import config from './.config.json';
-import {updateValue, loginUser} from './actions';
+import {updateValue, closeModal, userSignedIn} from './actions';
 
 const cascadeCheck = (element, check) => {
   while (element.parentElement){
@@ -26,28 +26,23 @@ const cascadeCheck = (element, check) => {
 
 const mapStateToProps = (state) => {
   const {
-    email,
-    password,
-    error,
     loading,
-    user
+    user,
+    newUser,
   } = state.auth;
   return {
-    email,
-    password,
-    error,
     loading,
-    user
+    user,
+    newUser,
   };
 }
 
-export default connect ( mapStateToProps, {updateValue, loginUser} )(class App extends Component {
+export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn} )(class App extends Component {
   constructor() {
     super();
     let dataMap = [];
     let topBar = window.innerWidth > 940 ? true : false;
     let xSmall = window.innerWidth < 600 ? true : false;
-    document.onclick = evt => !cascadeCheck(evt.target, 'headerContainer') && this.state.xSmallOpen ? this.setState({xSmallOpen: !this.state.xSmallOpen}) : undefined;
     window.onresize = () => {
       window.innerWidth < 940 && this.state.topBar ? this.setState({topBar: false}) : void 0;
       window.innerWidth > 940 && !this.state.topBar ? this.setState({topBar: true}) : void 0;
@@ -59,15 +54,17 @@ export default connect ( mapStateToProps, {updateValue, loginUser} )(class App e
     window.addEventListener("scroll", () => {
       if (this.samePage) {
         const newLocation = window.pageYOffset/5;
-        this.setState({fromTop: -newLocation})
+        this.setState({fromTop: -newLocation});
       }
     });
     let isOpen = [];
+    let isLoaded = [];
     for (let i = 0; i < data.length; i++) {
       isOpen[i]=false;
+      isLoaded[i]=false;
     }
+    isLoaded[data.length] = false;
     this.state = {
-      authOpen: false,
       dataMap,
       topBar,
       xSmall,
@@ -75,15 +72,25 @@ export default connect ( mapStateToProps, {updateValue, loginUser} )(class App e
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       isOpen,
-      show: true
+      show: true,
+      isLoaded,
+      loaded: false
     }
+  }
+
+  componentDidMount() {
+    this.props.userSignedIn();
+  }
+
+  componentWillMount() {
+    firebase.initializeApp(config.auth);
   }
 
   returnToTop = () => {
     this.samePage = false;
     this.wait = setInterval(() => {
       if (this.state.fromTop < -5)
-        this.setState({fromTop: this.state.fromTop*.85}) 
+        this.setState({fromTop: this.state.fromTop*.85});
       else {
         clearInterval(this.wait);
         this.samePage = true;
@@ -91,98 +98,108 @@ export default connect ( mapStateToProps, {updateValue, loginUser} )(class App e
     }, 5);
   }
 
+  loadNext = () => {
+    if (this.state.isLoaded[this.loading] === false){
+        let isLoaded = this.state.isLoaded;
+        isLoaded[this.loading] = true;
+        this.setState(isLoaded);
+        this.loading++;
+      }
+    else {
+      clearInterval(this.loadTimer);
+    }
+  }
+
+  loadingFunct = () => {
+    this.loading = 0;
+    setTimeout(() => this.loadTimer = setInterval(() => this.loadNext(), 200), 200);
+  }
+
   toggleFunct = (index, isOpen) => {
     isOpen[index] = !isOpen[index];
     this.setState({isOpen});
   }
 
+  linkClick = () => {
+    this.setState({xSmallOpen: false, dim: false})
+    this.returnToTop()
+  }
+
   renderMenus = () => {
-    const dataMap = data.map((i, index) => {
-      return (
-        <DropMenu
-          key={"sysvDropdown" + index}
-          label={i.label}
-          entries={i.entries}
-          menuImage={menuImage}
-          topBar={this.state.topBar}
-          onToggle={() => this.toggleFunct(index, this.state.isOpen)}
-          onLinkClick={() => this.returnToTop()}
-          isOpen={this.state.isOpen[index]}
-        />
-      );
-    });
-    return dataMap;
+    const linkList = [{http: '/build', title: 'Build a Page'}, {http: '/tutor', title: 'Get Tutored'}, {http: '/contact', title: 'Contact'}];
+    const link = linkList.map( (link, index) => <div key={'mainLink'+ index}><Link className = {this.topSide('dropButton main')} onClick={this.linkClick} to={link.http}>{link.title.toUpperCase()}</Link></div>);
+    return link;
   }
 
   topSide = (initial) => [initial, this.state.topBar ? 'top' : 'side'].join(' ');
 
-  xSmallShut = () => this.state.xSmall && this.state.xSmallOpen ? this.setState({xSmallOpen: false}) : void 0;
-
-  componentWillMount() {
-  	firebase.initializeApp(config.auth);
+  closeXSmall = evt => {
+    if (!cascadeCheck(evt.target, 'headerContainer')) {
+      this.setState({xSmallOpen: false, dim: false})
+      document.removeEventListener('click', this.closeXSmall);
+    }
   }
 
-  authBox = () => {
-  	if (this.props.user) {
-  		return (
-  			<div className='auth'>
-				{'Welcome, ' + this.props.user.name + '!'}
-				<Dropdown 
-					label='User Options'
-					entries={['Active Projects', 'New Project', 'Profile']}
-				/>
-			</div>
-  		)
-  	}
-  	if (this.state.authOpen) {
-  		document.onclick = evt => {
-  			if (evt.target.className.indexOf('auth') === -1 || evt.target.parentElement.className.indexOf('auth') === -1) 
-	  			this.setState({authOpen: false});
-  		}
-  		return (
-  			<form className = "auth open">
-  				<input type ='text' onChange={input => this.props.updateValue('email', input.target.value)} className="authInput" placeholder="email" />
-  				<input type ='text' onChange={input => this.props.updateValue('password', input.target.value)} className="authInput" placeholder="password" />
-          <div>{this.state.error}</div>
-  			</form>
-  		);
-  	}
-  	else {
-  		return (<div className="auth closed" onClick={() => this.setState({authOpen: true})}>+</div>);
-  	}
+  openXSmall = () => {
+    this.setState({xSmallllOpen: true, dim: true});
+    document.addEventListener('click', this.closeXSmall);
   }
 
-  login = ({email, password}) => {
-    this.props.loginUser(email, password);
-    return false;
-  }
+  dimmer = isDim => this.setState({dim: isDim});
+
+  loaderCheck = isLoaded => this.setState({loaded: isLoaded, dim: false});
 
   render() {
-    console.log(this.props);
     const {renderMenus, topSide} = this;
     const {topBar, loaded, bgLoaded,xSmall, xSmallOpen}=this.state;
-    let mainSectionClass = this.state.isOpen.indexOf(true) !== -1 || (xSmall && xSmallOpen) ? 'dim ' : '';
-    mainSectionClass = mainSectionClass +' '+ topSide('mainSection');
+    const user = this.props.user;
+    const mainSectionClass =topSide('mainSection').concat(this.props.mainSectionClass ? ' ' + this.props.mainSectionClass : '');
     return (
-      <div className={["App", topBar ? 'top': 'side', !loaded ? 'inactive' : void 0].join(' ')} style={{height:this.state.windowHeight}}>
-        <div className={['bgDiv', !bgLoaded ? ' inactive' : ''].join(' ')}>
-          <img alt='error' style={{top: this.state.fromTop}} id="bgImage" src={bgWires} onLoad={() => this.setState({bgLoaded: true})} />
-          <div className={['headerContainer', xSmall ? 'xSmall' : '', xSmallOpen ? 'open' : ''].join(' ')}>
-          	{this.authBox()}
-            <div className={topSide("App-header")} style={topBar ? {width:this.state.windowWidth} : {height: this.state.windowHeight} }>
-              <Link to='/'>
-                <img src={logo} onLoad={() => this.setState({loaded: true})} className={topSide("App-logo")} alt="logo" />
-              </Link>
-              <div className = {topSide('menusDiv')}>
-                {renderMenus()}
-                <div><Link className = {topSide('dropButton main')} onClick={() => this.returnToTop()} to='/contact'>CONTACT</Link></div>
+      <BrowserRouter>
+        <div className={["App", topBar ? 'top': 'side', !loaded ? 'inactive' : void 0].join(' ')} style={{height:this.state.windowHeight*.6}}>
+          <div className={'bgDiv'.concat(!bgLoaded ? ' inactive' : '')}>
+            <img alt='error' style={{top: this.state.fromTop}} id="bgImage" src={bgWires} onLoad={() => {
+                this.loadingFunct();
+                this.setState({bgLoaded: true});
+              }
+            } />
+            <div className={['headerContainer', xSmall ? 'xSmall' : '', xSmallOpen ? 'open' : ''].join(' ')}>
+              <div className={topSide("App-header")} style={topBar ? {width:this.state.windowWidth} : {height: this.state.windowHeight*.6} }>
+                <Link to='/'>
+                  <img src={logo} onLoad={() => this.setState({loaded: true})} className={topSide("App-logo")} alt="logo" />
+                </Link>
+                <div className = {topSide('menusDiv')}>
+                  {renderMenus()}
+                </div>
               </div>
             </div>
+            <AuthBox 
+              xSmall={xSmall}
+              cascadeCheck={cascadeCheck}
+              returnToTop={this.returnToTop}
+            />
+            <div hidden={!xSmall} className={["openButton", xSmallOpen ? 'open' : ''].join(' ')} onClick={() => this.openXSmall()}><img alt = 'error' id="popSideButton" src={popButton} /></div>
+            <MainApp 
+              dim = {this.state.dim}
+              xSmall={xSmall} 
+              topBar={topBar} 
+              className = {mainSectionClass}
+              user={user}
+              mountFunct={() => this.setState({show:true})} 
+              unmountFunct={() => this.setState({show:false})} 
+              in={this.state.show}
+              dimmer = {this.dimmer}
+              loaded = {this.state.loaded}
+              loaderCheck = {this.loaderCheck}
+            />
           </div>
-          <div hidden={!xSmall} className={["openButton", xSmallOpen ? 'open' : ''].join(' ')} onClick={() => this.setState({xSmallOpen: !xSmallOpen})}><img alt = 'error' id="popSideButton" src={popButton} /></div>
-          <MainApp xSmall={xSmall} topBar={topBar} className = {mainSectionClass} mountFunct={() => this.setState({show:true})} unmountFunct={() => this.setState({show:false})} in={this.state.show} />
+          <AuthModal 
+            visible={this.props.newUser} 
+            onClose={this.props.closeModal}
+          />
+          <BottomBar />
         </div>
-      </div>
+      </BrowserRouter>
     );
   }
 });

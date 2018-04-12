@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import firebase from 'firebase';
 import Dropdown from 'sysvisionz-react-dropdown';
-import {DropMenu} from './components/';
+import {DropMenu, AuthModal} from './components/';
 import data from './data.json';
 import logo from './images/minilogo.png';
 import './App.css';
@@ -13,7 +13,7 @@ import {MainApp} from './components/MainApp';
 import bgWires from './images/bgWires.png';
 import popButton from './images/popButton.png';
 import config from './.config.json';
-import {updateValue, loginUser} from './actions';
+import {closeModal} from './actions';
 
 const cascadeCheck = (element, check) => {
   while (element.parentElement){
@@ -128,7 +128,7 @@ class App extends Component {
       return (
         <form className = "auth open">
           <input type ='text' name='email' className="authInput" placeholder="email" />
-          <input type ='text' name='email' className="authInput" placeholder="password" />
+          <input type ='text' name='password' className="authInput" placeholder="password" />
         </form>
       );
     }
@@ -147,7 +147,7 @@ class App extends Component {
         <div className={['bgDiv', !bgLoaded ? ' inactive' : ''].join(' ')}>
           <img alt='error' style={{top: this.state.fromTop}} id="bgImage" src={bgWires} onLoad={() => this.setState({bgLoaded: true})} />
           <div className={['headerContainer', xSmall ? 'xSmall' : '', xSmallOpen ? 'open' : ''].join(' ')}>
-            {this.authBox()}
+            <AuthBox />
             <div className={topSide("App-header")} style={topBar ? {width:this.state.windowWidth} : {height: this.state.windowHeight} }>
               <Link to='/'>
                 <img src={logo} onLoad={() => this.setState({loaded: true})} className={topSide("App-logo")} alt="logo" />
@@ -161,6 +161,7 @@ class App extends Component {
           <div hidden={!xSmall} className={["openButton", xSmallOpen ? 'open' : ''].join(' ')} onClick={() => this.setState({xSmallOpen: !xSmallOpen})}><img alt = 'error' id="popSideButton" src={popButton} /></div>
           <MainApp xSmall={xSmall} topBar={topBar} className = {mainSectionClass} mountFunct={() => this.setState({show:true})} unmountFunct={() => this.setState({show:false})} in={this.state.show} />
         </div>
+        <AuthModal visible={this.props.newUser} onClose={this.props.closeModal} />
       </div>
     );
   }
@@ -172,15 +173,17 @@ const mapStateToProps = state => {
     password,
     error,
     loading,
-    user
+    user,
+    newUser
   } = state.auth;
   return {
     email,
     password,
     error,
     loading,
-    user
+    user,
+    newUser
   };
 }
 
-export default connect (mapStateToProps, {updateValue, loginUser})(App);
+export default connect (mapStateToProps, {closeModal})(App);

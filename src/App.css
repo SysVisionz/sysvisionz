@@ -1,11 +1,11 @@
 body {
-  background-color: rgb(0,0,0);
+  font-family: "Trebuchet MS";
+  text-shadow: 1px 1px 3px white;
 }
 
-html {
-  overflow: hidden;
+::-webkit-scrollbar{
+  display: none;
 }
-
 
 .App {
   transition: opacity 0.2s ease;
@@ -15,18 +15,18 @@ html {
   display:flex;
   background-color: #222;
   color: white;
-  background: rgba(10,61,160,.9); 
+  background: rgba(20, 130, 160, .9); 
 }
 
 .App-header.top{
   flex-direction: row; 
-  height:50px;
+  height:60px;
 }
 
 .App-header.side{
   flex-direction: column;
   width:135px;
-  background: rgba(10,61,160,.9); 
+  background: linear-gradient(rgba(20, 130, 160,.9), rgba(20, 130, 160,.8), rgba(20, 130, 160,.7), rgba(20, 130, 160,0));
 }
 
 .leftImg{
@@ -59,7 +59,6 @@ html {
 .dropButton.sub {
   text-decoration: none;
   color: #fff; 
-  font-style: italic;
 }
 
 .dropButton.main {
@@ -89,7 +88,6 @@ html {
 .dropButton {
   color:#fff;
   text-shadow: 1px 1px 5px black;
-  font-family: "Trebuchet MS";
   opacity: .7;
   transition: all 0.2s ease;
   padding-left: 5px;
@@ -97,7 +95,6 @@ html {
   padding-bottom :5px;
   margin: 5px;
   width: 110px;
-  text-shadow: 1px 1px 5px black;
 }
 
 .inactive {
@@ -113,18 +110,18 @@ html {
 }
 
 .bgDiv {
-  background-color: black;
   background-repeat: no-repeat;
   background-size: auto 100%;
   transition: opacity 0.2s ease;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
 }
 
 #bgImage {
   z-index: -1001;
   position: fixed;
-  width: 100%;
+  width: 102%;
+  left: 0px;
   right: 0;
 }
 
@@ -139,14 +136,16 @@ html {
 }
 
 .mainSection {
-  padding: 20px;
-  color: white;
+  padding: 18px;
   font-family: Bookman;
+  font-weight: bold;
   font-size: 18px;
   position: relative;
   transition: opacity 0.2s ease;
   position:relative;
-  z-index: -1000;
+  z-index: 1;
+  opacity: 1;
+
 }
 
 .wideImg {
@@ -170,8 +169,9 @@ html {
 }
 
 .headerContainer.xSmall.open {
-  transition: left 0.3s ease;
-  left:0px;
+  transition: top 0.3s ease;
+  transition-delay: 200ms;
+  top: 0px;
 }
 
 .headerContainer.xSmall.div {
@@ -179,9 +179,8 @@ html {
 }
 
 .headerContainer.xSmall:not(.open){
-  transition: left 0.3s ease;
-  left: -135px;
-  right: 0;
+  transition: top 0.5s ease;
+  top: -100%;
 }
 
 .mainSection.top {
@@ -220,11 +219,18 @@ html {
 }
 
 .bottomBar {
-  padding: 20px;
-  background-color: rgba(100, 125, 200, .8);
+  background: rgba(20, 130, 160, .9);
   position: fixed;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  padding: 20px 10px 20px 10px;
+  align-content: center;
+  justify-content: center;
   bottom:0;
   z-index: 1;
+  color: white;
+  text-shadow: 1px 1px 5px black;
 }
 
 .dropButton.main.side {
@@ -233,26 +239,28 @@ html {
 }
 .openButton {
   position: fixed;
-  left:135px;
-  transition: all .3s ease;
-  top: 180px;
+  left:0px;
+  top: 0px;
+  transition: opacity .2s ease;
+  bottom: 0;
   opacity:0;
   pointer-events: none;
 }
 .openButton:not(.open){
+  transition-delay: 250ms;
+  bottom: auto;
   pointer-events: auto;
-  left:0px;
   opacity: 1;
 }
 #popSideButton {
-  height:150px;
+  width:150px;
 }
 .fade-appear {
   opacity: 0;
 }
 .fade-appear.fade-appear-active {
   opacity: 1;
-  transition: opacity 300ms ease;
+  transition: opacity 600ms ease;
   transition-delay: 200ms;
 }
 .fade-enter {
@@ -260,7 +268,7 @@ html {
 }
 .fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 300ms ease;
+  transition: opacity 600ms ease;
   transition-delay: 200ms;
 }
 .fade-exit {
@@ -268,13 +276,142 @@ html {
 }
 .fade-exit.fade-exit-active {
   opacity: 0;
-  transition: opacity 300ms ease;
+  transition: opacity 600ms ease;
 }
 .auth{
   right: 0;
   position: fixed;
-  z-index: 10001;
-  font-size: 20px;
+  font-size: 14px;
   color: white;
-  background-color: rgba(50, 50, 50, .2);
+  background-color: rgb(5, 120, 160);
+  padding: 3px;
+  margin: 5px;
+  box-shadow: -15px 0 15px -15px #000000;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  opacity: .9;
+  white-space: nowrap;
+  transition: all 200ms ease;
+  z-index: 2
+}
+.auth .open {
+  border-radius: 5px 5px 0px 5px;
+}
+.auth > button {
+  border-radius: 5px;
+  background-color: rgb(5, 120, 160);
+  border: none;
+  color: white;
+  font-size: 14px;
+}
+.auth > input {
+  font-size: 12px;
+}
+.auth.closed {
+  cursor: pointer;
+}
+.auth.loggedIn {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+.auth.loggedIn>span {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10002;
+  background-color: rgba(0,0,0,.5);
+  opacity: .9;
+  height: 100%;
+  width: 100%;
+}
+.modalWindow {
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: white;
+  width: 20%; 
+}
+#authMenu > div >div {
+  border-radius: 0px 0px 5px 5px;
+  background-color: rgb(5, 120, 160);
+  margin-top: 5px;
+  margin-right: -5px;
+  padding: 0px 5px 5px 5px;
+}
+.authButton {
+  text-align: right;
+  text-decoration: none;
+  color: #fff;
+  transition: all 200ms ease;
+}
+.authButton:hover {
+  opacity:1;
+  cursor: pointer;
+  text-shadow: 0px 0px 5px white;
+  transition: all 0.2s ease;
+}
+.auth.menuOpen {
+  border-radius: 5px 5px 0px 5px;
+}
+
+.menusDiv.top div {
+  border-right: solid 2px rgba(255,255,255,.5);
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.menusDiv.top div:last-child {
+  border-right: none;
+}
+
+.menusDiv.side div a {
+  border-bottom: solid 2px rgba(255,255,255,.5);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.menusDiv.side div:last-child a{
+  border-bottom: none;
+}
+
+.auth:not.xSmall {
+  text-align: right;
+}
+
+.auth.xSmall {
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#authMenu.xSmall > div {
+  right: 0px;
+}
+
+.loadingDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.profileItem {
+  display: flex;
+  flex-direction: row;
+}
+
+.profileItem .provided {
+  min-width: 150px;
+  margin-right: 20px;
 }

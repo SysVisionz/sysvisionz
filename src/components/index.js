@@ -1,10 +1,7 @@
 export * from './BottomBar';
 export * from './Home';
-export * from './Sysvisionz';
-export * from './Page';
-export * from './MakeApp';
+export * from './Build';
 export * from './Invoices';
-export * from './Projects';
 export * from './NewProject';
 export * from './Details';
 export * from './Settings';
@@ -13,3 +10,4 @@ export * from './Tutor';
 export * from './OrderForm';
 export * from './Contact';
 export * from './DropMenu';
+export * from './Loading';

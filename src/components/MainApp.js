@@ -1,25 +1,21 @@
-import React, {Component} from 'react';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import React from 'react';
+import {Route, withRouter} from 'react-router-dom';
 import {TransitionGroup} from 'react-transition-group';
-import {Scrollbars} from 'react-custom-scrollbars';
 import {
-	Update,
-	Home, 
-	Sysvisionz, 
-	Page, 
-	MakeApp, 
+	Build,
 	Tutor,
 	Invoices, 
-	Projects, 
 	NewProject, 
 	Details, 
 	Settings,
 	Contact,
-	BottomBar,
 } from './';
+import Home from './Home';
+import Projects from './Projects';
+import Profile from './Profile';
 
 export const MainApp = withRouter((props) => {
-	const subProps = {xSmall: props.xSmall, topBar: props.topBar}
+	const subProps = {xSmall: props.xSmall, topBar: props.topBar, user: props.user, dimmer: props.dimmer, loaderCheck: props.loaderCheck}
 	const paths = [
 		{
 			key: 'home',
@@ -28,29 +24,19 @@ export const MainApp = withRouter((props) => {
 			component: <Home {...subProps} />,
 		},
 		{
-			key: 'aboutSVZ',
-			path: '/about/sysvisionz',
-			component: <Sysvisionz {...subProps} />
-		},
-		{
-			key: 'buildPage',
-			path: '/service/page',
-			component: <Page {...subProps} />
-		},
-		{
-			key: 'buildApp',
-			path: '/service/app',
-			component: <MakeApp {...subProps} />,
-		},
-		{
-			key: 'buildUpdate',
-			path: '/service/update',
-			component: <Update {...subProps} />,
+			key: 'build',
+			path: '/build',
+			component: <Build {...subProps} />
 		},
 		{
 			key: 'tutor',
-			path: '/service/tutor',
+			path: '/tutor',
 			component: <Tutor {...subProps} />,
+		},
+		{
+			key: 'profile',
+			path: '/account/profile',
+			component: <Profile {...subProps} />
 		},
 		{
 			key: 'invoice',
@@ -84,7 +70,7 @@ export const MainApp = withRouter((props) => {
 		}
 	];
 	const routes = (
-		<TransitionGroup>
+		<TransitionGroup className="mainBody">
 			{paths.map((i) => {
 			const {key, path, component, exact} = i;
 			return (
@@ -92,14 +78,15 @@ export const MainApp = withRouter((props) => {
 		)})}
 		</TransitionGroup>
 	);
-	const mainClass = props.xSmall ? props.className + ' xSmall' : props.className;
+	let mainClass = (props.xSmall ? props.className + ' xSmall' : props.className).concat( props.dim ? ' dim': '');
 	const mainWidth = props.xSmall
 		? window.innerWidth-150
 		: props.topBar ? window.innerWidth-175 : window.innerWidth-250;
 	return (
-		<Scrollbars className={mainClass} style={{width: mainWidth }}>
-			{routes}
-			<BottomBar {...subProps} style={{width: mainWidth}} />
-		</Scrollbars>
+		<div>
+			<div className={mainClass} style={{width: mainWidth }}>
+				{routes}
+			</div>
+		</div>
 	)
 });

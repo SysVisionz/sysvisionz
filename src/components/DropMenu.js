@@ -3,7 +3,7 @@ import Dropdown from 'sysvisionz-react-dropdown';
 import {Link} from 'react-router-dom';
 
 export const DropMenu = (props) => {
-	const {label, topBar} = props;
+	const {label, topBar, isLoaded, isOpen} = props;
 	let {entries} = props;
 	const dropDirection = topBar ? 'down' : 'right';
 	const colors = ['rgba(152,241,255, 1)'];
@@ -26,8 +26,11 @@ export const DropMenu = (props) => {
 		backgroundSize: '100% 100%',
 	};
 	let classNameObj = ['dropButton main', props.topBar ? 'top' : 'side'].join(' ');
-	if (props.isOpen) {
+	if (isOpen) {
 		classNameObj.concat(' open');
+	}
+	if (isLoaded){
+		classNameObj.concat(' loaded');
 	}
 	return(
 		<Dropdown

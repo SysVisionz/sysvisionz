@@ -7,31 +7,36 @@ import {
 	Invoices, 
 	NewProject, 
 	Details, 
-	Settings,
 	Contact,
+	Home,
 } from './';
-import Home from './Home';
+import Blog from './Blog';
 import Projects from './Projects';
 import Profile from './Profile';
 
 export const MainApp = withRouter((props) => {
-	const subProps = {xSmall: props.xSmall, topBar: props.topBar, user: props.user, dimmer: props.dimmer, loaderCheck: props.loaderCheck}
+	const subProps = {returnToTop: props.returnToTop, user: props.user, itemLoaded: props.itemLoaded};
 	const paths = [
 		{
 			key: 'home',
 			path: '/',
 			exact: true,
-			component: <Home {...subProps} />,
+			component: <Home {...subProps} name={props.name} />,
+		},
+		{
+			key: 'blog',
+			path: '/blog',
+			component: <Blog {...subProps} />,
 		},
 		{
 			key: 'build',
 			path: '/build',
-			component: <Build {...subProps} />
+			component: <Build {...subProps}  />
 		},
 		{
 			key: 'tutor',
 			path: '/tutor',
-			component: <Tutor {...subProps} />,
+			component: <Tutor {...subProps} recommendation={props.tutorRecommendation} isUp={props.isUp} clicked={props.clicked}  />,
 		},
 		{
 			key: 'profile',
@@ -59,18 +64,13 @@ export const MainApp = withRouter((props) => {
 			component: <Details {...subProps} />,
 		},
 		{
-			key: 'settings',
-			path: '/account/settings',
-			component: <Settings {...subProps} />,
-		},
-		{
 			key: 'contact',
 			path: '/contact',
 			component: <Contact {...subProps} />,
 		}
 	];
 	const routes = (
-		<TransitionGroup className="mainBody">
+		<TransitionGroup id="main-section" className={props.dim ? ' dim' : ''}>
 			{paths.map((i) => {
 			const {key, path, component, exact} = i;
 			return (
@@ -78,15 +78,10 @@ export const MainApp = withRouter((props) => {
 		)})}
 		</TransitionGroup>
 	);
-	let mainClass = (props.xSmall ? props.className + ' xSmall' : props.className).concat( props.dim ? ' dim': '');
-	const mainWidth = props.xSmall
-		? window.innerWidth-150
-		: props.topBar ? window.innerWidth-175 : window.innerWidth-250;
+	const {id, className}=props;
 	return (
-		<div>
-			<div className={mainClass} style={{width: mainWidth }}>
-				{routes}
-			</div>
+		<div id={id} className={className}>
+			{routes}
 		</div>
 	)
 });

@@ -20,10 +20,14 @@ export default connect(mapStateToProps, {createUser})(class AuthModal extends Co
 		return (
 			<div className="modal">
 				<div className="modalWindow">
-					<span>There is not a current account with this email and password.</span>
-					<span>Create this account?</span>
-					<button onClick={() => this.props.createUser(this.props.email, this.props.password)}>Yes</button>
-					<button onClick={this.props.onClose}>No</button>
+					<div>
+						<span>There is not a current account with this email and password.</span>
+						<span>Create this account?</span>
+					</div>
+					<div>
+						<button onClick={() => this.props.createUser(this.props.email, this.props.password)}>Yes</button>
+						<button onClick={this.props.onClose}>No</button>
+					</div>
 				</div>
 			</div>
 		)

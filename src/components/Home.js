@@ -1,69 +1,61 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import Fader from './Fader'; 
-import {editBlog, newBlog, getBlogs, updateValue} from '../actions';
+import React from 'react';
+import Fader from './Fader';
+import logo from '../images/largeLogo.png';
+import inspire from '../images/inspire.png';
+import presenting from '../images/presenting.png';
+import mirror from '../images/presentingMirror.png';
+//import hurray from '../images/hurray.png';
 
-const mapStateToProps = state => {
-	const {
-		blogs,
-		blogId,
-		name,
-		contents,
-		error
-	} = state.blog;
-	const {
-		user
-	} = state.auth;
-	return {
-		blogs,
-		blogId,
-		name,
-		contents,
-		user,
-		error
-	};
-}
-
-export default connect (mapStateToProps, {editBlog, newBlog, getBlogs, updateValue}) (class Home extends Component {
-	constructor () {
-		super();
-		this.state = {
-			createOpen: false,
-			blogId: false
-		}
-	}
-
-	returnBlogs = () => {
-		this.props.getBlogs();
-		if (this.props.blogs){
-			this.props.blogs.map(blog => {
-				return (
-					<div className="blog">
-						<div>
-							<span>{blog.name}</span>
-							<button hidden={!this.props.user || !this.props.user.admin} onClick={this.setState({createOpen: true, blogId: blog.Id})}>Edit</button>
+export const Home = (props) => {
+	return (
+		<Fader>
+			<div id="homeWrapper" >
+				<div>
+					<img src={logo} alt="SysVisionz" style={{width: '40%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}} />
+					<div className='titleText'>Little Company. Big Vision.</div>
+				</div>
+				<div>
+					<div className='titleText'>Hello there, {props.name ? props.name : 'Stranger'}! <br/>Let's get started. </div>
+					<div className="imageBoxer">
+						<div className="flexImg">
+							<img alt="inspire" src={inspire}  />
 						</div>
 						<div>
-							<span>{blog.contents}</span>
+							<p>We're here to realize your vision.</p>
+							<p>Whether you want something big, something small, a passion project, a work utility, we make it.</p>
+							<img alt="inspire" src={inspire} className="smImg leftImg" />
+							<p>We are dedicated, and always approach each product with the loving care and attention it deserves.</p>
+							<p>Just a few of the services we offer:</p>
 						</div>
 					</div>
-				)
-			});
-		}
-		else{
-			return <span>{this.props.error}</span>;
-		}
-	}
-
-	render () {
-		let nextBlogId = Math.round(Math.random()*10000);
-		return (
-			<Fader key={this.props.key}>
-				<div>
-					{this.returnBlogs()}
-					<button onClick={() => this.setState({createOpen: true, blogId: nextBlogId})} hidden={!this.props.user || !this.props.user.admin}>New Blog Entry</button>
+					<div id="midWrapper" className="imageBoxer">
+						<div className="flexImg list" >
+							<img alt="presenting" src={presenting} />
+						</div>
+						<div id="midList">
+							<img alt="presenting" src={mirror} className="smImg"  />
+							<ul>
+								<p>Web Design</p>
+								<p>Server Maintenance</p>
+								<p>Backend Design</p>
+								<p>Mobile Design</p>
+								<p>Project Planning</p>
+								<p>Training</p>
+							</ul>
+							<img alt="presenting" src={mirror} className="smImg flipped"   />
+						</div>
+						<div className="flexImg list flipped">
+							<img alt="presenting" src={presenting} className="flipped"   />
+						</div>
+					</div>
+					<p>and we're always adding more!</p>
+					<div>
+						<p>We put in everything you need, and nothing that you don't, making for an experience and a product you won't find anywhere else.</p>
+						
+						<p>Let us hear your vision, and bring it to life!</p>
+					</div>
 				</div>
-			</Fader>
-		)
-	}
-})
+			</div>
+		</Fader>	
+	)
+}

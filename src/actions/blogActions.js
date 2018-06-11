@@ -14,6 +14,10 @@ export const editBlog = (dispatch, blogId, name, contents, userEdit) => {
 	}
 }
 
+export const updateBlog = () => {
+	
+}
+
 export const newBlog = (name, contents, user) => {
 	firebase.database().ref('blog/lastBlogNum')
 	.on('value', snapshot => {

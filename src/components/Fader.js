@@ -16,7 +16,7 @@ export default class Fader extends Component {
 		return (
 			<CSSTransition
 				key={this.props.key}
-				timeout={500}
+				timeout={1000}
 				appear
 				enter
 				exit

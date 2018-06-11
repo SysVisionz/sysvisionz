@@ -12,7 +12,7 @@ export default (state = INITIAL_STATE, action ) => {
 	const {type, payload} = action;
 	switch (type) {
 		case 'login':
-			return {...state, user: payload, loggingIn: false, userChecked: true, newUser: false};
+			return {...state, ...payload, loggingIn: false, userChecked: true, newUser: false};
 		case 'logout':
 			return {state: INITIAL_STATE};
 		case 'updateValue':
@@ -25,6 +25,8 @@ export default (state = INITIAL_STATE, action ) => {
 			return {...state, newUser: false};
 		case 'loggingIn':
 			return {...state, loggingIn: true, error: false};
+		case 'signOut':
+			return INITIAL_STATE;
 		default:
 			return state;
 	}

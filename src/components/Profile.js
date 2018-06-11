@@ -1,71 +1,64 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import firebase from 'firebase';
-import {userData, sendUserData, updateSite} from '../actions';
+import {userData, 
+	sendUserData, 
+	updateSite,
+	updatePersonal,
+	updateCompany} from '../actions';
 import Fader from './Fader';
 import {Loading} from './Loading';
 
 
 const mapStateToProps = state => {
 	const {
-		user,
+		pAddressActive,
+		cAddressActive,
 		email,
-		company,
-		name,
 		displayName,
+		photoUrl,
+		company,
+		personal,
+		clientType,
 		type,
 		website,
-		error
+		error,
+		greeting
 	} = state.site;
 	return {
-		user,
+		pAddressActive,
+		cAddressActive,
 		email,
-		company,
-		name,
 		displayName,
+		photoUrl,
+		company,
+		personal,
+		clientType,
 		type,
 		website,
-		error
+		error,
+		greeting
 	};
 };
 
-export default connect (mapStateToProps, {userData, sendUserData, updateSite}) (class Profile extends Component {
+export default connect (mapStateToProps, {userData, sendUserData, updateSite, updateCompany, updatePersonal}) (class Profile extends Component {
 
 	constructor() {
 		super()
 		this.state={
-			editName: false,
-			editDisplayName: false,
-			editEmail: false,
-			editCompany: false,
-			editPhoto: false,
-			editWebsite: false,
-			editing: null,
-			editElem: null
+			edit: undefined,
+			pAddressActive:false,
+			cAddressActive:false
 		}
 	}
 
 	componentDidMount() {
-		firebase.auth().onAuthStateChanged( user => this.props.userData(user));
+		firebase.auth().onAuthStateChanged( () => this.props.userData(firebase.auth().currentUser));
 	}
 
 	componentDidUpdate() {
-		if (this.state.editName && this.state.editing !== 'editName'){
-			document.addEventListener('click', this.closeClick)
-			this.setState({editing: 'editName', editElem: document.getElementById('name')})
-		}
-		if (this.state.editDisplayName && this.state.editing !== 'editDisplayName'){
-			document.addEventListener('click', this.closeClick)
-			this.setState({editing: 'editDisplayName', editElem: document.getElementById('displayName')})
-		}
-		if (this.state.editCompany && this.state.editing !== 'editCompany'){
-			document.addEventListener('click', this.closeClick)
-			this.setState({editing: 'editCompany', editElem: document.getElementById('company')})
-		}
-		if (this.state.editEmail && this.state.editing !== 'editEmail'){
-			document.addEventListener('click', this.closeClick)
-			this.setState({editing: 'editEmail', editElem: document.getElementById('email')})
-		}
+		if (this.state.edit) {document.getElementById(this.state.edit).focus()}
 	}
 
 	isAdmin = () => {
@@ -81,201 +74,162 @@ export default connect (mapStateToProps, {userData, sendUserData, updateSite}) (
 		}
 	}
 
-	closeClick = evt => {
-		if (evt.target ? evt.target !== this.state.editElem : evt !== this.state.editing){
-			this.setState({[this.state.editing]: false});
-		} 
-		document.removeEventListener('click', this.closeClick)
-	}
-
-	buttonClick = edit => {
-		this.setState({[edit]: true});
-		this.closeClick(edit);
-	}
-
-	handleSubmit = (submitVal, evt) => {
-		switch (submitVal) {
-			case 'name':
-				this.setState({editName: false});
-				break;
-			case 'email':
-				this.setState({editEmail: false});
-				break;
-			case 'company':
-				this.setState({editCompany: false});
-				break;
-			case 'displayName':
-				this.setState({editDisplayName: false});
-				break;
-			case 'website':
-				this.setState({editWebsite: false});
-				break;
-			default:
-				break;
+	closeClick = (evt, name) => {
+		if (evt.target.id !== this.state.edit && evt.target.className !== 'button'){ 
+			this.setState({edit: undefined});
+			document.removeEventListener('click', this.closeClick)
 		}
-		this.props.sendUserData(submitVal, evt.target.firstChild.value);
+	}
+
+	buttonClick = (toEdit, isCompany) => {
+		const edit = isCompany ? 'c'+toEdit : toEdit;
+		document.addEventListener('click', this.closeClick);
+		this.setState({edit});
+	}
+
+	handleSubmit = (evt, value, isCompany) => {
+		this.props.sendUserData(firebase.auth().currentUser, value, evt.target.firstChild.value, isCompany);
+		this.setState({edit: undefined});
 		evt.preventDefault();
 	}
 
-	inputChange = (prop, value) => {
-		this.props.updateSite(prop, value)	
+	checkIfOwnValue = (prop) =>  {
+		const nonBasic = ['name', 'street', 'city', 'state', 'zip'];
+		return nonBasic.indexOf(prop) === -1;
 	}
 
-	profileItem = item => {
-		const {email, displayName, company, website} = this.props;
-		switch (item){
-			case 'name':
-				if (this.state.editName){
-					return (
-						<form 
-							className="profileForm" 
-							onSubmit={evt => this.handleSubmit('name', evt)}
-						>
-							<input 
-								type='text' 
-								id='name' 
-								name='name' 
-								onChange={input => this.inputChange('name', input.target.value)} 
-								value={this.props.name} 
-								placeholder="name" 
-							/>
-							<input 
-								type='submit' 
-								hidden='true' 
-							/>
-						</form>
-					)
-				}
-				else{
-					return (
-						<div className="profileItem">
-							<div className = {this.props.name ? 'provided' : 'empty'}>{this.props.name}</div>
-							<button onClick={() => this.buttonClick('editName')}>{!this.props.name ? 'Add' : 'Edit'}</button>
-						</div>
-					)
-				}
-			case 'displayName':
-				if (this.state.editDisplayName){
-					return (
-						<form 
-							className="profileForm" 
-							onSubmit={evt => this.handleSubmit('displayName', evt)}
-						>
-							<input 
-								type = 'text' 
-								id='displayName' 
-								name='displayName' 
-								onChange={input => this.inputChange('displayName', input.target.value)} 
-								value={displayName} 
-								placeholder="Display Name" 
-							/>
-							<input type='submit' hidden='true' />
-						</form>
-					)
-				}
-				else{
-					return (
-						<div className="profileItem">
-							<div className={displayName ? 'provided' : 'empty'}>{displayName}</div>
-							<button onClick={() => this.buttonClick('editDisplayName')}>{!displayName ? 'Add' : 'Edit'}</button>
-						</div>
-					)
-				}
-			case 'email':
-				if (this.state.editEmail){
-					return (
-						<form className="profileForm" onSubmit={evt => this.handleSubmit('email', evt)}>
-							<input type = 'text' 
-							id='email' 
-							name='email' 
-							onChange={input => this.inputChange('email', input.target.value)} 
-							value={email} 
-							placeholder="email" />
-							<input type='submit' hidden='true' />
-						</form>
-					)
-				}
-				else{
-					return (
-						<div className="profileItem">
-							<div className={email ? 'provided' : 'empty'}>{email}</div>
-							<button onClick={() => this.buttonClick('editEmail')}>{!email ? 'Add' : 'Edit'}</button>
-						</div>
-					)
-				}
-			case 'company':
-				if (this.state.editCompany){
-					return (
-						<form 
-							className="profileForm" 
-							onSubmit={evt => this.handleSubmit('company', evt)}
-						>
-							<input type = 'text' 
-							id='company' 
-							name='company' 
-							onChange={input => this.inputChange('company', input.target.value)} 
-							value={company} 
-							placeholder="company" />
-							<input type='submit' hidden='true' />
-						</form>
-					)
-				}
-				else{
-					return (
-						<div className="profileItem">
-							<div className={company ? 'provided' : 'empty'}>{company}</div>
-							<button onClick={() => this.buttonClick('editCompany')}>{!company ? 'Add' : 'Edit'}</button>
-						</div>
-					)
-				}
-			case 'website':
-				if (this.state.editWebsite){
-					return (
-						<form className="profileForm" onSubmit={evt => this.handleSubmit('website', evt)}>
-							<input type = 'text' 
-							id='website' 
-							name='website' 
-							onChange={input => this.inputChange('website', input.target.value)} 
-							value={website} 
-							placeholder="website" />
-							<input type='submit' hidden='true' />
-						</form>
-					)
-				}
-				else{
-					return (
-						<div className="profileItem">
-							<div className={website ? 'provided' : 'empty'}>{website}</div>
-							<button onClick={() => this.buttonClick('editWebsite')}>{!website ? 'Add' : 'Edit'}</button>
-						</div>
-					)
-				}
-			default:
-				return <div>error</div>
+	typeOfUpdate = (prop, value, isCompany) => {
+		if (!this.checkIfOwnValue(prop)){
+			isCompany ? this.props.updateCompany(prop, value) : this.props.updatePersonal(prop, value);
+		}
+		else{
+			this.props.updateSite(prop, value);
 		}
 	}
 
+	activateAddress(active, isCompany) {
+		this.props.updateSite(isCompany ? 'cAddressActive' : 'pAddressActive', active);
+		this.props.sendUserData(firebase.auth().currentUser, isCompany ? 'cAddressActive' : 'pAddressActive', active);
+	}
+
+	returnValue = (prop, isCompany) => {
+		if(this.checkIfOwnValue(prop)){
+			return this.props[prop];
+		}
+		else{
+			return isCompany ? this.props.company[prop] : this.props.personal[prop];
+		}
+	}
+
+	profileItem = (item, isCompany) => {
+		let value;
+		if (isCompany) {
+			value = this.props.company[item]
+		}
+		else if ( !this.checkIfOwnValue(item) ) {
+			value = this.props.personal[item]
+		}
+		else {
+			value = this.props[item]
+		}
+		const {returnValue, label, state, typeOfUpdate, handleSubmit} = this;
+		const tag = isCompany ? "c"+item : item;
+		return (
+			<div className="profileItemContainer">
+				<form className={state.edit !== tag ? "profileForm hidden" : "profileForm visible"}
+					onSubmit={evt => handleSubmit(evt, item, isCompany)}
+				>
+					<input 
+						type='text' 
+						id={isCompany ? 'c'+item : item} 
+						name={isCompany ? 'c'+item : item} 
+						onChange={input => typeOfUpdate(item, input.target.value, isCompany)} 
+						value={value}
+						placeholder={item}
+					/>
+					<input 
+						type='submit' 
+						hidden='true' 
+					/>
+				</form>
+				<div className="profileItem" style={{display: state.edit === tag ? 'none' : ''}}>
+					<div className = {this.props[item] ? 'provided' : 'empty'}>{returnValue(item, isCompany)}</div>
+				</div>
+				<div className="profile-button" >
+					<div className = "button" onClick={() => this.buttonClick(item, isCompany)} style={{display: this.state.edit === tag ? 'none': ''}}>{!this.returnValue(item, isCompany) ? 'Add' : 'Change'}</div>
+				</div>
+			</div>
+		)
+	}
+
 	mainSpot = () => {
+		const companyAddress = (
+			<div>
+				<div hidden={!this.props.cAddressActive}>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">Street: </div>{this.profileItem('street', true)} </div>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">City: </div>{this.profileItem('city', true)} </div>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">State: </div>{this.profileItem('state', true)} </div>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">Zip Code: </div>{this.profileItem('zip', true)} </div>
+				</div>
+			</div>
+			)
+		const personalAddress = (
+			<div>
+				<div hidden={!this.props.pAddressActive}>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">Street: </div>{this.profileItem('street')} </div>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">City: </div>{this.profileItem('city')} </div>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">State: </div>{this.profileItem('state')} </div>
+					<div className="profile-item-wrapper"><div className="profileItemTitle">Zip Code: </div>{this.profileItem('zip')} </div>
+				</div>
+			</div>
+		)
 		return (
 			<Fader key={this.props.key}>
-				<div>
-					<h1>Profile</h1>
-					<div>Email: {this.profileItem('email')} </div>
-					<div>Display Name: {this.profileItem('displayName')}</div>
-					<div>Name: {this.profileItem('name')} </div>
-					<div>Company: {this.profileItem('company')} </div>
-					<div>Website: {this.profileItem('website')} </div>
-					<div>Account Type: {this.isAdmin()}</div>
-					<div>{this.props.error}</div>
+				<div id='profile'>
+ 					<div className="titleText stretch"><span>Profile</span></div>
+					<div id="profileBody">
+						<div className="profile-item-wrapper"><div className="profileItemTitle">Email: </div>{this.profileItem('email')} </div>
+						<div className="profile-item-wrapper"><div className="profileItemTitle">Display Name:</div> {this.profileItem('displayName')}</div>
+						<div className="profile-item-wrapper"><div className="profileItemTitle">Name: </div>{this.profileItem('name')} </div>
+						<div className='small-warning'>-PERSONAL ADDRESS OPTIONAL EXCEPT FOR BILLING PURPOSES-</div>
+						<div>Add personal Address:
+							<input 
+								type='checkbox' 
+								checked={this.props.pAddressActive}
+								value={this.props.pAddressActive}
+								onChange={val => this.activateAddress(val.target.checked, false)}
+							/>
+						</div>
+						{personalAddress}
+						<div className="profile-item-wrapper"><div className="profileItemTitle">Company: </div>{this.profileItem('name', true)} </div>
+						<div className='small-warning'>-COMPANY ADDRESS OPTIONAL EXCEPT FOR BILLING PURPOSES-</div>
+						<div> Add Company Address:
+							<input 
+								type='checkbox' 
+								value={this.props.cAddressActive}
+								checked={this.props.cAddressActive}
+								onChange={val => this.activateAddress(val.target.checked, true)} 
+							/>
+						</div>
+						{companyAddress}
+						<div className="profile-item-wrapper"><div className="profileItemTitle">Website: </div>{this.profileItem('website')} </div>
+						<div className="profile-item-wrapper"><div className="profileItemTitle">Custom Greeting: </div>{this.profileItem('greeting')} </div>
+					</div>
+					<div className='adminType'>{this.isAdmin()}</div>
 				</div>
 			</Fader>
 		);
 	}
 
 	render() {
-		if (this.props.user)
+		if (firebase.auth().currentUser){
 			return this.mainSpot()
-		else
+		}
+		else if (this.props.error==='no user'){
+			return <Redirect to='/' />
+		}
+		else{
 			return <Loading />
+		}
 	}
 })

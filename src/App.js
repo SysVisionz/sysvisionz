@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import {Link, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import firebase from 'firebase';
-import {BottomBar} from './components/';
 import AuthModal from './components/AuthModal';
 import AuthBox from './components/AuthBox';
-import data from './data.json';
 import logo from './images/minilogo.png';
+import {BottomBar} from './components/BottomBar';
 import './App.css';
 import './components/common';
 import {MainApp} from './components/MainApp';
@@ -15,11 +14,11 @@ import popButton from './images/popButton.png';
 import config from './.config.json';
 import {updateValue, closeModal, userSignedIn} from './actions';
 
-const cascadeCheck = (element, check) => {
-  while (element.parentElement){
-    if(element.parentElement.className && element.parentElement.className.indexOf(check) !== -1)
+const cascadeCheck = (target, element) => {
+  while (target.parentElement){
+    if(target===element)
       return true;
-    element = element.parentElement;
+    target = target.parentElement;
   }
   return false;
 }
@@ -30,7 +29,11 @@ const mapStateToProps = (state) => {
     user,
     newUser,
   } = state.auth;
+  const {
+    personal,
+  } = state.site;
   return {
+    personal,
     loading,
     user,
     newUser,
@@ -40,16 +43,6 @@ const mapStateToProps = (state) => {
 export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn} )(class App extends Component {
   constructor() {
     super();
-    let dataMap = [];
-    let topBar = window.innerWidth > 940 ? true : false;
-    let xSmall = window.innerWidth < 600 ? true : false;
-    window.onresize = () => {
-      window.innerWidth < 940 && this.state.topBar ? this.setState({topBar: false}) : void 0;
-      window.innerWidth > 940 && !this.state.topBar ? this.setState({topBar: true}) : void 0;
-      window.innerWidth < 600 && !this.state.xSmall ? this.setState({xSmall: true}) : void 0;
-      window.innerWidth > 600 && this.state.xSmall ? this.setState({xSmall: false}) : void 0;
-      this.setState({windowWidth: window.innerWidth, windowHeight: window.innerHeight});
-    };
     this.samePage = true;
     window.addEventListener("scroll", () => {
       if (this.samePage) {
@@ -57,24 +50,33 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
         this.setState({fromTop: -newLocation});
       }
     });
-    let isOpen = [];
-    let isLoaded = [];
-    for (let i = 0; i < data.length; i++) {
-      isOpen[i]=false;
-      isLoaded[i]=false;
+    window.onresize = () => {
+      if (this.state.dropOpen) {
+        this.setState({dropOpen: false});
+        document.removeEventListener('click', this.closeMenu);
+      }
+    };
+    let imageLoaded = {};
+    const imagesIn = {build: 3, tutor: 6, home : 5, contact: 2}
+    const pages = ['build', 'tutor', 'home', 'contact'];
+    for (const i of pages) {
+      for (let inside = imagesIn[i]; inside > 0; inside--){
+        if (imageLoaded[i]) {
+          imageLoaded[i].push(false)
+        } 
+        else {
+          imageLoaded[i] = [false]
+        }
+      }
     }
-    isLoaded[data.length] = false;
     this.state = {
-      dataMap,
-      topBar,
-      xSmall,
-      xSmallOpen: false,
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      isOpen,
+      tutorRecommendation: {code:false, shortcuts: false, docs: false, games: false},
+      clicked: {code:false, shortcuts: false, docs: false, games: false},
+      dropOpen: false,
+      top: 0,
       show: true,
-      isLoaded,
-      loaded: false
+      loaded: {build: false, tutor: false, home: false, contact: false},
+      imageLoaded
     }
   }
 
@@ -82,37 +84,42 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
     this.props.userSignedIn();
   }
 
+  authState = isOpen => this.setState({authOpen: isOpen});
+
   componentWillMount() {
     firebase.initializeApp(config.auth);
   }
 
-  returnToTop = () => {
-    this.samePage = false;
-    this.wait = setInterval(() => {
-      if (this.state.fromTop < -5)
-        this.setState({fromTop: this.state.fromTop*.85});
-      else {
-        clearInterval(this.wait);
-        this.samePage = true;
-      }
-    }, 5);
-  }
-
-  loadNext = () => {
-    if (this.state.isLoaded[this.loading] === false){
-        let isLoaded = this.state.isLoaded;
-        isLoaded[this.loading] = true;
-        this.setState(isLoaded);
-        this.loading++;
-      }
-    else {
-      clearInterval(this.loadTimer);
+  returnToTop = (isSame) => {
+    let offset = window.pageYOffset;
+    if (isSame) {
+      this.scrollUp = setInterval(() => {
+        if (offset > 5) { 
+          window.scrollBy(0, -(offset*.20));
+          offset -= offset*.15;
+        }
+        else {clearInterval(this.scrollUp)}
+      }, 5);
     }
-  }
-
-  loadingFunct = () => {
-    this.loading = 0;
-    setTimeout(() => this.loadTimer = setInterval(() => this.loadNext(), 200), 200);
+    else {
+      this.samePage = false;
+      let scrolledUp = false;
+      let bgScrolledUp = false;
+      this.scrollUp = setInterval(() => {
+        if (offset > 5) { 
+          window.scrollBy(0, -(offset*.20));
+          offset -= offset*.15;
+        }
+        else {scrolledUp = true}
+        if (this.state.fromTop < -5){ this.setState({fromTop: this.state.fromTop*.85}) }
+        else { bgScrolledUp = true }
+        if (bgScrolledUp && scrolledUp)
+        {
+          clearInterval(this.scrollUp);
+          this.samePage = true;
+        }
+      }, 5);
+    }
   }
 
   toggleFunct = (index, isOpen) => {
@@ -120,84 +127,93 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
     this.setState({isOpen});
   }
 
-  linkClick = () => {
-    this.setState({xSmallOpen: false, dim: false})
-    this.returnToTop()
-  }
-
-  renderMenus = () => {
-    const linkList = [{http: '/build', title: 'Build a Page'}, {http: '/tutor', title: 'Get Tutored'}, {http: '/contact', title: 'Contact'}];
-    const link = linkList.map( (link, index) => <div key={'mainLink'+ index}><Link className = {this.topSide('dropButton main')} onClick={this.linkClick} to={link.http}>{link.title.toUpperCase()}</Link></div>);
-    return link;
-  }
-
-  topSide = (initial) => [initial, this.state.topBar ? 'top' : 'side'].join(' ');
-
-  closeXSmall = evt => {
-    if (!cascadeCheck(evt.target, 'headerContainer')) {
-      this.setState({xSmallOpen: false, dim: false})
-      document.removeEventListener('click', this.closeXSmall);
+  closeXSmall = () => {
+    if (this.state.dropOpen) {
+      this.setState({dropOpen: false});
+      document.removeEventListener('click', this.closeMenu);
     }
   }
 
-  openXSmall = () => {
-    this.setState({xSmallllOpen: true, dim: true});
-    document.addEventListener('click', this.closeXSmall);
+  linkClick = () => {
+    this.setState({dropOpen: false})
+    this.returnToTop()
+    this.closeXSmall();
   }
 
-  dimmer = isDim => this.setState({dim: isDim});
+  renderMenus = () => {
+    const linkList = [{http: '/build', title: 'Build a Page'}, {http: '/tutor', title: 'Get Tutored'}, {http: '/blog', title: 'Blog'}];
+    const link = linkList.map( (link, index) => <div key={'mainLink'+ index} className={'button-container'}><Link className = 'button main' onClick={this.linkClick} to={link.http}>{link.title.toUpperCase()}</Link></div>);
+    return link;
+  }
 
-  loaderCheck = isLoaded => this.setState({loaded: isLoaded, dim: false});
+  openMenu = () => {
+    this.setState({dropOpen: true});
+    document.addEventListener('click', this.closeMenu);
+  }
+
+  closeMenu = evt => {
+    const menuElement = document.getElementById('header-container');
+    if (!cascadeCheck(evt.target, menuElement)) {
+      this.setState({dropOpen: false});
+      document.removeEventListener('click', this.closeMenu);
+    }
+  }
+
+  isClicked = (select, is) => {
+    this.setState({...this.state.clicked, [select]: is});
+  }
+
+  isUp = (select, up) => {
+    this.setState({tutorRecommendation: {...this.state.tutorRecommendation, [select]: up}})
+  }
 
   render() {
-    const {renderMenus, topSide} = this;
-    const {topBar, loaded, bgLoaded,xSmall, xSmallOpen}=this.state;
-    const user = this.props.user;
-    const mainSectionClass =topSide('mainSection').concat(this.props.mainSectionClass ? ' ' + this.props.mainSectionClass : '');
+    const {renderMenus, props, state, returnToTop, openMenu, authState, isUp, isClicked} = this;
+    const {bgLoaded, show, dropOpen, authOpen, tutorRecommendation,clicked}=state;
+    const {user, personal, newUser, closeModal} = props;
     return (
       <BrowserRouter>
-        <div className={["App", topBar ? 'top': 'side', !loaded ? 'inactive' : void 0].join(' ')} style={{height:this.state.windowHeight*.6}}>
-          <div className={'bgDiv'.concat(!bgLoaded ? ' inactive' : '')}>
-            <img alt='error' style={{top: this.state.fromTop}} id="bgImage" src={bgWires} onLoad={() => {
-                this.loadingFunct();
+        <div id="app-wrapper" className={'app'.concat(!bgLoaded || !(personal.name || user === null ) ? ' inactive' : '')}>
+          <div className={'bgDiv'}>
+            <img alt='error' style={{top: this.state.fromTop}} id="bg-image" src={bgWires} onLoad={() => {
                 this.setState({bgLoaded: true});
               }
             } />
-            <div className={['headerContainer', xSmall ? 'xSmall' : '', xSmallOpen ? 'open' : ''].join(' ')}>
-              <div className={topSide("App-header")} style={topBar ? {width:this.state.windowWidth} : {height: this.state.windowHeight*.6} }>
-                <Link to='/'>
-                  <img src={logo} onLoad={() => this.setState({loaded: true})} className={topSide("App-logo")} alt="logo" />
-                </Link>
-                <div className = {topSide('menusDiv')}>
-                  {renderMenus()}
-                </div>
+            <div id="header-container" className={dropOpen ? "open" : ''}>
+              <Link to='/'>
+                <img src={logo} onClick = {this.linkClick} id="App-logo" alt="logo" />
+              </Link>
+              <div id="nav-bar">
+                {renderMenus()}
               </div>
             </div>
             <AuthBox 
-              xSmall={xSmall}
               cascadeCheck={cascadeCheck}
-              returnToTop={this.returnToTop}
+              returnToTop={returnToTop}
+              authState={authState}
             />
-            <div hidden={!xSmall} className={["openButton", xSmallOpen ? 'open' : ''].join(' ')} onClick={() => this.openXSmall()}><img alt = 'error' id="popSideButton" src={popButton} /></div>
+            <div id="open-menu-div"><img onClick={() => openMenu()} className={dropOpen ? 'open' : ''} alt = 'error' id="open-menu-button" src={popButton} /></div>
             <MainApp 
-              dim = {this.state.dim}
-              xSmall={xSmall} 
-              topBar={topBar} 
-              className = {mainSectionClass}
+              tutorRecommendation = {tutorRecommendation}
+              id="main-wrapper"
+              isUp={isUp}
+              clicked={clicked}
               user={user}
               mountFunct={() => this.setState({show:true})} 
               unmountFunct={() => this.setState({show:false})} 
-              in={this.state.show}
-              dimmer = {this.dimmer}
-              loaded = {this.state.loaded}
-              loaderCheck = {this.loaderCheck}
+              in={show}
+              dim={dropOpen || authOpen }
+              returnToTop={returnToTop}
+              name={personal.name}
+              isClicked={isClicked}
+              authState={authState}
             />
           </div>
+          <BottomBar returnToTop={returnToTop} />
           <AuthModal 
-            visible={this.props.newUser} 
-            onClose={this.props.closeModal}
+            visible={newUser} 
+            onClose={closeModal}
           />
-          <BottomBar />
         </div>
       </BrowserRouter>
     );

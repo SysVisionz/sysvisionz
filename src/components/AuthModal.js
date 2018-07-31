@@ -1,35 +1,30 @@
 import React, {Component} from 'react';
-import {createUser} from '../actions';
 import {connect} from 'react-redux';
+import {createUser, closeModal} from '../actions';
+import {Modal} from './common';
 
 const mapStateToProps = state => {
-	const {
-		email,
-		password
-	} = state.auth;
+	const {email, password, persist} = state.auth;
 	return {
 		email,
-		password
+		password,
+		persist
 	};
 }
 
-export default connect(mapStateToProps, {createUser})(class AuthModal extends Component {
+export default connect(mapStateToProps, {createUser, closeModal})(class AuthModal extends Component {
 	render() {
-		if (!this.props.visible)
-			return null;
 		return (
-			<div className="modal">
-				<div className="modalWindow">
-					<div>
-						<span>There is not a current account with this email and password.</span>
-						<span>Create this account?</span>
-					</div>
-					<div>
-						<button onClick={() => this.props.createUser(this.props.email, this.props.password)}>Yes</button>
-						<button onClick={this.props.onClose}>No</button>
-					</div>
+			<Modal open={this.props.open} closeModal={() => this.props.closeModal()}>
+				<div>
+					<p>There is not a current account with the email {this.props.email}.</p>
+					<p>Create this account?</p>
 				</div>
-			</div>
+				<div>
+					<div onClick={() => this.props.createUser(this.props.email, this.props.password, this.props.persist)} className="yes-no button">Yes</div>
+					<div onClick={() => this.props.closeModal()} className="yes-no button">No</div>
+				</div>
+			</Modal>
 		)
 	}
 });

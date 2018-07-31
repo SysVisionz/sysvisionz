@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import firebase from 'firebase';
+import {Link} from 'react-router-dom';
 import Fader from './Fader'; 
-import {editBlog, newBlog, getBlogs, updateBlog, typeCheck} from '../actions';
+import {newBlog, getBlogs} from '../actions';
+import Modal from './common/Modal';
 
 const mapStateToProps = state => {
 	const {
@@ -29,7 +30,7 @@ const mapStateToProps = state => {
 	};
 }
 
-export default connect (mapStateToProps, {editBlog, newBlog, getBlogs, updateBlog, typeCheck}) (class Home extends Component {
+export default connect (mapStateToProps, {newBlog, getBlogs}) (class Home extends Component {
 	constructor () {
 		super();
 		this.state = {
@@ -38,22 +39,18 @@ export default connect (mapStateToProps, {editBlog, newBlog, getBlogs, updateBlo
 		}
 	}
 
-	componentDidMount() {
-		firebase.auth().onAuthStateChanged(() => this.props.typeCheck());
-	}
-
 	returnBlogs = () => {
 		this.props.getBlogs();
 		if (this.props.blogs){
 			this.props.blogs.map(blog => {
 				return (
-					<div className="blog">
+					<div className="blogEntry">
 						<div>
-							<span>{blog.name}</span>
+							<Link to={"blog/ref?blog="+encodeURI(blog._id)}>{blog.name}</Link>
 							<button hidden={this.props.type !== 'admin' || this.props.type !== 'master'} onClick={this.setState({createOpen: true, blogId: blog.Id})}>Edit</button>
 						</div>
 						<div>
-							<span>{blog.contents}</span>
+							<span>{blog.description}</span>
 						</div>
 					</div>
 				)

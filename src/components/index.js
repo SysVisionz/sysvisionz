@@ -7,5 +7,5 @@ export * from './Details';
 export * from './Update';
 export * from './Tutor';
 export * from './OrderForm';
-export * from './Loading';
 export * from './Contact';
+export * from './BackgroundImage';

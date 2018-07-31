@@ -1,59 +1,50 @@
-import firebase from 'firebase';
+import request from 'request-promise';
 
-export const createUser = (email, password) => {
+export const createUser = (email, password, persist) => {
 	return dispatch => {
-		firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then(user => {
-			loginUserSuccess(dispatch, user);
+		request({
+			uri: window.location.origin + '/users',
+			method: 'POST',
+			body: {email, password, persist},
+			json: true,
+			resolveWithFullResponse: true
 		})
-		.catch(error => {
-			loginUserFail(dispatch)
-		});
+		.then( res => dispatch({type: 'login', payload: {...res.body, token: res.headers['x-auth']}}) )
+		.catch( err => dispatch( {type: 'createUserFail', payload: err.body } ) )
 	}
 }
 
-export const closeModal = () => {
-	return ({type: 'closeModal'});
-}
+export const closeModal = () => {return {type: 'closeModal'}};
 
-export const promoteAdmin = () => {
+export const promoteAdmin = (token, target) => {
 	return dispatch => {
-		const uid = firebase.auth().currentUser.uid;
-		firebase.database().ref(`masterAdmin`)
-		.set({[uid]: true})
-		.then(dispatch({type: 'adminSuccess'}));
+		request({
+			method: 'POST',
+			uri: window.location.origin + window.location.origin + '/users/promote',
+			headers: {
+				'x-auth': token
+			},
+			body: {target},
+			json: true
+		})
+		.then(res => dispatch( {type: 'promoteUserSuccess', payload: res} ) )
+		.catch(err => dispatch ({type: 'promoteUserFail', payload: err} ) );
 	}
 }
 
-export const demoteAdmin = uid => {
+export const demoteAdmin = (target, token) => {
 	return dispatch => {
-		firebase.database().ref(`masterAdmin`)
-		.on('value', snapshot => {
-			if (snapshot.uid){
-				firebase.database().ref(`admin`)
-				.set({[uid]: true})
-				.then(() => {
-					firebase.database().ref(`masterAdmin`)
-					.set({[uid]: false})
-					return dispatch => dispatch({type: 'demoteSuccess'});
-				})
-			}
+		request({
+			method: 'POST',
+			uri: window.location.origin + '/users/demote',
+			headers: {
+				'x-auth': token
+			},
+			body: {target},
+			json: true
 		})
-		.then(() => {
-			firebase.database().ref(`admin`)
-			.on('value', snapshot => {
-				if (snapshot.uid) {
-					firebase.database().ref('client')
-					.set({[uid]: true})
-					.then(() => {
-						firebase.database().ref('admin')
-						.set({[uid]: false})
-						return dispatch => dispatch({type: 'demoteSuccess'});
-					})
-				}
-			})
-		})
-		.catch(() => dispatch => dispatch({type: 'demoteFail'}));
+		.then( res => dispatch( {type: 'demoteUserSuccess', payload: res} ) )
+		.catch( err => dispatch( {type: 'demoteUserFail', payload: err} ) );
 	}
 }
 
@@ -67,62 +58,122 @@ export const updateValue = ( prop, value ) => {
 	};
 }
 
-export const loginUser = (email, password, persist) => {
-	return (dispatch) => {
-		dispatch({type: 'loggingIn'})
-		firebase.auth().signInWithEmailAndPassword(email, password)
-		.then( async user => {
-			firebase.database().ref(`user/${user.uid}`)
-			.on('value', snapshot => {
-				const {greeting, messages} = snapshot.val();
-				loginUserSuccess(dispatch, user, greeting, messages);
-			})
-		})
-		.catch((error) => {
-			if (error.code === 'auth/user-not-found') {
-				dispatch ({type: 'noUser'});
-			}
-			else {
-				loginUserFail(dispatch);
-			}
-		});
-	};
-}
-
-const loginUserFail = (dispatch) => {
-	dispatch ({ type: 'loginFail' });
-}
-
-const loginUserSuccess = (dispatch, user, greeting, messages) => {
-	dispatch ({
-		type: 'login',
-		payload: {user, greeting, messages}
-	});
-}
-
-export const userSignedIn = () => {
+export const updateUserType = (token, type, target) => {
 	return dispatch => {
-		firebase.auth().onAuthStateChanged( function (user) {
-			let greeting;
-			let messages;
-			if (user) {
-				firebase.database().ref(`user/${user.uid}`)
-				.on('value', snapshot => {
-					greeting = snapshot.val();
-				});
-				firebase.database().ref(`messages/${user.uid}`)
-				.on('value', snapshot => {
-					messages = snapshot.val();
-				})
+		request({
+			method: 'POST',
+			headers: {
+				'x-auth': token
+			},
+			body: {
+				target
+			},
+			json: true
+		})
+	}
+}
+
+export const loginClick = () => {
+	return {type: 'loggingIn'}
+}
+
+export const sendUserData = (token, prop, value, prefix) => {
+	const body = prefix ? {[prefix]:{[prop]: value}} : {[prop]: value};
+	return dispatch => {
+		request({
+			method: 'POST',
+			uri: window.location.origin + '/users/update',
+			headers: {
+				'x-auth': token
+			},
+			body,
+			json:true
+		})
+		.catch(err => dispatch({type: 'userDataFail', payload: err.message}))
+	}
+}
+
+export const loginUser = (email, password, persist, socket) => {
+	return dispatch => {
+		request({
+			method: 'POST',
+			uri: window.location.origin + '/users/login',
+			body: {
+				email,
+				password,
+				persist
+			},
+			json: true,
+			resolveWithFullResponse: true
+		})
+		.then( res => {
+			socket.emit('signIn', res.headers['x-auth']);
+			dispatch({
+				type: 'login', 
+				payload: {
+					...res.body,
+					token: res.headers['x-auth']
+				}
+			}) 
+		})
+		.catch( err => {
+			if (err.statusCode === 400) {
+				dispatch({type: 'noUser'})
 			}
-			dispatch ({type: 'login', payload: {user, greeting, messages}});
+			else{
+				dispatch({ type: 'loginFail' });
+			}
 		});
 	}
 }
 
-export const signUserOut = (dispatch) => {
+export const userData = (token) => {
 	return dispatch => {
-		firebase.auth().signOut()
-		dispatch ({ type: 'signOut' });
+		request({
+			method: 'GET',
+			uri: window.location.origin + '/users/me',
+			json: true,
+			headers: {
+				'x-auth': token
+			},
+			resolveWithFullResponse: true
+		})
+		.then (res => dispatch ({type: 'userData', payload: res}))
+		.catch (err => dispatch ({type: 'userDataFail', payload: err.message}))
+	}
+}
+
+export const userSignedIn = (token, socket) => {
+	return dispatch => {
+		request({
+			method: 'GET',
+			uri: window.location.origin + '/users/me',
+			json: true,
+			headers: {
+				'x-auth': token
+			},
+			resolveWithFullResponse: true
+		})
+		.then( res => {
+			socket.emit('signIn', token)
+			dispatch({type: 'login', payload: {...res.body, token: res.headers['x-auth']}})
+		})
+		.catch( err => dispatch( {type: 'userNotIn'} ) )
+
+	}
+}
+
+export const signUserOut = (token) => {
+	return dispatch => {
+		request({
+			method: 'DELETE',
+			uri: window.location.origin + '/users/logout',
+			json: true,
+			headers: {
+				'x-auth': token
+			}
+		})
+		.then( res => dispatch({type: 'logout'}) )
+		.catch( err => dispatch({type: 'logoutFail', payload: err}) );
 	}
 };

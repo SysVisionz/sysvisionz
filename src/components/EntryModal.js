@@ -2,6 +2,7 @@ import React, {Component, Modal} from 'react';
 import Dropdown from 'sysvisionz-react-dropdown';
 import {connect} from 'react-redux';
 import {inputChange} from '../actions';
+import {Modal} from './common';
 
 mapStateToProps = state => {
 	const {currentUser} = state.auth;

@@ -8,8 +8,9 @@ import {
 	NewProject, 
 	Details, 
 	Contact,
-	Home,
+	Home
 } from './';
+import GetBlog from './GetBlog'
 import Blog from './Blog';
 import Projects from './Projects';
 import Profile from './Profile';
@@ -26,7 +27,13 @@ export const MainApp = withRouter((props) => {
 		{
 			key: 'blog',
 			path: '/blog',
+			exact: true,
 			component: <Blog {...subProps} />,
+		},
+		{
+			key: 'getBlog',
+			path: '/blog/ref',
+			component: <GetBlog {...subProps} search = {props.location.search} />
 		},
 		{
 			key: 'build',

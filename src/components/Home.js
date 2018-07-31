@@ -22,15 +22,15 @@ export const Home = (props) => {
 						</div>
 						<div>
 							<p>We're here to realize your vision.</p>
-							<p>Whether you want something big, something small, a passion project, a work utility, we make it.</p>
 							<img alt="inspire" src={inspire} className="smImg leftImg" />
+							<p>Whether you want something big, something small, a passion project, a work utility, we make it.</p>
 							<p>We are dedicated, and always approach each product with the loving care and attention it deserves.</p>
 							<p>Just a few of the services we offer:</p>
 						</div>
 					</div>
 					<div id="midWrapper" className="imageBoxer">
 						<div className="flexImg list" >
-							<img alt="presenting" src={presenting} />
+							<img alt="presenting" src={presenting} className="rightImg presenting"/>
 						</div>
 						<div id="midList">
 							<img alt="presenting" src={mirror} className="smImg"  />
@@ -45,7 +45,7 @@ export const Home = (props) => {
 							<img alt="presenting" src={mirror} className="smImg flipped"   />
 						</div>
 						<div className="flexImg list flipped">
-							<img alt="presenting" src={presenting} className="flipped"   />
+							<img alt="presenting" src={presenting} className="leftImg presenting flipped"   />
 						</div>
 					</div>
 					<p>and we're always adding more!</p>

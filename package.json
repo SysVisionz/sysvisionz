@@ -3,27 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "assert": "^1.4.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "js-cookie": "^2.2.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongodb": "^3.0.10",
+    "mongoose": "^5.2.3",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
-    "react-dropdown": "^1.3.6",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.11"
+    "react-scripts": "^1.1.4",
+    "react-transition-group": "^2.2.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "request-promise": "^4.2.2",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "socketio": "^1.0.0",
+    "sysvisionz-react-dropdown": "^2.1.4",
+    "validator": "^10.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "./node_modules/mocha/bin/mocha tests/*.test.js",
+    "eject": "react-scripts eject",
+    "test-exec": "nodemon --exec \"npm test\""
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
-    "firebase": "^4.12.0",
-    "react-custom-scrollbars": "^4.2.1",
-    "react-redux": "^5.0.6",
-    "react-transition-group": "^2.2.1",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "sysvisionz-react-dropdown": "^2.0.0"
+    "expect": "^23.4.0",
+    "mocha": "^5.2.0",
+    "supertest": "^3.1.0"
   }
 }

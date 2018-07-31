@@ -42,7 +42,7 @@ export const Tutor = (props) => {
 						<p>You're looking for a new skill, trying to put yourself at the top of the pack</p>
 						<img alt="computer" src={computer} className="smImg leftImg"  />
 						<p>There's a thousand things to learn, with only so many places to learn them.</p>
-						<p>Few skills are more in demand than software design, and event fewer of them pay as well.</p>
+						<p>Few skills are more in demand than software design, and that demand is only growing over time.</p>
 						<p>So what are you waiting for?</p>
 					</div>
 				</div>

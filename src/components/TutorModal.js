@@ -1,6 +1,6 @@
-import firebase from 'firebase';
 import React, {Component} from 'react';
 import {submitTutor, getSkillData} from '../actions';
+import {Modal} from './common'
 import {connect} from 'react-redux';
 
 const mapStateToProps = state => {
@@ -28,26 +28,23 @@ export default connect(mapStateToProps, {submitTutor, getSkillData})(class Tutor
 	}
 
 	render() {
-		this.props.getSkillData(firebase.auth().currentUser);
 		if (!this.props.visible)
 			return null;
 		return (
-			<div className="modal">
-				<div className="modalWindow">
-					<span>What would you like to learn?</span>
-					<div id="genreBox">
-						{this.genreButtons()}
-					</div>
-					<div id="specificsBox">
-						{this.specificsBox()}
-					</div>
-					<div id="studyingBox">
-						{this.studyingBox()}
-					</div>
-					<button onClick={() => this.props.submitTutor(this.props.selected)}>Submit Request</button>
-					<button onClick={this.props.closeModal}>No</button>
+			<Modal>
+				<span>What would you like to learn?</span>
+				<div id="genreBox">
+					{this.genreButtons()}
 				</div>
-			</div>
+				<div id="specificsBox">
+					{this.specificsBox()}
+				</div>
+				<div id="studyingBox">
+					{this.studyingBox()}
+				</div>
+				<button onClick={() => this.props.submitTutor(this.props.selected)}>Submit Request</button>
+				<button onClick={this.props.closeModal}>No</button>
+			</Modal>
 		)
 	}
 });

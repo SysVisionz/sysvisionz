@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import {Link, BrowserRouter} from 'react-router-dom';
+import io from 'socket.io-client';
 import {connect} from 'react-redux';
-import firebase from 'firebase';
-import AuthModal from './components/AuthModal';
 import AuthBox from './components/AuthBox';
 import logo from './images/minilogo.png';
-import {BottomBar} from './components/BottomBar';
+import {BottomBar, BackgroundImage} from './components';
+import Chat from './components/Chat'
 import './App.css';
 import './components/common';
 import {MainApp} from './components/MainApp';
 import bgWires from './images/bgWires.png';
 import popButton from './images/popButton.png';
 import config from './.config.json';
-import {updateValue, closeModal, userSignedIn} from './actions';
+import {updateValue, userSignedIn, signUserOut} from './actions';
 
 const cascadeCheck = (target, element) => {
   while (target.parentElement){
@@ -26,21 +26,21 @@ const cascadeCheck = (target, element) => {
 const mapStateToProps = (state) => {
   const {
     loading,
-    user,
-    newUser,
+    _id,
+    userChecked,
+    persist,
+    personal
   } = state.auth;
-  const {
-    personal,
-  } = state.site;
   return {
-    personal,
     loading,
-    user,
-    newUser,
+    _id,
+    persist,
+    personal,
+    userChecked
   };
 }
 
-export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn} )(class App extends Component {
+export default connect ( mapStateToProps, {updateValue, userSignedIn, signUserOut} )(class App extends Component {
   constructor() {
     super();
     this.samePage = true;
@@ -76,18 +76,17 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
       top: 0,
       show: true,
       loaded: {build: false, tutor: false, home: false, contact: false},
-      imageLoaded
+      imageLoaded,
+      chatOpen: false
     }
-  }
-
-  componentDidMount() {
-    this.props.userSignedIn();
   }
 
   authState = isOpen => this.setState({authOpen: isOpen});
 
   componentWillMount() {
-    firebase.initializeApp(config.auth);
+    const token = localStorage.getItem('sysv-user-token')
+    this.socket = io.connect('localhost:8080', {reconnect: true});
+    this.props.userSignedIn(token, this.socket);
   }
 
   returnToTop = (isSame) => {
@@ -134,6 +133,10 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
     }
   }
 
+  closeChat = () => {
+    this.setState({chatOpen: false})
+  }
+
   linkClick = () => {
     this.setState({dropOpen: false})
     this.returnToTop()
@@ -159,6 +162,10 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
     }
   }
 
+  chatOpen = () => {
+    this.setStat({chatOpen: true})
+  }
+
   isClicked = (select, is) => {
     this.setState({...this.state.clicked, [select]: is});
   }
@@ -170,15 +177,13 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
   render() {
     const {renderMenus, props, state, returnToTop, openMenu, authState, isUp, isClicked} = this;
     const {bgLoaded, show, dropOpen, authOpen, tutorRecommendation,clicked}=state;
-    const {user, personal, newUser, closeModal} = props;
+    const {_id, userChecked, personal} = props;
+    const mainClassName = bgLoaded && userChecked ? 'app' : 'app inactive';
     return (
       <BrowserRouter>
-        <div id="app-wrapper" className={'app'.concat(!bgLoaded || !(personal.name || user === null ) ? ' inactive' : '')}>
+        <div id="app-wrapper" className={mainClassName}>
           <div className={'bgDiv'}>
-            <img alt='error' style={{top: this.state.fromTop}} id="bg-image" src={bgWires} onLoad={() => {
-                this.setState({bgLoaded: true});
-              }
-            } />
+            <BackgroundImage fromTop={this.state.fromTop} bgWires={bgWires} bgLoaded={() => this.setState({bgLoaded: true})} />
             <div id="header-container" className={dropOpen ? "open" : ''}>
               <Link to='/'>
                 <img src={logo} onClick = {this.linkClick} id="App-logo" alt="logo" />
@@ -188,32 +193,31 @@ export default connect ( mapStateToProps, {updateValue, closeModal, userSignedIn
               </div>
             </div>
             <AuthBox 
+              socket = {this.socket}
               cascadeCheck={cascadeCheck}
               returnToTop={returnToTop}
               authState={authState}
             />
             <div id="open-menu-div"><img onClick={() => openMenu()} className={dropOpen ? 'open' : ''} alt = 'error' id="open-menu-button" src={popButton} /></div>
-            <MainApp 
+            <MainApp
+              socket = {this.socket}
               tutorRecommendation = {tutorRecommendation}
               id="main-wrapper"
               isUp={isUp}
               clicked={clicked}
-              user={user}
+              _id={_id}
               mountFunct={() => this.setState({show:true})} 
               unmountFunct={() => this.setState({show:false})} 
               in={show}
               dim={dropOpen || authOpen }
               returnToTop={returnToTop}
-              name={personal.name}
+              name={personal && personal.name ? personal.name : 'Stranger'}
               isClicked={isClicked}
               authState={authState}
             />
           </div>
           <BottomBar returnToTop={returnToTop} />
-          <AuthModal 
-            visible={newUser} 
-            onClose={closeModal}
-          />
+          <Chat user = {this.props._id} open = {this.state.chatOpen} onClick = {this.chatClick} />
         </div>
       </BrowserRouter>
     );

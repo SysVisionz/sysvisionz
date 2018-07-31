@@ -1,29 +1,31 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import Dropdown from 'sysvisionz-react-dropdown';
-import firebase from 'firebase';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import io from 'socket.io-client';
+import AuthModal from './AuthModal';
+import { Attention, Modal } from './common';
 import menuButton from '../images/MenuButton.png';
-import {loginUser, userSignedIn, signUserOut, updateValue, userData, resetSite} from '../actions';
+import { loginUser, userSignedIn, signUserOut, updateValue, userData, resetSite, loginClick } from '../actions';
 
 const mapStateToProps = (state) => {
 	const {
-		email,
 		password,
 		error,
 		loggingIn,
 		userChecked,
 		newUser,
-		user,
-	} = state.auth;
-	const {
+		_id,
+		email,
+		persist,
+		token,
+		displayName,
 		type,
-		greeting,
+		attentions,
 		personal,
-	} = state.site;
+	} = state.auth;
 	return {
 		personal,
-		greeting,
 		email,
 		password,
 		error,
@@ -31,11 +33,15 @@ const mapStateToProps = (state) => {
 		userChecked,
 		newUser,
 		type,
-		user
+		_id,
+		attentions,
+		persist,
+		token,
+		displayName
 	};
 }
 
-export default connect (mapStateToProps, {loginUser, userSignedIn, signUserOut, updateValue, userData, resetSite}) (class AuthBox extends Component {
+export default connect (mapStateToProps, {loginClick, loginUser, userSignedIn, signUserOut, updateValue, userData, resetSite }) (class AuthBox extends Component {
 	constructor () {
 		super();
 		this.state={
@@ -48,30 +54,25 @@ export default connect (mapStateToProps, {loginUser, userSignedIn, signUserOut, 
 		}
 	}
 
-	componentDidMount() {
-		this.props.userSignedIn();
-		this.props.userData(firebase.auth().currentUser);
-		firebase.auth().onAuthStateChanged(user => this.props.userData(firebase.auth().currentUser));
-	}
-
 	handleSubmitUser = evt => {
 		evt.preventDefault();
-		this.props.loginUser(this.props.email, this.props.password);
+		this.props.loginClick();
+		this.props.loginUser(this.props.email, this.props.password, this.props.persist, this.props.socket);
 		this.setState({authMenuOpen: false});
 		document.removeEventListener('click', this.closeAuth);
 	}
 
 	loginButton = () => {
 		if (this.props.loggingIn)
-			return <button>logging in...</button>
+			return <input type="submit" className="login button" value="logging in..." />
 		else
-			return <button onClick={this.handleSubmitUser}>login</button>
+			return <input type="submit" className="login button" value="login" />
 	}
 
 	signOut = () => {
 		this.setState({authOpen: false, authMenuOpen: false});
 		this.props.authState(false);
-		this.props.signUserOut();
+		this.props.signUserOut(localStorage.getItem('sysv-user-token'));
 		this.props.resetSite();
 		document.removeEventListener('click', this.closeAuth);
 	}
@@ -83,6 +84,49 @@ export default connect (mapStateToProps, {loginUser, userSignedIn, signUserOut, 
 		}
 	}
 
+	authEntries = type => {
+		const {signOut, props} = this
+		const {attentions} = props;
+		switch (type) {
+			case 'master':
+				return [
+					{title: <Attention on={attentions.promote}>Promote</Attention>, action: () => this.setState({promoteOpen: true})},
+					{title: <Attention on={attentions.newProject}>New Project</Attention>, http: '/account/newProject'},
+					{title: <Attention on={attentions.projects}>Active Projects</Attention>, http: '/account/projects'},
+					{title: <Attention on={attentions.schedule}>Schedule</Attention>, http: '/account/schedule'},
+					{title: <Attention on={attentions.profile}>Profile</Attention>, http: '/account/profile'},
+					{title: 'Sign Out', action: () => signOut()}
+				];
+			case 'client':
+				return [
+					{title: <Attention on={attentions.newProject}>New Project</Attention>, http: '/account/newProject'},
+					{title: <Attention on={attentions.projects}>Active Projects</Attention>, http: '/account/projects'},
+					{title: <Attention on={attentions.schedule}>Schedule</Attention>, http: '/account/schedule'},
+					{title: <Attention on={attentions.invoices}>Current Invoices</Attention>, http: '/account/invoices'},
+					{title: <Attention on={attentions.profile}>Profile</Attention>, http: '/account/profile'},
+					{title: 'Sign Out', action: () => signOut()}
+				];
+			case 'admin':
+				return [
+					{title: <Attention on={attentions.projects}>Active Projects</Attention>, http: '/account/projects'},
+					{title: <Attention on={attentions.schedule}>Schedule</Attention>, http: '/account/schedule'},
+					{title: <Attention on={attentions.profile}>Profile</Attention>, http: '/account/profile'},
+					{title: 'Sign Out', action: () => signOut()}
+				];
+			case 'student':
+				return [
+					{title: <Attention on={attentions.schedule}>Schedule</Attention>, http: '/account/schedule'},
+					{title: <Attention on={attentions.profile}>Profile</Attention>, http: '/account/profile'},
+					{title: 'Sign Out', action: () => signOut()}
+				];
+			default:
+				return [
+					{title: <Attention on={attentions.profile}>Profile</Attention>, http: '/account/profile'},
+					{title: 'Sign Out', action: () => signOut()}
+				];
+		}
+	}
+
 	openSignIn = () => {
 		this.setState({isVisible: false});
 		this.setState({authOpen: true});
@@ -90,7 +134,7 @@ export default connect (mapStateToProps, {loginUser, userSignedIn, signUserOut, 
 	}
 
 	clickDiv = () => {
-		if (this.props.xSmall && firebase.auth().currentUser) {
+		if (this.props.xSmall && this.props._id) {
 			if (!this.state.authMenuOpen) {document.addEventListener('click', this.closeAuth)}
 			this.setState({authMenuOpen: !this.state.authMenuOpen})
 		}
@@ -114,58 +158,57 @@ export default connect (mapStateToProps, {loginUser, userSignedIn, signUserOut, 
 			state,
 			props,
 			clickDiv,
-			signOut,
 			buttonToggle,
-			linkClick
+			linkClick,
+			authEntries
 		} = this
 		const {
 			type, 
 			xSmall,
 			loggingIn,
-			newUser,
-			greeting,
 			personal,
-			user,
+			_id,
 			email,
+			newUser,
+			attentions,
+			error,
+			persist,
+			password,
+			token,
+			displayName
 		} = props;
 		const {
 			authOpen,
 		} = state;
-		let classNameOf = "auth";
-		classNameOf+= xSmall ? ' xSmall' : '';
+		let classNameOf = "auth";	
 		let contents;
-		if (user) {
-			classNameOf+=" loggedIn";
-			let authEntries = []
-			switch (type) {
-				case 'master':
-					authEntries = authEntries.concat({title: 'Promote', action: () => this.setState({promoteOpen: true})});
-				case 'client':
-					authEntries = authEntries.concat({title: 'New Project', http: '/account/newProject'})
-				case 'admin':
-					authEntries = authEntries.concat({title: 'Active Projects', http: '/account/projects'});
-				case 'student':
-					authEntries = authEntries.concat({title: 'Schedule', http: '/account/schedule'});
-				default:
-					authEntries = authEntries.concat(
-						{title: 'Profile', http: '/account/profile'},
-						{title: 'Sign Out', action: () => signOut()}
-					);
+		if (_id) {
+			if ( token && localStorage.getItem('sysv-user-token') !== token){
+				localStorage.setItem('sysv-user-token', token)
 			}
-			if (type === 'student' || type === 'client') {authEntries.splice(authEntries.length-2, 0, {title: 'Current Invoices', http: '/account/invoices'})}
-			const menuOptions = authEntries.map(entry => {
+			const mainAttention = attentions && Object.values(attentions).indexOf(true) !== -1;
+			classNameOf+=" loggedIn";
+			const menuOptions = authEntries(type).map(entry => {
 				return entry.http
 					? <Link onClick={() => window.location.pathname === entry.http ? linkClick(true) : linkClick(false)} to={entry.http}>{entry.title}</Link>
 					: <div onClick={entry.action}>{entry.title}</div>
 			});
-			const greetMsg = greeting
-				? personal.name ? greeting + ' ' + personal.name : greeting + ' ' + email
-				: personal.name ? "Welcome " + personal.name : "Welcome " + email;
+			const greetMsg = () => {
+				if (personal) {
+					return personal.greeting
+					? personal.name ? personal.greeting + ' ' + personal.name : personal.greeting + ' ' + displayName
+					: personal.name ? "Welcome, " + personal.name : "Welcome, " + displayName;
+				}
+				else {
+					return "Welcome, " + displayName
+				}
+			}
+
 			contents = (
 				<div>
-					<span>{greetMsg}!</span>
+					<span className="greet-span">{greetMsg()}!</span>
 					<Dropdown 
-						label={<div onClick={buttonToggle}><img alt='+' src={menuButton} /></div>}
+						label={<Attention on={mainAttention && !this.state.authMenuOpen}><div onClick={buttonToggle}><img alt='+' src={menuButton} /></div></Attention>}
 						entries={menuOptions}
 						controlled
 						delay={200}
@@ -186,19 +229,39 @@ export default connect (mapStateToProps, {loginUser, userSignedIn, signUserOut, 
 		else if (authOpen) {
 			contents = (
 				<div>
-					<form onSubmit={this.handleSubmitUser}>
+					<form id ="signInForm" onSubmit={this.handleSubmitUser}>
 						<input disabled={loggingIn || newUser} type ='text' onChange={(input) => this.props.updateValue('email', input.target.value)} className="authInput" placeholder="email" />
 						<input disabled={loggingIn || newUser} type ='password' onChange={(input) => this.props.updateValue('password', input.target.value)} className="authInput" placeholder="password" />
+						<span>keep logged in:</span><input disabled={loggingIn || newUser} type = 'checkBox' onChange={input => this.props.updateValue('persist', input.target.checked)} checked={this.props.persist} />
+						{this.loginButton()}
 					</form>
-				<div>{this.state.error}</div>
-				{this.loginButton()}
+					<Modal id="signInModal" open={!newUser} closeModal={() => this.setState({authOpen: false})}>
+						<form onSubmit={this.handleSubmitUser}>
+							<input disabled={loggingIn || newUser} type ='text' onChange={(input) => this.props.updateValue('email', input.target.value)} className="authInput" placeholder="email" />
+							<input disabled={loggingIn || newUser} type ='password' onChange={(input) => this.props.updateValue('password', input.target.value)} className="authInput" placeholder="password" />
+							<span>stay logged in:</span><input disabled={loggingIn || newUser} type = 'checkBox' onChange={input => this.props.updateValue('persist', input.target.checked)} checked={this.props.persist} />
+							{this.loginButton()}
+						</form>
+					</Modal>
+				<div className={this.props.error ? 'error-box' : "error-box-hidden"}>{this.props.error}</div>
 				</div>
 			);
 		}
 		else {
 			classNameOf+=' closed';
-			contents=<div onClick={this.openSignIn}>Sign In/Sign Up</div>;
+			contents=<div onClick={this.openSignIn}>Sign In/Register</div>;
 		}
-			return (<div id='authContainer' className={classNameOf} onClick={() => clickDiv()}>{contents}</div>);
-	}
+		return (
+			<div id='authContainer' 
+				className={classNameOf} 
+				onClick={() => clickDiv()}
+			>
+				{contents}
+				<AuthModal 
+					open={newUser} 
+					email={email} 
+					password={password} 
+					persist={persist} 
+				/>
+			</div>); }
 });

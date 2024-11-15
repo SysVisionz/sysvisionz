@@ -6,6 +6,7 @@ import express, { Request, Response } from "express";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { config } from 'dotenv'
+import { set } from "mongoose";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -39,7 +40,13 @@ exp.use(compression({filter: shouldCompress}))
 exp.get('/api/stream', (req, res) => {
   res.write('hello')
   res.write('world')
-  res.end()
+  setTimeout(() => {
+    res.write('!')
+    res.write('okay.')
+    setTimeout(() => {
+      res.end()
+    }, 1000)
+  }, 3000)
 })
 exp.all('*', (req, res) => {
   handler(req, res)

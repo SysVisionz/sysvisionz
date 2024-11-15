@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react"
 
 
-export const useEffectDelay = (delay: number = 500, triggers: any[]) => {
+export const useEffectDelay = (triggers: any[] = [], delay: number = 500) => {
 	const timeout = useRef<NodeJS.Timeout | null>(null)
 	const onStart = useRef<() => void>()
 	const onEnd = useRef<() => void>()

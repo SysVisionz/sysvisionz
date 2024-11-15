@@ -1,12 +1,11 @@
-import { headers } from "next/headers";
 import { createContext, FC, MutableRefObject, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useSiteNotify } from "./notification";
 import { useEffectDelay } from "@/app/shared/utils";
 
-type Search = {name?: string, project?:string, who?: string[], why?: string, hasSolution?: boolean}
+type Search = {name?: string, project?:string, who?: string[], why?: string, hasSolution?: boolean, page: number, pageSize: number}
 
 interface ProposalContext{
-	search?: MutableRefObject<Search | undefined>
+	search?: MutableRefObject<Search>
 	list?: {name: string, project: string, get: () => ProposalContext["proposal"]}[]
 	proposal?: {
 		name: string,
@@ -17,51 +16,46 @@ interface ProposalContext{
 		hasSolution: boolean,
 		solutions?: string[],
 		whyBetter?: string[],
-		send: () => void;
 	},
+	send: (content: ProposalContext["proposal"]) => void;
 	select: (name: string) => void
 }
 
 const proposalContext = createContext<ProposalContext>({
-	select: () => void
+	send: () => {},
+	select: () => {}
 })
 
 const ProposalProvider: FC<{children: ReactNode}> = () => {
-	const search: ProposalContext["search"] = useRef<Search>()
-	const delay = useRef<NodeJS.Timeout | null>()
+	const search: ProposalContext["search"] = useRef<Search>({page: 1, pageSize: 10})
 	const [proposal, setProposal] = useState<ProposalContext["proposal"]>()
 	const [list, setList] = useState<ProposalContext["list"]>()
-	const wait = useRef<NodeJS.Timeout | null>(null)
-	const set = () => {
-		delay.current && clearTimeout(delay.current){
-			
-		}
-	}
-
-	useEffectDelay(500, [search.current?.hasSolution, search.current?.name, search.current?.project, search.current?.who, search.current?.why]).after(() => {
-			search && fetch(`https://sysvisionz.com/api/proposal${Object.keys(search.current || []).length 
-				? `?${Object.entries(search.current!).map(v => `${v[0]}=${v[1]}`).join('&')}`
-				: ''}`).then( (resp) => {
-				resp.json().then(proposal => {
-					proposal && setProposal(proposal)
-				})
-			})
-	})
-	useEffect(() => {
-	}, [search.current?.name, search.current?.project, search.current?.who, search.current?.why, search.current?.hasSolution])
-	const send = () => {
-
-	}
-	const get = (name: string) => new Promise<Proposal>((res, rej) => {
-		fetch('https://sysvisionz.com/proposal', {headers: {
-			name: name
-		}}).then( (resp) => {
-			resp.json().then(proposal => res(proposal))
-		}).catch(err => {
-			useSiteNotify().error(typeof err === 'object' ? err.message : err)
+	const select = (name: string) => fetch(`https://sysvisionz.com/api/proposal?${name}`).then(resp => {
+		resp.json().then(data => {
+			setProposal(data)
 		})
 	})
-	return <proposalContext.Provider value={{search, proposal, list, selectProposal}}>
+	const send = (content: ProposalContext["proposal"]) => {
+		fetch('https://sysvisionz.com/api/proposal', {
+			method: 'POST',
+			body: JSON.stringify(content)
+		}).then(resp => {
+			resp.json().then(data => {
+				setProposal(data)
+			})
+		})
+	}
+	useEffectDelay([search.current?.hasSolution, search.current?.name, search.current?.project, search.current?.who, search.current?.why, search.current?.page])
+	.after(() => {
+		search && fetch(`https://sysvisionz.com/api/proposal${Object.keys(search.current || []).length 
+			? `?${Object.entries(search.current!).map(v => `${v[0]}=${v[1]}`).join('&')}`
+			: ''}`).then( (resp) => {
+			resp.json().then(data => {
+				setList(data)
+			})
+		})
+	})
+	return <proposalContext.Provider value={{search, proposal, list, select, send}}>
 
 	</proposalContext.Provider>
 } 

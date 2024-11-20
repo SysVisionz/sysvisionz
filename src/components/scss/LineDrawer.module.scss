@@ -1,0 +1,28 @@
+@import '/src/shared/theme.scss';
+
+.container {
+	position: absolute;
+	.hide{
+		transition: transform linear;
+		position: relative;
+		transform: scaleX(1);
+		.line {
+			border: 0;
+			padding: 0;
+			margin: 0;
+		}
+		&.hidden{
+			transform: scaleX(0);
+		}
+		&.left, &.up {
+			transform-origin: right;
+		}
+		&.right, &.down {
+			transform-origin: left;
+		}
+		&.up, &.down {
+			rotate: 90deg;
+		}
+	}
+
+}

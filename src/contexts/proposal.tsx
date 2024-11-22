@@ -1,6 +1,6 @@
 import { createContext, FC, MutableRefObject, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useSiteNotify } from "./notification";
-import { useEffectDelay } from "@/app/shared/utils";
+import { useEffectDelay } from "~/shared/utils";
 
 type Search = {name?: string, project?:string, who?: string[], why?: string, hasSolution?: boolean, page: number, pageSize: number}
 

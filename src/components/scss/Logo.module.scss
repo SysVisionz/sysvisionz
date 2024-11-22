@@ -1,0 +1,16 @@
+.container{
+	.large{
+		opacity: 0;
+		.show{
+			transition: 400ms ease opacity width;
+			opacity: 1;
+		}
+	}
+	.small{
+		opacity: 0;
+		.show{
+			transition: 400ms ease opacity width;
+			opacity: 1;
+		}
+	}
+}

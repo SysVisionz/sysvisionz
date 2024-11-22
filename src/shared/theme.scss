@@ -1,3 +1,23 @@
 @use "sass:map";
 
-$black: ("xlight": #444, "light": #333, "default": #222, "dark": #111, "xdark": #000) 	;
+$black: ("xlight": #444, "light": #333, "default": #222, "dark": #111, "xdark": #000);
+$blue: ("xlight": #c1ecff, "light": #6FCAF1, "default": #156DDD, "dark": #1360c5, "xdark": #0a3c81);
+$green: ("xlight": #c1ffcc, "light": #6FF1A8, "default": #1DD1A1, "dark": #0f9d8f, "xdark": #0a6a5f);
+$red: ("xlight": #ffccc1, "light": #f1a86f, "default": #d11d1d, "dark": #9d0f0f, "xdark": #6a0a0a);
+$yellow: ("xlight": #fff6c1, "light": #f1e16f, "default": #d1c11d, "dark": #9d8f0f, "xdark": #6a5f0a);
+$background: #F3EBED;
+@mixin mobile {
+	@media (max-width: 768px) {
+		@content;
+	}
+}
+@mixin tablet {
+	@media (min-width: 769px) and (max-width: 1024px) {
+		@content;
+	}
+}
+@mixin desktop {
+	@media (min-width: 1025px) {
+		@content;
+	}
+}

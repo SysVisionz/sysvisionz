@@ -9,14 +9,11 @@ export const useEffectDelay = (triggers: any[] = [], delay: number = 500) => {
 	useEffect(() => {
 		if (!timeout.current){
 			onStart.current?.()
+			timeout.current = setTimeout(() => {
+				onEnd.current?.()
+				timeout.current = null;
+			}, delay)
 		}
-		else {
-			clearTimeout(timeout.current)
-		}
-		timeout.current = setTimeout(() => {
-			onEnd.current?.()
-			timeout.current = null;
-		}, delay)
 	}, triggers)
 	return {
 		/** this will play at the start of the delay, and will not play again until the delay has completed and reset. */

@@ -1,0 +1,104 @@
+.logo{
+	display: flex;
+	justify-content: center;
+	img{
+		max-width: 80%;
+	}
+}
+.title{
+	position: relative;
+	width: 100%;
+	.sys-vis{
+		height: 5em;
+		.first, .second{
+			h1{
+				text-align: center;
+				display: none;
+				white-space: nowrap;
+				margin: 0 0;
+			}
+		}
+		.first{
+			position: relative;
+			right: 60px;
+			&.show{
+				h1{
+					display: block;
+					animation: reveallr 400ms forwards;
+				}
+			}
+		}
+		.second{
+			position: relative;
+			&.show{
+				h1{
+					display: block;
+					animation: revealrl 800ms forwards;
+				}
+			}
+		}	
+		.lines{
+			position: absolute;
+			top: 23px;
+			right: calc(50% - 0px);
+			>div{
+				>div {
+					overflow: hidden;
+				}
+				&:first-child{
+					>div{
+						border-radius: 0 0 3px 0;
+					}
+				}
+				&:last-child{
+					>div{
+						border-radius: 0 0 0 3px;
+					}
+				}
+			}
+		}
+	}
+	.let-us{
+		margin-top: 30px;
+		h5{
+			text-align: center;
+			margin: 0;
+		}
+		h2{
+			text-align: center;
+		}
+	}
+	.meet{
+		.links{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-top: 30px;
+		}
+	}
+}
+@keyframes reveallr{
+	from{
+		opacity: 0;
+		clip-path: inset(0 0 0 100%);
+	}
+	to{
+		opacity: 1;
+		clip-path: inset(0 0 0 0);
+	}
+}
+@keyframes revealrl{
+	0%{
+		opacity: 0;
+		clip-path: inset(0 100% 0 0);
+	}
+	66%{
+		opacity: 0;
+		clip-path: inset(0 100% 0 0);
+	}
+	
+	100%{
+		opacity: 1;
+		clip-path: inset(0 0 0 0);
+	}
+}

@@ -1,18 +1,44 @@
 @import "/src/shared/theme.scss";
 
-.topbar{
+.topbar, .spacer{
 	position: fixed;
+	box-sizing: border-box;
 	top: 0;
 	left: 0;
 	display: flex;
+	align-items: center;
+	padding: 0 15px;
+	justify-content: space-between;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	background-color: $background;
-	height: 100px;
+	z-index: 1000;
+	height: 40px;
+	width: 100%;
+	transition: 200ms ease height;
+	.logo{
+		height: 90%;
+	}
+	.links{
+		flex:1;
+		display:flex;
+		justify-content: space-around;
+	}
 	@include mobile {
 		padding-top: 15px;
-		height: 50px;
+		height: 30px;
+		img{
+			left: 15px;
+			height: 30px;
+		}
 	}
-	.top {
-		height: 50px;
+	&.top {
+		height: 60px;
+		@include mobile {
+			height: 50px;
+		}
 	}
+}
+.spacer{
+	position: relative;
+	box-shadow: none;
 }

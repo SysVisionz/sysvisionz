@@ -19,17 +19,6 @@ export const Contact = (props) => {
 						</div>
 					</div>
 				</div>
-				<div className="contact-wrapper">
-					<div>
-						<div className="contact-photo">
-							<img alt="renita" src={renita}  />
-						</div>
-						<div>
-							<div>Renita Orellana: Graphic Designer</div>
-							<div>Email: renita@sysvisionz.com</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</Fader>
 	);

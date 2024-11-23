@@ -11,8 +11,8 @@ export interface UserObj extends Document{
 	password: string,
 	email: string,
 	tokens?: string[],
-	privs?: 'master' | 'admin' | 'mod' | 'user',
-	hasAtLeast: {[P in 'master' | 'admin' | 'mod' | 'user']: boolean}
+	privs?: PrivLevel,
+	hasAtLeast: {[P in PrivLevel]: boolean}
 	generateAuthToken: () => Promise<string>,
 	removeToken: (token: string) => void,
 	toJSON: () => {displayName: string, email: string, privs: UserObj["privs"]}
@@ -22,7 +22,7 @@ interface UserMethods {
 	removeToken: (token: string) => void,
 }
 
-export const levelFromPriv = (priv: 'master' | 'admin' | 'mod' | 'user') => {
+export const levelFromPriv = (priv: PrivLevel) => {
 	const l = ['user', 'mod', 'admin', 'master'].indexOf(priv as string) as 0|1|2|3
 	return ~l ? l : null
 }
@@ -45,7 +45,7 @@ const UserSchema = new Schema<
 	UserMethods,
 	{},
 	{
-		hasAtLeast: {[P in 'master' | 'admin' | 'mod' | 'user']: boolean}
+		hasAtLeast: {[P in PrivLevel]: boolean}
 	},
 	QueryHelpers
 >  (
@@ -84,9 +84,9 @@ const UserSchema = new Schema<
 			hasAtLeast: {
 				get: function() {
 					const user = this;
-					return new Proxy({master: false, admin: false, mod: false, user: false} as {[P in 'master' | 'admin' | 'mod' | 'user']: boolean}, {
+					return new Proxy({master: false, admin: false, mod: false, user: false} as {[P in PrivLevel]: boolean}, {
 						get: (t, p, r) => {
-							const level = (v: 'master' | 'admin' | 'mod' | 'user') => typeof level === 'number' ? v
+							const level = (v: PrivLevel) => typeof level === 'number' ? v
 							: {master: 3, admin: 2, mod: 1, user: 0}[v]
 							return level(p as keyof typeof t) <= level(user.privs!)		 
 						}

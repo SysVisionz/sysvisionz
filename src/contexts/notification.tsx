@@ -1,7 +1,7 @@
 import { useContext, createContext, ReactNode, useMemo, useRef, useEffect, useState } from "react"
 
 interface Notice {
-	type: 'info' | 'warn' | 'error'
+	type: 'info' | 'warn' | 'error' | 'success'
 	visible: boolean
 	value: string
 	fadeDelay: number
@@ -12,21 +12,22 @@ interface Notice {
 }
 
 type Notifications = {
-	[Key in 'info' | 'warn' | 'error']: Notice[]
+	[Key in 'info' | 'warn' | 'error' | 'success']: Notice[]
 }
 
 interface NotificationContext extends Notifications{
 	push: {
 		(info: string): void;
 	} & {
-		[type in 'error' | 'info' | 'warn']: (err: string) => void
+		[type in 'error' | 'info' | 'warn' | 'success']: (err: string) => void
 	}
 }
 
-const notificationContext = createContext<NotificationContext>({
+export const notificationContext = createContext<NotificationContext>({
 	info: [],
 	warn: [],
 	error: [],
+	success: [],
 	push: new Proxy<NotificationContext["push"]>({} as NotificationContext["push"], {
 		apply: () => {},
 		get: () => {}
@@ -35,7 +36,7 @@ const notificationContext = createContext<NotificationContext>({
 
 const NotificationProvider: FCWC = ({children}) => {
 	class Notice {
-		type: 'info' | 'warn' | 'error'
+		type: 'info' | 'warn' | 'error' | 'success'
 		visible: boolean = false;
 		value: string
 		fadeDelay: number
@@ -68,7 +69,7 @@ const NotificationProvider: FCWC = ({children}) => {
 		next = this.action.next().value
 
 	}
-	const notifications = useRef<Notifications>({info: [], error: [], warn: []})
+	const notifications = useRef<Notifications>({info: [], error: [], warn: [], success: []})
 	const push = new Proxy<NotificationContext["push"]>((() => {}) as unknown as NotificationContext["push"], {
 		apply: (t, thisArg, [info]) => {
 			new Notice('info', info)
@@ -78,5 +79,7 @@ const NotificationProvider: FCWC = ({children}) => {
 		{children}
 	</notificationContext.Provider>
 }
+
+export default NotificationProvider;
 
 export const useSiteNotify = () => useContext(notificationContext).push

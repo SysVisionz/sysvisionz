@@ -18,12 +18,12 @@ const message= {
 }
 
 export type Message = Omit<typeof message, 'privileged'> & {
-	privileged?: 'admin' | 'mod' | 'user'
+	privileged?: PrivLevel
 }
 
 export type MessageUser = {
 	user: ObjectId,
-	privilege: 'admin' | 'mod' | 'user'
+	privilege: PrivLevel
 	banned: boolean
 }
 

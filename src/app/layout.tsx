@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Topbar from "~/Topbar";
+import style from "./style.module.scss";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,10 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      <Topbar />
-
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} ${style.body}`}>
+        <Topbar />
+        <main className={style.main}>{children}</main>
       </body>
     </html>
   );

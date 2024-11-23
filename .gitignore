@@ -38,12 +38,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/db/*
+server-ts/db/*
 !**/*model*
 server.js
-db/**/*.js
-models/**/*.js
-middleware/**/*.js
+/db
+/models
+/middleware
 *.csr
 *.crt
 *.ext

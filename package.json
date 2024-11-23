@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "node server.js dev",
-    "build": "tsc -p tsServer.json && next build",
+    "build": "tsc -p ./server-ts/tsconfig.json && next build",
     "start": "node server.js",
     "lint": "next lint",
-    "build-server": "tsc -p tsServer.json"
+    "build-server": "tsc -p ./server-ts/tsconfig.json"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

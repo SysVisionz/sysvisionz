@@ -1,0 +1,12 @@
+@import '/src/shared/theme.scss';
+.body{
+	background-color: $background;
+	margin:0;
+	height: 2000px;
+}
+.main{
+	margin-top: 10px;
+	@mixin mobile{
+		margin-top: 5px;
+	}
+}

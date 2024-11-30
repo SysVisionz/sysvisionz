@@ -27,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${style.body}`}>
+        <div className={style.background} />
         <Topbar />
         <main className={style.main}>{children}</main>
       </body>

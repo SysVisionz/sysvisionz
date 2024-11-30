@@ -1,6 +1,8 @@
-@import "/src/shared/theme.scss";
+@use "sass:map";
+@use "forward.scss";
 
 .topbar, .spacer{
+	background: linear-gradient(45deg, forward.$background, map.get(forward.$blue, light));
 	position: fixed;
 	box-sizing: border-box;
 	top: 0;
@@ -10,32 +12,47 @@
 	padding: 0 15px;
 	justify-content: space-between;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
-	background-color: $background;
 	z-index: 1000;
 	height: 40px;
 	width: 100%;
-	transition: 200ms ease height;
+	transition: 200ms ease height, 200ms ease background-image, 200ms ease box-shadow;
 	.logo{
+		flex:1;
 		height: 90%;
 	}
 	.links{
-		flex:1;
+		flex:2;
 		display:flex;
 		justify-content: space-around;
+		a{
+			@include forward.underline;
+			color: forward.$background;
+			text-decoration: none;
+		}
 	}
-	@include mobile {
+	img:last-child{
+		position: absolute;
+		top: 0;
+		left: 5px;
+	}
+	@include forward.mobile {
 		padding-top: 15px;
 		height: 30px;
-		img{
-			left: 15px;
-			height: 30px;
-		}
+		padding: 0 5px;
 	}
 	&.top {
+		box-shadow: 0 0 10px rgba(0,0,0,0);
+		background: linear-gradient(45deg, transparent, transparent);
 		height: 60px;
-		@include mobile {
+		@include forward.mobile {
 			height: 50px;
 		}
+	}
+	&:not(.top) a {
+		&:before{
+			background-color: map.get(forward.$blue, xdark);
+		}
+		color: map.get(forward.$blue, xdark);
 	}
 }
 .spacer{

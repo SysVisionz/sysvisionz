@@ -21,3 +21,30 @@ $background: #F3EBED;
 		@content;
 	}
 }
+@mixin hover {
+	&:hover {
+		@content;
+	}
+}
+@mixin underline ($color: $background) {
+	margin-bottom: 0;
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+		top: 100%;
+		background-color: $color;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 0;
+		height: 2px;
+		transition: width 200ms ease;
+	}
+	&:hover {
+		&:before {
+			width: 70%;
+		}
+	}
+}
+
+$shadow: 2px 2px 5px map-get($black, light );

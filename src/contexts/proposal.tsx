@@ -45,15 +45,17 @@ const ProposalProvider: FC<{children: ReactNode}> = () => {
 			})
 		})
 	}
-	useEffectDelay([search.current?.hasSolution, search.current?.name, search.current?.project, search.current?.who, search.current?.why, search.current?.page])
-	.after(() => {
-		search && fetch(`https://sysvisionz.com/api/proposal${Object.keys(search.current || []).length 
-			? `?${Object.entries(search.current!).map(v => `${v[0]}=${v[1]}`).join('&')}`
-			: ''}`).then( (resp) => {
-			resp.json().then(data => {
-				setList(data)
+	useEffectDelay({
+		triggers: [search.current?.hasSolution, search.current?.name, search.current?.project, search.current?.who, search.current?.why, search.current?.page],
+		onStart: () => {
+			search && fetch(`https://sysvisionz.com/api/proposal${Object.keys(search.current || []).length 
+				? `?${Object.entries(search.current!).map(v => `${v[0]}=${v[1]}`).join('&')}`
+				: ''}`).then( (resp) => {
+				resp.json().then(data => {
+					setList(data)
+				})
 			})
-		})
+		}
 	})
 	return <proposalContext.Provider value={{search, proposal, list, select, send}}>
 

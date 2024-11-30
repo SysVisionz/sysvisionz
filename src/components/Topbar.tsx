@@ -1,8 +1,8 @@
 'use client'
-import { useEffectDelay } from '~/shared/utils';
 import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
 import { FC, useContext, useEffect, useRef, useState } from "react";
+import { userContext } from '../contexts/user';
 
 /** this component changes height, as well as the logo size/type */
 const Topbar: FC = () => {
@@ -10,7 +10,6 @@ const Topbar: FC = () => {
 	const spacer = useRef<HTMLDivElement>(null)
 	useEffect(() => {
 		const iObserv = new IntersectionObserver((entries) => {
-			console.log('scrolling')
 			if (entries[0].isIntersecting){
 				setAtTop(true)
 			} else {
@@ -26,18 +25,18 @@ const Topbar: FC = () => {
 		}
 		
 	}, [])
+	const {user} = useContext(userContext)
 	return<>
 		<div ref={spacer} className={`${style.spacer}${atTop ? ` ${style.top}` : ""}`}></div>
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
 			<div className={style.logo}><Logo style={atTop ? 'large' : 'small'}/></div>
 			<div className={style.links}>
-				<a href="/home">Home</a>
 				<a href="/about">About</a>
 				<a href="/services">Services</a>
 				<a href="/contact">Contact</a>
 			</div>
-			<div>
-				<button>{}</button>
+			<div style={{display: 'none'}}>
+				{/* {user.privLevel ? : <button>Login</button>} */}
 			</div>
 		</div>
 	</>

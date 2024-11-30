@@ -1,4 +1,4 @@
-import { useContext, createContext, ReactNode, useMemo, useRef, useEffect, useState } from "react"
+import { createContext, useRef, useEffect, useState, useContext } from "react"
 import { useSiteNotify } from "./notification"
 import { useDelay } from "~/shared/utils"
 
@@ -12,7 +12,7 @@ interface UserContext {
 	login: (displayNameOrEmail: UserContext["user"]["displayName"] | UserContext["user"]["email"], pass?: string) => void
 }
 
-const userContext = createContext<UserContext>({
+export const userContext = createContext<UserContext>({
 	user: {
 		displayName:"",
 		email: "",
@@ -61,4 +61,9 @@ const NotificationProvider: FCWC = ({children}) => {
 	return <userContext.Provider value={{user, login, loginError}}>
 		{children}
 	</userContext.Provider>
+}
+
+export const useHasAtLeast = (privLevel: PrivLevel, callback: () => void) => {
+	const {user} = useContext(userContext)
+	return user.privLevel && user.privLevel >= privLevel ? callback ? callback() : true : false
 }

@@ -1,16 +1,14 @@
-
-.container{
+.container {
 	height: 90%;
 	position: relative;
 	box-sizing: border-box;
-	img{
+	img {
+		box-sizing: border-box;
 		opacity: 0;
 		top: 0;
-		position: absolute;	
-		transition: opacity 200ms ease, position 0;
-		height:100%;
-		&.show{
-			position: relative;
+		transition: opacity 400ms ease, position 0;
+		height: 100%;
+		&.show {
 			top: 0;
 			transition: 200ms 100ms ease opacity, position 50ms;
 			opacity: 1;

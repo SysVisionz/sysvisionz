@@ -43,15 +43,17 @@ export const useEffectDelay = ({triggers = [], delay = 500, onStart, onEnd}: {tr
 	}
 }
 
-export const useDelay = ({onStart, onEnd, delay = 500}: {onStart?: () => void, onEnd?: () => void, delay?: number} = {}) => {
+export const useDelay = <T extends any[] = []>({onStart, onEnd, delay = 500}: {onStart?: (...args: T) => void, onEnd?: (...args: T) => void, delay?: number} = {}) => {
 	const timeout = useRef<NodeJS.Timeout | null>(null)
-	const onStartFunc = useRef<(() => void) | undefined>(onStart);
-	const onEndFunc = useRef<(() => void) | undefined>(onEnd);
-	return () => {
+	const onStartFunc = useRef<((...args: T) => void) | undefined>(onStart);
+	const onEndFunc = useRef<((...args: T) => void) | undefined>(onEnd);
+	return (...args: T) => {
+		console.log('running')
 		if (!timeout.current){
-			onStartFunc.current?.()
+			onStartFunc.current?.(...args)
 			timeout.current = setTimeout(() => {
-				onEndFunc.current?.()
+				onEndFunc.current?.(...args)
+				timeout.current = null;
 			}, delay)
 		}
 	}

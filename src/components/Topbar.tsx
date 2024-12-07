@@ -1,4 +1,5 @@
 'use client'
+import { useEffectDelay } from '~/shared/utils';
 import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
 import { FC, useContext, useEffect, useRef, useState } from "react";
@@ -8,20 +9,23 @@ import { userContext } from '../contexts/user';
 const Topbar: FC = () => {
 	const [atTop, setAtTop] = useState<boolean>(true)
 	const spacer = useRef<HTMLDivElement>(null)
+	const iObserv = useRef<IntersectionObserver>()
 	useEffect(() => {
-		const iObserv = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting){
-				setAtTop(true)
-			} else {
-				setAtTop(false)
-			}
-		}, {threshold: 0.1})
+		if (!iObserv.current){
+			iObserv.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting){
+					setAtTop(true)
+				} else {
+					setAtTop(false)
+				}
+			}, {threshold: 0.8})
+		}
 		if (!(typeof window === 'undefined')){
 			setAtTop(window.scrollY <= 70)
 		}
-		spacer.current && iObserv.observe(spacer.current)
+		spacer.current && iObserv.current.observe(spacer.current)
 		return () => {
-			spacer.current && iObserv.unobserve(spacer.current)
+			spacer.current && iObserv.current?.unobserve(spacer.current)
 		}
 		
 	}, [])
@@ -31,6 +35,7 @@ const Topbar: FC = () => {
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
 			<div className={style.logo}><Logo style={atTop ? 'large' : 'small'}/></div>
 			<div className={style.links}>
+				<a href="/home">Home</a>
 				<a href="/about">About</a>
 				<a href="/services">Services</a>
 				<a href="/contact">Contact</a>

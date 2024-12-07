@@ -15,9 +15,10 @@ const LineDrawer: FC<{
 	size: number,
 	color?: string,
 	delay?: number,
+	className?: string
 	position?: {x?: number, y?: number},
 	duration?: number
-} & DirectionSet> =({width, size = 3, color="#333", direction, from, to, delay = 0, position: {x = 0, y = 0} = {}, duration = width*2}) => {
+} & DirectionSet> =({className, width, size = 3, color="#333", direction, from, to, delay = 0, position: {x = 0, y = 0} = {}, duration = width*2}) => {
 	let content: ReactNode
 	const [ready, setReady] = useState<boolean>(false)
 	const border = [0, 0, 0, 0]
@@ -60,7 +61,7 @@ const LineDrawer: FC<{
 	})
 	return <div className={style.container} style={{width, height:size}}>
 		<div className={`${style.hide} ${style[direction]}${ready ? '' : ` ${style.hidden}`}`} style={{transitionDuration: `${duration}ms`, top: -y, left: x}}>
-			<hr className={style.line} color={color} style={{width, height: size}}></hr>
+			<hr className={`${style.line}${className ? ` ${className}` : ''}`} color={color} style={{width, height: size}}></hr>
 		</div>
 	</div>
 }

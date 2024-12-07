@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Topbar from "~/Topbar";
 import style from "./style.module.scss";
+import SiteProvider from "../contexts/site";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${style.body}`}>
-        <div className={style.background} />
-        <Topbar />
-        <main className={style.main}>{children}</main>
+        <SiteProvider>
+          <div className={style.background} />
+          <Topbar />
+          <main className={style.main} id="main">{children}</main>
+        </SiteProvider>
       </body>
     </html>
   );

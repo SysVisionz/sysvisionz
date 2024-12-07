@@ -1,15 +1,17 @@
 'use client'
-import { type FC, useEffect, useState } from 'react'
+import { type FC, useContext, useEffect, useState } from 'react'
 import styles from '~/scss/LandingPage.module.scss'
 import Layout from '~/Layout'
 import LineDrawer from '~/LineDrawer'
 import Button from '~/Button'
+import { siteContext } from '../contexts/site'
 
 export default function Home() {
 	const [started, setStarted] = useState<boolean>(false)
 	useEffect(() => {
 		setStarted(true)
-	})
+	}, [])
+  const {breakpoint} = useContext(siteContext)
   return (
           <Layout>
             <div className={styles.title} key="title-div">
@@ -21,8 +23,8 @@ export default function Home() {
                   <h1>Your Visions</h1>
                 </div>
                 <div className={styles.lines}>
-                  <LineDrawer size={4} width={20} position={{x: -120, y: -10 }} delay={200} duration={100} direction="down" />
-                  <LineDrawer size={4} width={32} position={{x: -122, y: -30 }} delay={375} duration={100} direction="right" />
+                  <LineDrawer size={4} width={16} position={{x: -155, y: -5}} delay={200} duration={100} direction="down" />
+                  <LineDrawer size={4} width={52} position={{x: -157, y: -21 }} delay={375} duration={100} direction="right" />
                 </div>
               </div>
               <div className={styles['let-us']}>

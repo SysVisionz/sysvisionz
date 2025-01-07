@@ -1,5 +1,4 @@
 'use client'
-import { useEffectDelay } from '~/shared/utils';
 import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
 import { FC, useContext, useEffect, useRef, useState } from "react";
@@ -23,9 +22,9 @@ const Topbar: FC = () => {
 		if (!(typeof window === 'undefined')){
 			setAtTop(window.scrollY <= 70)
 		}
-		spacer.current && iObserv.current.observe(spacer.current)
+		if (spacer.current){iObserv.current.observe(spacer.current)}
 		return () => {
-			spacer.current && iObserv.current?.unobserve(spacer.current)
+			if (spacer.current) {iObserv.current?.unobserve(spacer.current)}
 		}
 		
 	}, [])
@@ -41,7 +40,7 @@ const Topbar: FC = () => {
 				<a href="/contact">Contact</a>
 			</div>
 			<div style={{display: 'none'}}>
-				{/* {user.privLevel ? : <button>Login</button>} */}
+				{user.privLevel ? <div>{user.displayName}</div> : <button>Login</button>}
 			</div>
 		</div>
 	</>

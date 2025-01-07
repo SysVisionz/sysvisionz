@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react"
 
 
-export const useEffectDelay = ({triggers = [], delay = 500, onStart, onEnd}: {triggers?: any[], delay?: number, onStart?: () => void, onEnd?: ()=> void} = {}) => {
+export const useEffectDelay = ({triggers = [], delay = 500, onStart, onEnd}: {triggers?: unknown[], delay?: number, onStart?: () => void, onEnd?: ()=> void} = {}) => {
 	const timeout = useRef<NodeJS.Timeout | null>(null)
 	const onStartFunc = useRef<(() => void) | undefined>(onStart)
 	const onEndFunc = useRef<(() => void) |undefined >(onEnd)
@@ -43,7 +43,7 @@ export const useEffectDelay = ({triggers = [], delay = 500, onStart, onEnd}: {tr
 	}
 }
 
-export const useDelay = <T extends any[] = []>({onStart, onEnd, delay = 500}: {onStart?: (...args: T) => void, onEnd?: (...args: T) => void, delay?: number} = {}) => {
+export const useDelay = <T extends unknown[] = []>({onStart, onEnd, delay = 500}: {onStart?: (...args: T) => void, onEnd?: (...args: T) => void, delay?: number} = {}) => {
 	const timeout = useRef<NodeJS.Timeout | null>(null)
 	const onStartFunc = useRef<((...args: T) => void) | undefined>(onStart);
 	const onEndFunc = useRef<((...args: T) => void) | undefined>(onEnd);

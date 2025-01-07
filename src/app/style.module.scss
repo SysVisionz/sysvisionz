@@ -5,13 +5,13 @@
 .body{
 	margin:0;
 	height: 2000px;
-	font-size: 12px;
+	font-size: 18px;
 	@include forward.mobile{
 		font-size: 10px;
 	}
 }
 .background{
-	mask-image: image(url(/src/images/bgWires.png));
+	mask-image: image(url("/src/images/bgWires.png"));
 	mask-size: 100%;
 	background: linear-gradient(45deg, forward.$background, map.get(forward.$blue, default));
 	position: fixed;
@@ -40,5 +40,21 @@
 	}
 	h1{
 		font-size: 2.5em;		
+		font-weight: bold;
+	}
+	h2{
+		font-size: 2.2em;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	h3{
+		font-size: 2em;
+		font-weight: bold;
+	}
+	h4{
+		font-size: 1.8em;
+	}
+	h5{
+		font-size: 1.5em;
 	}
 }

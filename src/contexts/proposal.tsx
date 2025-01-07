@@ -1,6 +1,5 @@
 'use client'
-import { createContext, FC, MutableRefObject, ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { useSiteNotify } from "./notification";
+import { createContext, FC, MutableRefObject, ReactNode, useRef, useState } from "react";
 import { useEffectDelay } from "~/shared/utils";
 
 type Search = {name?: string, project?:string, who?: string[], why?: string, hasSolution?: boolean, page: number, pageSize: number}
@@ -31,14 +30,14 @@ const ProposalProvider: FC<{children: ReactNode}> = () => {
 	const search: ProposalContext["search"] = useRef<Search>({page: 1, pageSize: 10})
 	const [proposal, setProposal] = useState<ProposalContext["proposal"]>()
 	const [list, setList] = useState<ProposalContext["list"]>()
-	console.log(process.env.HOSTNAME)
-	const select = (name: string) => fetch(`https://${process.env.HOSTNAME}/api/proposal?${name}`).then(resp => {
+	console.log(process.env.NEXT_PUBLIC_HOSTNAME)
+	const select = (name: string) => fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/proposal?${name}`).then(resp => {
 		resp.json().then(data => {
 			setProposal(data)
 		})
 	})
 	const send = (content: ProposalContext["proposal"]) => {
-		fetch(`https://${process.env.HOSTNAME}.com/api/proposal`, {
+		fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}.com/api/proposal`, {
 			method: 'POST',
 			body: JSON.stringify(content)
 		}).then(resp => {
@@ -50,13 +49,13 @@ const ProposalProvider: FC<{children: ReactNode}> = () => {
 	useEffectDelay({
 		triggers: [search.current?.hasSolution, search.current?.name, search.current?.project, search.current?.who, search.current?.why, search.current?.page],
 		onStart: () => {
-			search && fetch(`https://${process.env.HOSTNAME}/api/proposal${Object.keys(search.current || []).length 
+			if (search){fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/proposal${Object.keys(search.current || []).length 
 				? `?${Object.entries(search.current!).map(v => `${v[0]}=${v[1]}`).join('&')}`
 				: ''}`).then( (resp) => {
 				resp.json().then(data => {
 					setList(data)
 				})
-			})
+			})}
 		}
 	})
 	return <proposalContext.Provider value={{search, proposal, list, select, send}}>

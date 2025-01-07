@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import styles from './scss/Logo.module.scss'
-import { type FC, useRef, useState } from "react";
+import { type FC, useRef } from "react";
 import { logo } from '~/images';
 
 const Logo: FC<{
@@ -10,8 +11,8 @@ const Logo: FC<{
 	const sm = useRef<HTMLImageElement>(null)
 
 	return <div className={styles.container}>
-		<img ref={lg} className={`${styles.large}${style === 'large' ? ` ${styles.show}` : ''}`} src={logo.large[color].src} alt="logo-lg" />
-		<img ref={sm} className={`${styles.small}${style === 'small' ? ` ${styles.show}` : ''}`} src={logo.small[color].src} alt="logo-sm" />
+		<Image ref={lg} className={`${styles.large}${style === 'large' ? ` ${styles.show}` : ''}`} src={logo.large[color].src} alt="logo-lg" />
+		<Image ref={sm} className={`${styles.small}${style === 'small' ? ` ${styles.show}` : ''}`} src={logo.small[color].src} alt="logo-sm" />
 	</div>
 }
 

@@ -39,8 +39,8 @@ const SiteProvider = ({children}: {children: ReactNode}) => {
 		rObserv.current?.observe(document.getElementById('main')!)
 		return () => rObserv.current?.unobserve(document.getElementById('main')!)
 	}, [])
-	const setTheme = (theme: SiteContext['theme']) => {
-		theme = theme
+	const setTheme = (theTheme: SiteContext['theme']) => {
+		theme.current = theTheme
 	}
 	return <siteContext.Provider value={{theme: theme.current, setTheme, breakpoint, ready: ready.current.length === 0}}>
 		{children}

@@ -1,11 +1,11 @@
-import { useContext, createContext, ReactNode, useMemo, useRef, useEffect, useState } from "react"
+import { useContext, createContext, useRef } from "react"
 
 interface Notice {
 	type: 'info' | 'warn' | 'error' | 'success'
 	visible: boolean
 	value: string
 	fadeDelay: number
-	delete: () => {}
+	delete: () => void
 	action: IterableIterator<() => NodeJS.Timeout>
 	next: () => void,
 	id: number
@@ -43,6 +43,7 @@ const NotificationProvider: FCWC = ({children}) => {
 		id: number
 		delete = () => {
 			const i = notifications.current[this.type].findIndex(v => v === this as Notice)
+			delete notifications.current[this.type][i]
 		}
 		constructor(type: 'info' | 'warn' | 'error', value: string, {
 			fadeDelay = 400,

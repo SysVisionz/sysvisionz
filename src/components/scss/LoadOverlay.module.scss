@@ -1,0 +1,35 @@
+@use "forward.scss";
+.overlay{
+	position: fixed;
+	background: linear-gradient(40deg, forward.$background, map-get(forward.$blue, light));
+	top: 0;
+	left: 0;
+	display: flex;
+	height: 100vh;
+	width: 100vw;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	z-index: 99999999;
+	transition: opacity 400ms ease;
+	opacity: 0;
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+	.div {
+		animation: opacity 2s ease-in;
+	}
+
+	@keyframes opacity {
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+}

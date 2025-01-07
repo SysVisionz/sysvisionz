@@ -1,11 +1,11 @@
-@import '../../shared/theme.scss';
+@use "forward.scss";
 .container{
 	position: relative;
 	height: 1em;
 	border-radius: .2em;
-	background-color: $background;
+	background-color: forward.$background;
 	overflow: hidden;
-	box-shadow: $shadow;
+	box-shadow: forward.$shadow;
 	.bar {
 		position: absolute;
 		border-radius: .2em;
@@ -14,7 +14,7 @@
 		width: 0;
 		transition: width 200ms ease;
 		height: 100%;
-		box-shadow: 1px 0 2px map-get($black, light);
-		background-color: map-get($blue, default)
+		box-shadow: 1px 0 2px map-get(forward.$black, light);
+		background-color: map-get(forward.$blue, default)
 	}
 }

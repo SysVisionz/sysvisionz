@@ -1,17 +1,16 @@
 'use client'
-import { type FC, useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from '~/scss/LandingPage.module.scss'
 import Layout from '~/Layout'
 import LineDrawer from '~/LineDrawer'
 import Button from '~/Button'
-import { siteContext } from '../contexts/site'
 
 export default function Home() {
 	const [started, setStarted] = useState<boolean>(false)
 	useEffect(() => {
 		setStarted(true)
 	}, [])
-  const {breakpoint} = useContext(siteContext)
+  // const {breakpoint} = useContext(siteContext)
   return (
           <Layout>
             <div className={styles.title} key="title-div">

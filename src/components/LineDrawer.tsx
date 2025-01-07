@@ -1,5 +1,5 @@
 'use client'
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import style from './scss/LineDrawer.module.scss'
 
 type Directions = "up" | "down" | "left" | "right"
@@ -18,8 +18,7 @@ const LineDrawer: FC<{
 	className?: string
 	position?: {x?: number, y?: number},
 	duration?: number
-} & DirectionSet> =({className, width, size = 3, color="#333", direction, from, to, delay = 0, position: {x = 0, y = 0} = {}, duration = width*2}) => {
-	let content: ReactNode
+} & DirectionSet> =({className, width, size = 3, color="#333", direction, from, delay = 0, position: {x = 0, y = 0} = {}, duration = width*2}) => {
 	const [ready, setReady] = useState<boolean>(false)
 	const border = [0, 0, 0, 0]
 	if (from){

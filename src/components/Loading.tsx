@@ -1,5 +1,5 @@
 'use client'
-import { FC, useEffect, useRef, useState, ReactElement, ReactNode, LegacyRef } from "react";
+import { useEffect, useRef, useState, ReactElement } from "react";
 import style from './scss/Loading.module.scss'
 
 function Loading ({message, percent, at, onIsLoaded, className}: {message?: string, percent?: number, at?: {[percentage: number]: () => void}, className?: string | {
@@ -30,7 +30,7 @@ function Loading ({message, className, at, ...args }: {message?: string, percent
 }, onIsLoaded?: () => void}): ReactElement {
 	const was = useRef<`${number}%`>(args.delay ? '0%' : `${args.percent as number}%`)
 	const container = useRef<HTMLDivElement>(null)
-	const {container: cName, container: contain, progress} = typeof className === 'object' ? className : {container: className}
+	const {container: cName} = typeof className === 'object' ? className : {container: className}
 	const percent = useLoadStyle(args.delay || `${args.percent}%` as `${number}%`)
 	const timers = useRef<NodeJS.Timeout[]>([])
 	useEffect(() => {
@@ -42,7 +42,7 @@ function Loading ({message, className, at, ...args }: {message?: string, percent
 			}
 		}
 		was.current = percent
-	}, [percent])
+	}, [at, percent])
 	return (
 	<div className={cName}>
 		{message && <p>{message}</p>}
@@ -55,7 +55,7 @@ function Loading ({message, className, at, ...args }: {message?: string, percent
 
 const useLoadStyle = (val: number | `${number}%`): `${number}%` => {
 	const [percent, setPercent] = useState<`${number}%`>(typeof val === 'string' ? val : `0%`)
-	const timers = useRef< (() => NodeJS.Timeout)[] >(Array(5))
+	// const timers = useRef< (() => NodeJS.Timeout)[] >(Array(5))
 	useEffect(() => {
 		if (typeof val === 'string') {
 			setPercent(val)

@@ -18,8 +18,10 @@ type Notifications = {
 interface NotificationContext extends Notifications{
 	push: {
 		(info: string): void;
-	} & {
-		[type in 'error' | 'info' | 'warn' | 'success']: (err: string) => void
+		error: (error: string) => void;
+		info: (info: string) => void;
+		warn: (warning: string) => void;
+		success: (success: string) => void;
 	}
 }
 
@@ -74,6 +76,12 @@ const NotificationProvider: FCWC = ({children}) => {
 	const push = new Proxy<NotificationContext["push"]>((() => {}) as unknown as NotificationContext["push"], {
 		apply: (t, thisArg, [info]) => {
 			new Notice('info', info)
+		},
+		get: (t: NotificationContext['push'], p: keyof NotificationContext["push"], r: NotificationContext["push"]) => {
+			return t[p as 'success' | 'error' | 'info' | 'warn']
+		},
+		set: () => {
+			throw "push methods are read only" 
 		}
 	})
 	return <notificationContext.Provider value={{...notifications.current, push}}>

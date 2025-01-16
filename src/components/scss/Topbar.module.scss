@@ -2,7 +2,7 @@
 @use "forward.scss";
 
 .topbar, .spacer{
-	background: linear-gradient(45deg, forward.$background, map.get(forward.$blue, light));
+	background: linear-gradient(260deg, forward.$background, map.get(forward.$blue, light));
 	position: fixed;
 	box-sizing: border-box;
 	top: 0;

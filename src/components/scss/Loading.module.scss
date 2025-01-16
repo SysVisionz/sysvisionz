@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "forward.scss";
 .container{
 	position: relative;
@@ -14,7 +15,7 @@
 		width: 0;
 		transition: width 200ms ease;
 		height: 100%;
-		box-shadow: 1px 0 2px map-get(forward.$black, light);
-		background-color: map-get(forward.$blue, default)
+		box-shadow: 1px 0 2px map.get(forward.$black, light);
+		background-color: map.get(forward.$blue, default)
 	}
 }

@@ -11,25 +11,21 @@
 	align-items: center;
 	flex-direction: column;
 	z-index: 99999999;
-	transition: opacity 400ms ease;
-	opacity: 0;
 	&.hidden {
-		opacity: 0;
 		pointer-events: none;
+		animation: opacity 500ms ease-in ;
+		animation-fill-mode: forwards;
 	}
-	.div {
-		animation: opacity 2s ease-in;
+}
+	
+@keyframes opacity {
+	0% {
+		opacity: 1;
 	}
-
-	@keyframes opacity {
-		0% {
-			opacity: 0;
-		}
-		50% {
-			opacity: 1;
-		}
-		100% {
-			opacity: 1;
-		}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
 	}
 }

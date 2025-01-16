@@ -13,6 +13,7 @@ const LoadOverlay = () => {
 		}
 	}
 	useEffect(() => {
+		setCurrent(100)
 		let total = 100;
 		const timers = Array(4).fill(0).map((_, i) => {
 			const step = Math.random() * total / (5 - i)

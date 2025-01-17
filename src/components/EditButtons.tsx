@@ -2,11 +2,12 @@ import { FC, MouseEventHandler, ReactNode, useState } from "react"
 import style from './scss/EditButtons.module.scss'
 import Button from "./Button"
 import icons from "../icons"
+import Tooltip from "./Tooltip"
 
 type ObjectStyle = {onClick: MouseEventHandler<HTMLButtonElement>, content?: ReactNode}
 type Button = 'edit' | 'delete' | 'duplicate' | 'cancel' | 'undo'
 
-const EditButtons: FC<{[K in Button]?: ObjectStyle["onClick"] | ObjectStyle} & {className: string, id: string, editing?: boolean}> = ({editing, id, className, ...props}) => {
+const EditButtons: FC<{[K in Button]?: ObjectStyle["onClick"] | ObjectStyle} & {className?: string, id?: string}> = ({ id, className, ...props}) => {
 	const [buttons, setButtons] = useState<{[K in Button]?: ObjectStyle["onClick"]}>({})
 	const icon = {
 		edit: icons.edit.pencil01,
@@ -30,13 +31,9 @@ const EditButtons: FC<{[K in Button]?: ObjectStyle["onClick"] | ObjectStyle} & {
 	}
 	console.log(buttons, setButtons)
 	return <div className={[style.container, id || '', className || ''].join(' ')}>
-		{
-		editing 
-		? (Object.keys(props) as ['edit', 'delete', 'duplicate', 'undo']).reduce((buttons: ReactNode[], button: keyof typeof props ) => {
-			return props[button] ? buttons.concat(<Button onClick={typeof props[button] === 'object' ? props[button].onClick : undefined}>{typeof props[button] === 'object' ? props[button].content : undefined}</Button>) : buttons
-		}, [] as ReactNode[]) 
-		: props.cancel && typeof props.cancel !== 'function' && <Button onClick={props.cancel?.onClick}>{props.cancel.content}</Button> 
-		}
+		{(Object.keys(props) as ['edit', 'delete', 'duplicate', 'undo', 'cancel']).reduce((buttons: ReactNode[], button: keyof typeof props ) => {
+			return props[button] ? buttons.concat(<Tooltip tooltip={`${button[0].toUpperCase}${button.substring(1)}`}><Button onClick={typeof props[button] === 'object' ? props[button].onClick : undefined}>{typeof props[button] === 'object' ? props[button].content : undefined}</Button></Tooltip>) : buttons
+		}, [] as ReactNode[])}
 	</div>
 }
 

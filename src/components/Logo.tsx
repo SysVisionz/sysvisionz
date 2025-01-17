@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './scss/Logo.module.scss'
 import { type FC, useRef } from "react";
 import { logo } from '~/images';
-import icons from '~/icons'
+// import icons from '~/icons'
 
 const Logo: FC<{
 	style?: 'large' | 'small',

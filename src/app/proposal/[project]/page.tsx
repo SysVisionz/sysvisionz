@@ -48,7 +48,6 @@ const Proposal: FC<{project: string}> = ({project}) => {
 					}
 				}
 			}, [notify, select])
-			console.log(proposal)
 			return <div>
 
 			</div>

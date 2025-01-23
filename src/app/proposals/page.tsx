@@ -35,7 +35,6 @@ const Proposal: FC = () => {
 			// }
 			const search: ProposalContext["search"] = useRef<SearchQuery>({page: 1, pageSize: 10})
 			const [list, setList] = useState<ProposalContext["list"]>()
-			console.log(list)
 			useEffectDelay({
 				onStart: () => {
 					if (search.current){
@@ -45,7 +44,6 @@ const Proposal: FC = () => {
 							: ''
 						}`).then( (resp) => {
 							resp.json().then(data => {
-								console.log(data)
 								setList(data)
 								window.history.replaceState(null, document.title, "/proposal")
 							})

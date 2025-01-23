@@ -7,6 +7,7 @@
 	background-color: forward.$background;
 	overflow: hidden;
 	box-shadow: forward.$shadow;
+	min-width: 200px;
 	.bar {
 		position: absolute;
 		border-radius: .2em;

@@ -37,7 +37,10 @@ const SiteProvider = ({children}: {children: ReactNode}) => {
 		}
 		setBreakpoint()
 		rObserv.current?.observe(document.getElementById('main')!)
-		return () => rObserv.current?.unobserve(document.getElementById('main')!)
+		return () => {
+			if (document.getElementById('main')){
+				rObserv.current?.unobserve(document.getElementById('main')!)
+			}}
 	}, [])
 	const setTheme = (theTheme: SiteContext['theme']) => {
 		theme.current = theTheme

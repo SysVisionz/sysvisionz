@@ -13,11 +13,14 @@
 	z-index: 99999999;
 	&.hidden {
 		pointer-events: none;
-		animation: opacity 500ms ease-in ;
+		animation: opacity 500ms 200ms ease-in ;
 		animation-fill-mode: forwards;
+		>div {
+			animation: opacity 400ms ease-in;
+			animation-fill-mode: forwards;
+		}
 	}
 }
-	
 @keyframes opacity {
 	0% {
 		opacity: 1;

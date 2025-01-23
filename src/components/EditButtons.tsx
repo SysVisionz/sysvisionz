@@ -1,39 +1,47 @@
-import { FC, MouseEventHandler, ReactNode, useState } from "react"
+import { FC, MouseEventHandler, ReactNode, useEffect, useState } from "react"
 import style from './scss/EditButtons.module.scss'
-import Button from "./Button"
-import icons from "../icons"
 import Tooltip from "./Tooltip"
+import IconButton from "./IconButton";
+import Button from "./Button";
+import { Icons } from "~/icons";
 
 type ObjectStyle = {onClick: MouseEventHandler<HTMLButtonElement>, content?: ReactNode}
 type Button = 'edit' | 'delete' | 'duplicate' | 'cancel' | 'undo'
 
 const EditButtons: FC<{[K in Button]?: ObjectStyle["onClick"] | ObjectStyle} & {className?: string, id?: string}> = ({ id, className, ...props}) => {
-	const [buttons, setButtons] = useState<{[K in Button]?: ObjectStyle["onClick"]}>({})
-	const icon = {
-		edit: icons.edit.pencil01,
-		delete: icons.interfce.trashFull,
-		duplicate: icons.edit.copy,
-		undo: icons.edit.undo,
-		cancel: icons.edit.closeCircle
-	}
-	for (const i in props){
-		if (props[i as keyof typeof props]){
-			const theButtons: {[K in Button]?: ObjectStyle}  = {}
-			if (typeof props[i as keyof typeof props] === 'function') {
-				theButtons[i as Button] = {
-					onClick: props[i as keyof typeof props] as MouseEventHandler<HTMLButtonElement>, 
+	const [buttons, setButtons] = useState<JSX.Element[]>([])
+	useEffect(() => {
+		setButtons(() => {
+			const theButtons: JSX.Element[] = []
+			const icons = {
+				edit: {category: 'edit', icon: 'pencil01'},
+				save: {category: 'interfce', icon: 'check'},
+				delete: {category: 'interfce', icon: 'trashFull'},
+				duplicate: {category: 'edit', icon: 'copy'},
+				undo: {category: 'edit', icon: 'undo'},
+				cancel: {category: 'edit', icon: 'closeCircle'}
+			} as const
+			for (const i in props){
+				if (props[i as Button]){
+					const b = i as Button;
+					let content
+					if (typeof props[i as keyof typeof props] === 'function') {
+						const {icon, category} = icons[b]
+						content = category === 'interfce' 
+							? <IconButton category={category} icon={icon} onClick={props[b] as ObjectStyle["onClick"]}/>
+							: <IconButton category={category} icon={icon} onClick={props[b] as ObjectStyle["onClick"]}/>
+					}
+					else {
+						content = <Button onClick={(evt) => (props[b] as ObjectStyle)?.onClick?.(evt)}>{(props[b] as ObjectStyle).content}</Button>
+					}
+					theButtons.push(<Tooltip key={b} tooltip={`${b[0].toUpperCase()}${b.substring(1)}`}>{content}</Tooltip>)
 				}
 			}
-			if (!(props[i as keyof typeof props] as ObjectStyle)!.content){
-				(props[i as keyof typeof props] as ObjectStyle)!.content = icon[i as keyof typeof icon].src
-			}
-		}
-	}
-	console.log(buttons, setButtons)
+			return theButtons
+		})
+	}, [props.cancel, props.delete, props.duplicate, props.edit, props.undo])
 	return <div className={[style.container, id || '', className || ''].join(' ')}>
-		{(Object.keys(props) as ['edit', 'delete', 'duplicate', 'undo', 'cancel']).reduce((buttons: ReactNode[], button: keyof typeof props ) => {
-			return props[button] ? buttons.concat(<Tooltip tooltip={`${button[0].toUpperCase}${button.substring(1)}`}><Button onClick={typeof props[button] === 'object' ? props[button].onClick : undefined}>{typeof props[button] === 'object' ? props[button].content : undefined}</Button></Tooltip>) : buttons
-		}, [] as ReactNode[])}
+		{buttons}
 	</div>
 }
 

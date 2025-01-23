@@ -34,7 +34,7 @@ const Topbar: FC = () => {
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
 			<div className={style.logo}><Logo style={atTop ? 'large' : 'small'}/></div>
 			<div className={style.links}>
-				<a href="/home">Home</a>
+				<a href="/">Home</a>
 				<a href="/about">About</a>
 				<a href="/services">Services</a>
 				<a href="/contact">Contact</a>

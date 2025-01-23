@@ -1,6 +1,5 @@
-import Image from "next/image"
-import { ChangeEvent, Dispatch, FC, SetStateAction } from "react"
-import icons from "~/icons"
+// todo: #1 complete this if needed
+import { ChangeEvent, FC } from "react"
 
 const Radio: FC<{value: boolean, label: string, onChange?: (evt: ChangeEvent & {target: ChangeEvent["target"] & {checked: boolean}}) => void, editing?: boolean, className?: string, id?: string}> = ({value, onChange, editing}) => {
 	return <div></div>

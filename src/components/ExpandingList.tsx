@@ -44,9 +44,7 @@ export default function ExpandingList({id, list, onChange, box}: {
 		}, 400), listVals[i][1]])
 	}
 	const edit = (v: string, i: number) => {
-		console.log(v, i)
 	}
-	console.log(edit, id, box, editing, add, notEditing, remove)
 	useEffect(() => {
 		// onChange(listVals.reduce((list: (string|number|boolean)[], v: [string | number | boolean, boolean]) => {
 		// 	const [value, active] = v;

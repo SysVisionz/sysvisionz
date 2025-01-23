@@ -1,11 +1,11 @@
 'use client'
 import { ChangeEvent, Dispatch, FC, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import { useSiteNotify } from "~/contexts/notification";
-import icons from '~/icons'
 import { cleanObject, makeHeaders, useDelay } from "~/shared/utils";
+import ChangingInput from "./ChangingInput";
 
 
-interface Proposal{
+export interface ProposalProps{
 	name?: string,
 	project?: string | null | undefined,
 	clients?: {name: string, why: string}[],
@@ -16,18 +16,19 @@ interface Proposal{
 	solutions?: {company: string, solution: string, whyBetter: string}[],
 }
 
-const Proposal: FC<Proposal> = (projectOrProposal) => {
-	console.log(icons.environment.bulb)	
+type CheckboxChangeEvent = ChangeEvent<HTMLInputElement> & {target: ChangeEvent<HTMLInputElement>["target"] & {checked: boolean} }
+
+const Proposal: FC<ProposalProps> = (projectOrProposal) => {
 	const notify = useSiteNotify()
-	const [name, setName] = useState<Proposal['name']>()
-	const [example, setExample] = useState<Proposal['example']>()
-	const [project, setTheProject] = useState<Proposal['project'] | null>()
-	const [hasSolution, setHasSolution] = useState<Proposal['hasSolution']>()
-	const [solutions, setSolutions] = useState<Proposal['solutions']>()
-	const [why, setWhy] = useState<Proposal['why']>()
-	const [clients, setClients] = useState<Proposal['clients']>()
-	const [useCases, setUseCases] = useState<Proposal['useCases']>()
-	const [editing, setEditing] = useState<keyof Omit<Proposal, 'who'|'solutions'|'whyBetter'|'clients'|'useCases'> | {[K in 'solutions' | 'clients' | 'useCases']?: number} | null>(null)
+	const [name, setName] = useState<ProposalProps['name']>()
+	const [example, setExample] = useState<ProposalProps['example']>()
+	const [project, setTheProject] = useState<ProposalProps['project'] | null>()
+	const [hasSolution, setHasSolution] = useState<ProposalProps['hasSolution']>()
+	const [solutions, setSolutions] = useState<ProposalProps['solutions']>()
+	const [why, setWhy] = useState<ProposalProps['why']>()
+	const [clients, setClients] = useState<ProposalProps['clients']>()
+	const [useCases, setUseCases] = useState<ProposalProps['useCases']>()
+	const [editing, setEditing] = useState<keyof Omit<ProposalProps, 'who'|'solutions'|'whyBetter'|'clients'|'useCases'> | {[K in 'solutions' | 'clients' | 'useCases']?: number} | null>(null)
 	const save = () => {
 		if ([name, example, project, hasSolution, solutions, why, clients, useCases].every(v => v !== undefined)){
 			fetch('/api/proposal', {
@@ -61,9 +62,9 @@ const Proposal: FC<Proposal> = (projectOrProposal) => {
 		if (!projectOrProposal){
 			return curr
 		}
-		const changed: Omit<Partial<Proposal>, 'solutions' | 'clients'> & {
-			solutions?: Partial<Required<Proposal>['solutions'][number]>[]
-			clients?: Partial<Required<Proposal>['clients'][number]>[]
+		const changed: Omit<Partial<ProposalProps>, 'solutions' | 'clients'> & {
+			solutions?: Partial<Required<ProposalProps>['solutions'][number]>[]
+			clients?: Partial<Required<ProposalProps>['clients'][number]>[]
 		} = {}
 		for (const i in curr){
 			switch(i){
@@ -115,9 +116,9 @@ const Proposal: FC<Proposal> = (projectOrProposal) => {
 			}
 		}
 	}, [name, example, project, hasSolution, solutions, why, clients, useCases])
-	const setProject = useDelay<[Partial<Proposal>]>({
+	const setProject = useDelay<[Partial<ProposalProps>]>({
 		onStart: (newProposal) => {
-			const modified: keyof Proposal = Object.keys(newProposal)[1] as keyof Proposal
+			const modified: keyof ProposalProps = Object.keys(newProposal)[1] as keyof ProposalProps
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			proposal[modified] = newProposal[modified] as any
 		},
@@ -138,40 +139,43 @@ const Proposal: FC<Proposal> = (projectOrProposal) => {
 
 	})
 
-	const setValue = <T extends keyof Proposal>(k: T, i?: T extends 'clients' | 'solutions' | 'useCases' ? number : never, key?: T extends 'clients' ? keyof Required<Proposal>['clients'][number] : T extends 'solutions' ? keyof Required<Proposal>['solutions'][number] : never) => {
+	const setValue = <T extends keyof ProposalProps>(k: T, i?: T extends 'clients' | 'solutions' | 'useCases' ? number : never, key?: T extends 'clients' ? keyof Required<ProposalProps>['clients'][number] : T extends 'solutions' ? keyof Required<ProposalProps>['solutions'][number] : never) => {
 		function propose (evt: ChangeEvent<HTMLTextAreaElement> ): void
 		function propose (evt: ChangeEvent<HTMLInputElement> ): void
 		function propose (evt: ChangeEvent<HTMLInputElement> & {target: ChangeEvent<HTMLInputElement>["target"] & {checked: boolean} } ): void
-		function propose (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement> & {target: ChangeEvent<HTMLInputElement>["target"] & {checked: boolean} } ): void {
+		function propose (value: string): void;
+		function propose (value: boolean): void;
+		function propose (evtOrValue: string | boolean | ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | CheckboxChangeEvent ): void {
+			const val = (evtOrValue as CheckboxChangeEvent).target?.checked || (evtOrValue as ChangeEvent<HTMLInputElement>).target?.value || (evtOrValue as string | boolean)
 			switch(k){
 				case 'clients':
-					const clients: Required<Proposal>['clients'] = proposal[k as 'clients'] as Required<Proposal>['clients']
-					clients[i as number] = {...clients[i as number], [key as 'name' | 'why']: evt.target.value}
+					const clients: Required<ProposalProps>['clients'] = proposal[k as 'clients'] as Required<ProposalProps>['clients']
+					clients[i as number] = {...clients[i as number], [key as 'name' | 'why']: val}
 					proposal.clients = clients
 					break;
 				case 'solutions':
-					const solutions: Required<Proposal>['solutions'] = proposal[k as 'solutions'] as Required<Proposal>['solutions']
-					solutions[i as number] = {...solutions[i as number], [key as 'company' | 'solution' | 'whyBetter']: evt.target.value}
+					const solutions: Required<ProposalProps>['solutions'] = proposal[k as 'solutions'] as Required<ProposalProps>['solutions']
+					solutions[i as number] = {...solutions[i as number], [key as 'company' | 'solution' | 'whyBetter']: val}
 					proposal.solutions = solutions;
 					break;
 				case 'useCases':
-					const useCases: Required<Proposal>['useCases'] = proposal[k as 'useCases'] as Required<Proposal>['useCases']
-					useCases[i as number] = evt.target.value
+					const useCases: Required<ProposalProps>['useCases'] = proposal[k as 'useCases'] as Required<ProposalProps>['useCases']
+					useCases[i as number] = val as string
 					proposal.useCases = useCases
 					break;
 				case 'hasSolution':
-					proposal.hasSolution = (evt.target as HTMLInputElement & {checked: boolean}).checked
+					proposal.hasSolution = val as typeof proposal.hasSolution
 					break;
 				case 'project':
-					proposal.project = evt.target.value
+					proposal.project = val as typeof proposal.project
 				default:
-					proposal[k as Exclude<keyof Proposal, 'project' | 'clients' | 'solutions' | 'useCases' | 'hasSolution'>] = evt.target.value
+					proposal[k as Exclude<keyof ProposalProps, 'project' | 'clients' | 'solutions' | 'useCases' | 'hasSolution'>] = val as keyof typeof proposal[Exclude<keyof ProposalProps, 'project' | 'clients' | 'solutions' | 'useCases' | 'hasSolution'>]
 			}
 		}
 		return propose
 	}
 
-	const map: {[K in keyof Proposal]: Dispatch<SetStateAction<Proposal[K] | undefined>>} = {
+	const map: {[K in keyof ProposalProps]: Dispatch<SetStateAction<ProposalProps[K] | undefined>>} = {
 		name: setName,
 		project: setTheProject,
 		example: setExample,
@@ -194,9 +198,9 @@ const Proposal: FC<Proposal> = (projectOrProposal) => {
 	const edit = new Proxy((() => {}) as {
 		(): (target: string) => void
 	} & {
-		[K in keyof Proposal]: K extends 'useCases' | 'clients' | 'solutions' ? boolean[] : boolean
+		[K in keyof ProposalProps]: K extends 'useCases' | 'clients' | 'solutions' ? boolean[] : boolean
 	}, {
-		apply: (_t, _thisArg, [target]: [keyof Proposal]) => {
+		apply: (_t, _thisArg, [target]: [keyof ProposalProps]) => {
 			switch (target){
 				case 'useCases':
 				case 'clients':
@@ -206,7 +210,7 @@ const Proposal: FC<Proposal> = (projectOrProposal) => {
 					setEditing(target)
 			}
 		},
-		get: (_t, p: keyof Proposal) => {
+		get: (_t, p: keyof ProposalProps) => {
 			switch (p){
 				case 'useCases':
 				case 'clients':
@@ -229,20 +233,15 @@ const Proposal: FC<Proposal> = (projectOrProposal) => {
 		}
 	})
 	return <div>
-		{project !== null && editing === 'project' ? <input value={project} onChange={setValue('project')} /> : <span>{project}</span>}
-		{editing === 'name' ?  <input value={name} onChange={setValue('name')} /> : <span>{name}</span>}
+		{typeof project === 'string' && <ChangingInput value={project} save={setValue('project')} />}
+		{<ChangingInput label="name" value={name || ''} save={setValue('name')} />}
 		{(project === null || project) && name ? <>
 			<h3>Why should we build this?</h3> 
-			{edit.why ? <textarea value={why} onChange={setValue('why')} /> : <p>{why}</p>}
+			{<ChangingInput value={why || ''} save={() => setValue('why')} />}
 		</> : null}
 		<div><h3>Potential Clients</h3>
-		{clients && clients.map(client => <p>{client.name}</p>)}
+		{clients && clients.map(client => <p key={client.name}>{client.name}</p>)}
 		</div>
-		{editing === 'name' ? <input value={name} onChange={setValue('name')} /> : <span>{name}</span>}
-		{editing === 'name' ? <input value={name} onChange={setValue('name')} /> : <span>{name}</span>}
-		{editing === 'name' ? <input value={name} onChange={setValue('name')} /> : <span>{name}</span>}
-		{editing === 'name' ? <input value={name} onChange={setValue('name')} /> : <span>{name}</span>}
-		{editing === 'name' ? <input value={name} onChange={setValue('name')} /> : <span>{name}</span>}
 	</div>
 }
 

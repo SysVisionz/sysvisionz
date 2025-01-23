@@ -1,40 +1,43 @@
+@use "sass:map";
+@use "forward.scss";
 .tooltip{
 	position: relative;
 	display: inline-block;
 	.content{
 		transition: opacity 300ms ease;
 		opacity: 0;
-		position: absolute;
+		position: absolute; 
 		text-align: justify;
-		text-justify: inter-character;
-		width: 35vw;
-		top: calc(100% + 5px);
+		bottom: calc(100% + 5px);
 		left: 50%;
 		padding: 5px 18px;
-		background-color: #fafafa;
+		background-color: map.get(forward.$blue, xlight);
 		color: #333;
+		border: 1px solid black;;
 		border-radius: 5px;
 		box-shadow: 0 0 5px rgba(0,0,0,.3);
 		&:before{
 			content: "";
 			position: absolute;
-			bottom: 100%;
+			top: 100%;
+			left: 10px;
 			margin-left: -5px;
 			border: 5px solid transparent;
-			border-bottom-color: black;
+			border-top-color: map.get(forward.$black, default)
 		}
 		&:after{
 			content: "";
 			position: absolute;
-			bottom: 100%;
+			top: 100%;
 			left: 10px;
 			margin-left: -4px;
 			border: 4px solid transparent;
-			border-bottom-color: #fff;
+			border-top-color: map.get(forward.$blue, xlight);
 		}
 	}
  	&:hover{
 		.content{
+			transition: opacity 300ms 1000ms ease;
 			opacity: 1;
 			visibility: visible;
 		}

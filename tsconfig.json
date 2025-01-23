@@ -20,6 +20,7 @@
     ],
     "paths": {
       "~/icons": ["./src/icons/index.ts"],
+      "~/icons/*": ["./src/icons/*"],
       "~/images": ["./src/images/index.ts"],
       "~/images/*": ["./src/images/*"],
       "~/shared/*": ["./src/shared/*"],

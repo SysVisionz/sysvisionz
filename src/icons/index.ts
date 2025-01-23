@@ -1,19 +1,19 @@
-import warning from './Warning';
-import user from './User';
-import system from './System';
-import shape from './Shape';
-import navigation from './Navigation';
-import menu from './Menu';
-import media from './Media';
-import interfce from './Interface';
-import file from './File';
-import environment from './Environment';
-import edit from './Edit';
-import communication from './Communication';
-import calendar from './Calendar';
-import arrow from './Arrow';
+import warning from '../icons/Warning';
+import user from '../icons/User';
+import system from '../icons/System';
+import shape from '../icons/Shape';
+import navigation from '../icons/Navigation';
+import menu from '../icons/Menu';
+import media from '../icons/Media';
+import interfce from '../icons/Interface';
+import file from '../icons/File';
+import environment from '../icons/Environment';
+import edit from '../icons/Edit';
+import communication from '../icons/Communication';
+import calendar from '../icons/Calendar';
+import arrow from '../icons/Arrow';
 
-export default {
+const icons = {
 arrow,
 calendar,
 communication,
@@ -29,3 +29,6 @@ system,
 user,
 warning,
 }
+
+export type Icons = typeof icons;
+export default icons;

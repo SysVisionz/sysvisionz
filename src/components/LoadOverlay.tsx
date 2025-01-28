@@ -1,9 +1,9 @@
 'use client'
 import Loading from "./Loading";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import style from "./scss/LoadOverlay.module.scss";
 
-const LoadOverlay = (timer: number) => {
+const LoadOverlay: FC<{timer?: number}> = ({timer = 1000}) => {
 	const [loaded, setLoaded] = useState<boolean[]>([false])
 	const [current, setCurrent] = useState(0)
 	const at = {

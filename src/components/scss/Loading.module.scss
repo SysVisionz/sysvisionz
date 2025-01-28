@@ -6,7 +6,7 @@
 	border-radius: .2em;
 	background-color: forward.$background;
 	overflow: hidden;
-	box-shadow: forward.$shadow;
+	box-shadow: map.get(forward.$shadow, default);
 	min-width: 200px;
 	.bar {
 		position: absolute;

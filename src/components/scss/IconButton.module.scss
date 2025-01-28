@@ -10,7 +10,7 @@
 	border-radius: 5px;
 	font-weight: bold;
 	transition: 200ms ease background-image, 200ms ease color;
-	box-shadow: forward.$shadow;
+	box-shadow: map.get(forward.$shadow, default);
 	&:hover{
 		color: map.get(forward.$blue, xdark);
 		background: linear-gradient(45deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% )

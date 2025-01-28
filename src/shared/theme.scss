@@ -47,4 +47,4 @@ $background: #F3EBED;
 	}
 }
 
-$shadow: 2px 2px 5px map.get($black, light );
+$shadow: ("default": 2px 2px 5px map.get($black, light ), "clicked": 1px 1px 2px map.get($black, light));

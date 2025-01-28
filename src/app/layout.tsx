@@ -4,6 +4,8 @@ import Topbar from "~/Topbar";
 import style from "./style.module.scss";
 import SiteProvider from "../contexts/site";
 import LoadOverlay from "~/LoadOverlay";
+import {bgWires} from '~/images'
+import Footer from "~/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,10 +33,11 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} ${style.body}`}>
         <SiteProvider>
           <LoadOverlay />
-          <div className={style.background} />
+          <div className={style.background} style={{maskImage:bgWires.src}} />
           <Topbar />
           <main className={style.main} id="main">{children}</main>
         </SiteProvider>
+        <Footer />
       </body>
     </html>
   );

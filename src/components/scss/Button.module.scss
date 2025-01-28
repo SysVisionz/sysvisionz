@@ -12,10 +12,19 @@
 	text-decoration: none;
 	border-radius: 5px;
 	font-weight: bold;
-	transition: 200ms ease background-image, 200ms ease color;
-	box-shadow: forward.$shadow;
+	transition: background-image 200ms ease;
+	box-shadow: map.get(forward.$shadow, default);
+	.content {
+		color:forward.$background;
+		transition: color 200ms ease;
+	}
 	&:hover{
-		color: map.get(forward.$blue, xdark);
-		background: linear-gradient(45deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% )
+		background: linear-gradient(45deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% );
+		.content {
+			color: map.get(forward.$blue, xdark);
+		}
+	}
+	&:active{
+		box-shadow: map.get(forward.$shadow, clicked);
 	}
 }

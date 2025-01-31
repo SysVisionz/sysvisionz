@@ -1,3 +1,6 @@
+@use 'forward.scss';
+$bgWiresmask: url("../../images/bgWires-mask.jpg");
+
 .logo{
 	display: flex;
 	justify-content: center;
@@ -9,12 +12,10 @@
 	position: relative;
 	width: 100%;
 	.sys-vis{
-		height: 5em;
 		.first, .second{
 			h1{
 				text-align: center;
-				display: none;
-				white-space: nowrap;
+ 				white-space: nowrap;
 				margin: 0 0;
 			}
 		}
@@ -63,6 +64,7 @@
 		h5{
 			text-align: center;
 			margin: 0;
+			color: forward.$background
 		}
 		h2{
 			text-align: center;
@@ -79,6 +81,33 @@
 			justify-content: center;
 			margin-top: 30px;
 		}
+	}
+	.main-section{
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		>div{
+			flex: 1;
+		}
+	}
+}
+.dev-img{
+	flex:2;
+	top: 0;
+	transition: top 40ms ease;
+	left: 0;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	mask-image: $bgWiresmask;
+	mask-size:cover;
+	mask-mode: luminance;
+	mask-repeat: repeat-x;
+	>img{
+		min-width: 100%;
+		height: 120%;
+		width: auto;
+		position: absolute;
 	}
 }
 @keyframes reveallr{

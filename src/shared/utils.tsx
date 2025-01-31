@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 
 
 type UseEffectDelayParameters = {
@@ -30,14 +30,13 @@ export function useEffectDelay (funcOrParameters: UseEffectDelayParameters | (()
 triggers: any[]) {
 	const timeout = useRef<NodeJS.Timeout | null>(null)
 	const {onStart, onEnd, resets, delay = 100} = typeof funcOrParameters === 'function' ? {onStart: funcOrParameters} : funcOrParameters
-	useEffect(() => {
-		
+	return useEffect(() => {
 		if (!timeout.current){
 			onStart?.()
 			timeout.current = setTimeout(() => {
 				onEnd?.()
 				timeout.current = null;
-			}, delay)			
+			}, delay)
 		}
 		else if (resets){
 			clearTimeout(timeout.current)

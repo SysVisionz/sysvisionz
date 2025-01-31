@@ -1,7 +1,37 @@
 @use "sass:map";
 @use "forward.scss";
 
+$height: 80px;
+$mobile-height: 60px;
+
 .topbar, .spacer{
+	box-sizing: border-box;
+	padding: 0 15px;
+	width: 100%;
+	height: $height;
+	@include forward.mobile{
+		height: $mobile-height;
+	}
+	&.top {
+		box-shadow: 0 0 10px rgba(0,0,0,0);
+		background: linear-gradient(45deg, transparent, transparent);
+		height: $height;
+		@include forward.mobile {
+			height: $mobile-height;
+		}
+	}
+	&:not(.top) a {
+		&:before{
+			background-color: map.get(forward.$blue, xdark);
+		}
+		color: map.get(forward.$blue, xdark);
+	}
+}
+.spacer{
+	position: relative;
+	box-shadow: none;
+}
+.topbar{
 	background: linear-gradient(260deg, forward.$background, map.get(forward.$blue, light));
 	position: fixed;
 	box-sizing: border-box;
@@ -13,9 +43,20 @@
 	justify-content: space-between;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	z-index: 1000;
-	height: 40px;
-	width: 100%;
 	transition: 200ms ease height, 200ms ease background-image, 200ms ease box-shadow;
+	height: $height;
+	@include forward.mobile {
+		height: $mobile-height;
+	}
+	&:not(.top){
+		height: 50px;
+		a {
+			color: map.get(forward.$blue, xdark);
+			&:before{
+				background-color: map.get(forward.$blue, xdark);
+			}
+		}
+	}
 	.logo{
 		flex:1;
 		height: 90%;
@@ -43,16 +84,6 @@
 	&.top {
 		box-shadow: 0 0 10px rgba(0,0,0,0);
 		background: linear-gradient(45deg, transparent, transparent);
-		height: 60px;
-		@include forward.mobile {
-			height: 50px;
-		}
-	}
-	&:not(.top) a {
-		&:before{
-			background-color: map.get(forward.$blue, xdark);
-		}
-		color: map.get(forward.$blue, xdark);
 	}
 }
 .spacer{

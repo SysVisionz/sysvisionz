@@ -8,9 +8,10 @@
 		top: 0;
 		transition: opacity 400ms ease, position 0;
 		height: 100%;
+		width: auto;
 		&.show {
 			top: 0;
-			transition: 200ms 100ms ease opacity, position 50ms;
+			transition: 50ms 100ms ease opacity, position 50ms;
 			opacity: 1;
 		}
 	}

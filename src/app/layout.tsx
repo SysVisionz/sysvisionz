@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} ${style.body}`}>
         <SiteProvider>
           <LoadOverlay />
-          <div className={style.background} style={{maskImage:bgWires.src}} />
+          <div className={style.background} />
           <Topbar />
           <main className={style.main} id="main">{children}</main>
         </SiteProvider>

@@ -1,7 +1,8 @@
+@use "sass:map";
 @use "forward.scss";
 .overlay{
 	position: fixed;
-	background: linear-gradient(40deg, forward.$background, map-get(forward.$blue, light));
+	background: linear-gradient(40deg, forward.$background, map.get(forward.$blue, light));
 	top: 0;
 	left: 0;
 	display: flex;

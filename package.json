@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js dev",
-    "build": "tsc -p ./server-ts/tsconfig.json && next build",
+    "build": "npm run build-server && next build",
     "start": "node server.js",
-    "test": "node server.js test",
+    "test": "npm run build && node server.js test",
     "lint": "next lint",
-    "build-server": "tsc -p ./server-ts/tsconfig.json"
+    "build-server": "tsc -p ./server-ts/tsconfig.json && cp -r ./server-ts/build/* ./ && rm -rf ./server-ts/build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

@@ -14,14 +14,15 @@ config({path: `${__dirname}/.env`})
 
 const args = process.argv.slice(2);
 const dev = args.some(v => v === "dev");
-const port = dev ? 8082 : Number(args.find(v => v.match(/^port=/))?.substring(5)) || 8096;
-const hostname = dev ? 'localhost' : process.env.NEXT_PUBLIC_HOSTNAME
+const test = args.some(v => v === 'test');
+const port = (dev || test) ? 8082 : Number(args.find(v => v.match(/^port=/))?.substring(5)) || 8096;
+const hostname = (dev || test) ? 'localhost' : process.env.NEXT_PUBLIC_HOSTNAME
 const project = process.env.NEXT_PUBLIC_PROJECT
 // Init the Next app:
-const app = next({ dev, hostname, port, dir: __dirname });
+const app = next({ ...(dev ? {dev} : {}), hostname, port, dir: __dirname });
 
 // Create the secure HTTPS server:
-// Don't forget to create the keys for your development
+// Don't forget to create the keys for your (dev || test)elopment
 
 const shouldCompress = (req: Request, res: Response) => {
   // don't compress responses asking explicitly not
@@ -54,11 +55,11 @@ exp.all('*', (req, res) => {
 
 app.prepare().then(() => {
 
-  const name = dev ? project : hostname
+  const name = (dev || test) ? project : hostname
   spdy.createServer(  {
-    key: dev && fs.existsSync(`${name}.key`) ? fs.readFileSync(`${name}.key`) : fs.readFileSync(`/etc/letsencrypt/live/${name}/privkey.pem`),
-    cert: dev && fs.existsSync(`${name}.crt`) ? fs.readFileSync(`${name}.crt`) : fs.readFileSync(`/etc/letsencrypt/live/${name}/fullchain.pem`),
-    ca: dev && fs.existsSync(`${name}.csr`) ? fs.readFileSync(`${name}.csr`) : fs.readFileSync(`/etc/letsencrypt/live/${name}/chain.pem`)
+    key: (dev || test) && fs.existsSync(`${name}.key`) ? fs.readFileSync(`${name}.key`) : fs.readFileSync(`/etc/letsencrypt/live/${name}/privkey.pem`),
+    cert: (dev || test) && fs.existsSync(`${name}.crt`) ? fs.readFileSync(`${name}.crt`) : fs.readFileSync(`/etc/letsencrypt/live/${name}/fullchain.pem`),
+    ca: (dev || test) && fs.existsSync(`${name}.csr`) ? fs.readFileSync(`${name}.csr`) : fs.readFileSync(`/etc/letsencrypt/live/${name}/chain.pem`)
   }, exp).listen(port, () => {
     console.log(`Listening on HTTPS port ${port}`);
   })

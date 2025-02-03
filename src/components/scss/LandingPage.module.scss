@@ -8,67 +8,64 @@
 		max-width: 80%;
 	}
 }
-.title{
-	position: relative;
-	width: 100%;
-	.sys-vis{
-		.first, .second{
+.sys-vis{
+	.first, .second{
+		h1{
+			text-align: center;
+			white-space: nowrap;
+			margin: 0 0;
+		}
+	}
+	.first{
+		position: relative;
+		right: 60px;
+		&.show{
 			h1{
-				text-align: center;
- 				white-space: nowrap;
-				margin: 0 0;
+				display: block;
+				animation: reveallr 400ms forwards;
 			}
-		}
-		.first{
-			position: relative;
-			right: 60px;
-			&.show{
-				h1{
-					display: block;
-					animation: reveallr 400ms forwards;
-				}
-			}
-		}
-		.second{
-			position: relative;
-			&.show{
-				h1{
-					display: block;
-					animation: revealrl 800ms forwards;
-				}
-			}
-		}	
-	}
-	.let-us{
-		margin-top: 30px;
-		h5{
-			text-align: center;
-			margin: 0;
-			color: map.get(forward.$grey, xlight)
-		}
-		h2{
-			text-align: center;
 		}
 	}
-	.meet{
+	.second{
+		position: relative;
+		&.show{
+			h1{
+				display: block;
+				animation: revealrl 800ms forwards;
+			}
+		}
+	}	
+}
+.let-us{
+	margin-top: 30px;
+	h5{
+		text-shadow: map.get(forward.$shadow, default);
+		text-align: center;
+		margin: 0;
+		color: map.get(forward.$grey, xlight)
+	}
+	h2{
+		text-align: center;
+	}
+}
+.meet{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	.links{
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 		justify-content: center;
-		.links{
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			margin-top: 30px;
-		}
+		margin-top: 30px;
 	}
-	.main-section{
-		position: relative;
-		display: flex;
-		justify-content: space-between;
-		>div{
-			flex: 1;
-		}
+}
+.main-section{
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	>div{
+		flex: 1;
 	}
 }
 @keyframes reveallr{

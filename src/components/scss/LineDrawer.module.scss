@@ -10,7 +10,7 @@
 			border: 0;
 			padding: 0;
 			margin: 0;
-			background-color: forward.$background;
+			background-color: map.get(forward.$grey, xlight);
 		}
 		&.hidden{
 			transform: scaleX(0);

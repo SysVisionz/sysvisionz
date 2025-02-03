@@ -76,6 +76,10 @@ E extends (...args: T) => void = S>(parametersOrFunc: {onStart?: S, onEnd?: E, r
 	const timeout = useRef<NodeJS.Timeout | null>(null)
 	const onStartFunc = useRef<((...args: T) => void) | undefined>(onStart);
 	const onEndFunc = useRef<((...args: T) => void) | undefined>(onEnd);
+	useEffect(() => {
+		onStartFunc.current = onStart
+		onEndFunc.current = onEnd
+	}, [onStart, onEnd])
 	return (...args: T) => {
 		if (!timeout.current){
 			onStartFunc.current?.(...args)

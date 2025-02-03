@@ -4,35 +4,39 @@
 $height: 80px;
 $mobile-height: 60px;
 
-.topbar, .spacer{
-	box-sizing: border-box;
-	padding: 0 15px;
+.topbar, .spacer {
+	box-shadow: none;
 	width: 100%;
 	height: $height;
-	@include forward.mobile{
+	box-sizing: border-box;
+	padding: 0 15px;
+	@include forward.mobile {
 		height: $mobile-height;
 	}
+}
+
+.topbar{
 	&.top {
-		box-shadow: 0 0 10px rgba(0,0,0,0);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
 		background: linear-gradient(45deg, transparent, transparent);
 		height: $height;
+
 		@include forward.mobile {
 			height: $mobile-height;
 		}
 	}
+
 	&:not(.top) a {
-		&:before{
+		&:before {
 			background-color: map.get(forward.$blue, xdark);
 		}
+
 		color: map.get(forward.$blue, xdark);
 	}
 }
-.spacer{
-	position: relative;
-	box-shadow: none;
-}
-.topbar{
-	background: linear-gradient(260deg, forward.$background, map.get(forward.$blue, light));
+
+.topbar {
+	background: forward.$gradient;
 	position: fixed;
 	box-sizing: border-box;
 	top: 0;
@@ -41,52 +45,59 @@ $mobile-height: 60px;
 	align-items: center;
 	padding: 0 15px;
 	justify-content: space-between;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
 	transition: 200ms ease height, 200ms ease background-image, 200ms ease box-shadow;
-	height: $height;
+	height: 50px;
+
 	@include forward.mobile {
 		height: $mobile-height;
 	}
-	&:not(.top){
-		height: 50px;
+
+	.logo {
+		flex: 1;
+		height: 90%;
+	}
+
+	.links {
+		flex: 2;
+		display: flex;
+		justify-content: space-around;
+
 		a {
-			color: map.get(forward.$blue, xdark);
+			@include forward.underline;
+			color: map.get(forward.$grey, xlight);
+			text-decoration: none;
+			color: map.get(forward.$blue, default);
 			&:before{
-				background-color: map.get(forward.$blue, xdark);
+				background-color: map.get(forward.$blue, default);
 			}
 		}
 	}
-	.logo{
-		flex:1;
-		height: 90%;
-	}
-	.links{
-		flex:2;
-		display:flex;
-		justify-content: space-around;
-		a{
-			@include forward.underline;
-			color: forward.$background;
-			text-decoration: none;
+	&.top{
+		height: $height;
+		.links a{
+			color: map.get(forward.$grey, xlight);
+			&:before{
+				background-color: map.get(forward.$grey, xlight);
+			}
 		}
 	}
-	img:last-child{
+
+	img:last-child {
 		position: absolute;
 		top: 0;
 		left: 5px;
 	}
+
 	@include forward.mobile {
 		padding-top: 15px;
 		height: 30px;
 		padding: 0 5px;
 	}
+
 	&.top {
-		box-shadow: 0 0 10px rgba(0,0,0,0);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
 		background: linear-gradient(45deg, transparent, transparent);
 	}
-}
-.spacer{
-	position: relative;
-	box-shadow: none;
 }

@@ -3,26 +3,20 @@
 
 .button {
 	background: linear-gradient(45deg, map.get(forward.$blue, light) 20%, map.get(forward.$blue, default) 70%, map.get(forward.$blue, dark) 100%);
-	color: forward.$background;
+	color: map.get(forward.$grey, xlight);
 	border: none;
 	padding: 10px 20px;
 	text-decoration: none;
 	border-radius: 5px;
 	font-weight: bold;
-	transition: background-image 200ms ease;
+	transition: color 200ms ease;
 	box-shadow: map.get(forward.$shadow, default);
 	@include forward.mobile{
 		padding: 5px 10px;
 	}
 	.content {
-		color:forward.$background;
-		transition: color 200ms ease;
-	}
-	&:hover{
-		background: linear-gradient(45deg, map.get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% );
-		.content {
-			color: map.get(forward.$blue, xdark);
-		}
+		transition: text-shadow 200ms ease;
+		text-shadow: map.get(forward.$shadow, clicked);
 	}
 	&:active{
 		box-shadow: map.get(forward.$shadow, clicked);

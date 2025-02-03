@@ -10,14 +10,14 @@ const Testimonials: FC<{defaultTestimonials?: Testimonial[]}> = ({defaultTestimo
 	const [current, setCurrent] = useState<number>(0)
 	const [testimonials, setTestimonials] = useState<Testimonial[]> ([])
 	useEffect(() => {
-		fetch('/api/testimonials').then(res => res.json()).then((data: Testimonial[]) => {
+		fetch('/api/testimonials').then(res => res.json().then((data: Testimonial[]) => {
 			if (data && data.length) {
 				setTestimonials(data)
 			}
 			else {
 				setTestimonials(defaultTestimonials || [])
 			}
-		})
+		}).catch(err => Promise.reject(err))).catch(() => {console.warn("failed to retrieve testimonials")})
 		timer.current = setTimeout(() => {
 			setCurrent((current + 1) % testimonials.length)
 		})
@@ -25,13 +25,13 @@ const Testimonials: FC<{defaultTestimonials?: Testimonial[]}> = ({defaultTestimo
 			clearTimeout(timer.current)
 		}
 	}, [])
-	return <div className={style.container}>{testimonials.map(({image, text, name, title}, i) => {
+	return testimonials.length ? <div className={style.container}>{testimonials.map(({image, text, name, title}, i) => {
 		return <div key={`${name}-${i}`} className={`${style.testimonial}${i === current ? ' show' : ''}`}>
 			{image && <Image src={image} alt={name} fill={true} />}
 			<p>{text}</p>
 			<p>{`${name}${title ? `, ${title}` : ''}`}</p>
 		</div>
-	})}</div>
+	})}</div> : <></>
 }
 
 export default Testimonials

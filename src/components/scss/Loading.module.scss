@@ -4,7 +4,7 @@
 	position: relative;
 	height: 1em;
 	border-radius: .2em;
-	background-color: forward.$background;
+	background-color: map.get(forward.$grey, xlight);
 	overflow: hidden;
 	box-shadow: map.get(forward.$shadow, default);
 	min-width: 200px;

@@ -1,53 +1,32 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
 import styles from '~/scss/LandingPage.module.scss'
-import Layout from '~/Layout'
 import Links from '~/Links'
-import Image from 'next/image'
-import {dev} from '~/images'
-import { useEffectDelay } from '~/shared/utils'
+import SlidingSection from '~/SlidingSection'
 
 export default function Home() {
-	const [started, setStarted] = useState<boolean>(false)
-  const [top, setTop] = useState<number>(0)
-  const [scrollY, setScrollY] = useState<number>(0)
-  useEffect(() => {
-    const scrollListener = () => {
-      setScrollY(window.scrollY)
-    }
-    window.addEventListener('scroll', scrollListener)
-    return () => {window.removeEventListener('scroll', scrollListener)}
-  }, [])
-  const adjustTop = () => {
-    setTop(typeof window !== 'undefined' ? window.scrollY / (document.body.clientHeight - window.innerHeight) * (window.innerHeight - (img.current?.clientHeight || 0)) : 0)
-  }
-  const img = useRef<HTMLImageElement>(null)
-  useEffectDelay({"onStart": adjustTop, onEnd: adjustTop, 'delay': 40}, [scrollY])
-
+  
   // const {breakpoint} = useContext(siteContext)
-  return (
-          <Layout>
-            <div className={styles['dev-img']}><Image ref={img} src={dev.src} alt="dev" height={dev.height} width={dev.width} style={{top}} /></div>
-            <div className={styles.title} key="title-div">
-              <header className={styles['sys-vis']}>
-                <div className={`${styles.first} ${started ? ` ${styles.show}` : ''}`}>
-                  <h1>Our Systems</h1>
+  return (<>
+              <SlidingSection>
+                <header className={styles['sys-vis']}>
+                  <div className={styles.first}>
+                    <h1>Our Systems, Your Visions</h1>
+                  </div>  
+                </header>
+              </SlidingSection>
+              <SlidingSection left>
+                <div className={styles['main-section']}>
+                  <div className={styles['let-us']}>
+                    <h5>When you’re bringing your ideas to life,</h5>
+                    <h5>there can be a lot to worry about.</h5>
+                    <br/>
+                    <h5>Let us make sure one thing always goes right.</h5>
+                    <h2>Never worry<br/>about your website</h2>
+                  </div>
                 </div>
-                <div className={`${styles.second} ${started ? ` ${styles.show}` : ''}`}>
-                  <h1>Your Visions</h1>
-                </div>  
-              </header>
-              <div className={styles['main-section']}>
-                <div className={styles['let-us']}>
-                  <h5>When you’re bringing your ideas to life,</h5>
-                  <h5>there can be a lot to worry about.</h5>
-                  <br/>
-                  <h5>Let us make sure one thing always goes right.</h5>
-                  <h2>Never worry<br/>about your website</h2>
-                </div>
-              </div>
-              <Links />
-              <div>
+              </SlidingSection>
+              <SlidingSection><Links /></SlidingSection>
+              <SlidingSection left>
                 <h2>What we Do</h2>
                 <p>
                   Here at SysVisionz, we believe that your website should be the least of your worries, and every team deserves to have the tools to realize their maximum potential. 
@@ -63,8 +42,8 @@ export default function Home() {
                   giving them the tools and ways of working that will provide your business with the edge it needs to stay on top,
                   no matter what the future throws at you.
                 </p>
-              </div>
-              <div>
+              </SlidingSection>
+              <SlidingSection>
                 <h2>How we Work</h2>
                 <p>
                   Our applications are built with the latest technologies, providing the performance and security you expect and deserve from your software.
@@ -75,8 +54,8 @@ export default function Home() {
                 <p>
                   Not only that, but our team has proven experience meeting security and compliance requirements for even HIPAA level data sensitivity
                 </p>
-              </div>
-              <div>
+              </SlidingSection>
+              <SlidingSection left>
                 <h2>Why SysVisionz?</h2>
                 <p>
                   When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.
@@ -87,12 +66,13 @@ export default function Home() {
                 <p>
                   After all, we know that your time is valuable, and we want to make sure that you can focus on what you do best, while we take care of the software development that makes your business not just survive, but thrive.
                 </p>
-              </div>
-              <h3>
-                So why wait? Let's get to work, and let our Systems handle your Visions today.
+              </SlidingSection>
+              <SlidingSection><h3>
+                So why wait?<br/> 
+                Let's get to work.<br/>
+                Let our Systems build your Visions today.
               </h3>
-              <Links />
-            </div>
-          </Layout>
+              <Links /></SlidingSection>
+            </>
   );
 }

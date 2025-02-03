@@ -3,7 +3,7 @@
 
 .button {
 	background: linear-gradient(45deg, map.get(forward.$blue, light) 20%, map-get(forward.$blue, default) 70%, map-get(forward.$blue, dark) 100%);
-	color: forward.$background;
+	color: map.get(forward.$grey, xlight);
 	border: none;
 	padding: 4px 3px 0px 3px;
 	text-decoration: none;

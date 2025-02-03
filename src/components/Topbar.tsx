@@ -37,10 +37,7 @@ const Topbar: FC = () => {
 				style: 'small'
 			})} /></div>
 			<div className={style.links}>
-				<a href="/">Home</a>
-				<a href="/about">About</a>
 				<a href="/services">Services</a>
-				<a href="/contact">Contact</a>
 			</div>
 			<div style={{display: 'none'}}>
 				{user.privLevel ? <div>{user.displayName}</div> : <button>Login</button>}

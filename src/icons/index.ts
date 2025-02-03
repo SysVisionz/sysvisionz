@@ -12,6 +12,7 @@ import edit from '../icons/Edit';
 import communication from '../icons/Communication';
 import calendar from '../icons/Calendar';
 import arrow from '../icons/Arrow';
+import social from '../icons/Social';
 
 const icons = {
 arrow,
@@ -28,6 +29,7 @@ shape,
 system,
 user,
 warning,
+social
 }
 
 export type Icons = typeof icons;

@@ -5,7 +5,8 @@ $blue: ("xlight": #c1ecff, "light": #6FCAF1, "default": #156DDD, "dark": #1360c5
 $green: ("xlight": #c1ffcc, "light": #6FF1A8, "default": #1DD1A1, "dark": #0f9d8f, "xdark": #0a6a5f);
 $red: ("xlight": #ffccc1, "light": #f1a86f, "default": #d11d1d, "dark": #9d0f0f, "xdark": #6a0a0a);
 $yellow: ("xlight": #fff6c1, "light": #f1e16f, "default": #d1c11d, "dark": #9d8f0f, "xdark": #6a5f0a);
-$background: #F3EBED;
+$grey: (xlight: #FCFCFC, light: #D1C1C1, default: #A19191, dark: #918181, xdark: #716161);
+$gradient: linear-gradient(260deg, map.get($grey, xlight), map.get($blue, light));
 @mixin mobile {
 	@media (max-width: 768px) {
 		@content;
@@ -26,7 +27,7 @@ $background: #F3EBED;
 		@content;
 	}
 }
-@mixin underline ($color: $background) {
+@mixin underline ($color: map.get($grey, xlight)) {
 	margin-bottom: 0;
 	position: relative;
 	&:before {

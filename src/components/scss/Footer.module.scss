@@ -1,8 +1,42 @@
+@use "forward.scss";
+@use "sass:map";
+.spacer{
+	height: 170px;
+	width: 100%;
+}
 .footer{
 	position: fixed;
 	bottom: 0;
-	.content{
+	width: 100%;
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	background: forward.$gradient;
+	box-shadow: map.get(forward.$shadow, default);
+	h3{
+		margin: 5px;
+	}
+	.container{
+		max-width: 1024px;
+		width: 70%;
 		display: flex;
-		justify-content: space-around;
+		flex-direction: column;
+		align-items: space-around;
+		.content{
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: space-around;
+			.meet{
+				flex: 1;
+				display: flex;
+				justify-content: center;
+			}
+		}
+		.attributions{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
 	}
 }

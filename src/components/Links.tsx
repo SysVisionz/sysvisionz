@@ -1,12 +1,13 @@
 import styles from './scss/Links.module.scss'
 import Button from './Button'
+import Icon from './Icon';
 
 const Links = () => {
 	return <div className={styles.meet}>
 		<Button navigate="meet.sysvisionz.com"><h2>Schedule a Meeting</h2></Button>
 		<div className={styles.links}>
-			Call us at <a href="tel:5417357873">(541) 735-7873</a><br/>
-			Email us at <a href="mailto:contact@sysvisionz.com">contact@sysvisionz.com</a>
+			<span>Call Us: <a target="_blank" href="tel:5417357873"><Icon category="communication" icon="phone"/></a></span>
+			<span>Email us: <a target="_blank" href="mailto:contact@sysvisionz.com"><Icon category='communication' icon="mail" /></a></span>
 		</div>
 	</div>
 }

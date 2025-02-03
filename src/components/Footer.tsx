@@ -1,21 +1,27 @@
+'use client'
 import styles from '~/scss/Footer.module.scss'
-import Links from './Links'
 import Socials from './Socials'
 import Testimonials from './Testimonials'
+import Button from './Button'
+import { useEffect, useRef, useState } from 'react'
 
 const Footer = () => {
-	return (
-		<footer className={styles.footer}>
-			<div className={styles.content} >
-				<Links />
-				<Socials />
-				<Testimonials />
+	const footer = useRef<HTMLDivElement>(null)
+	return (<>
+		<div className={styles.spacer} />
+		<footer className={styles.footer} ref={footer}>
+			<div className={styles.container}>
+				<div className={styles.content} >
+					<div className={styles.meet}><Button navigate="meet.sysvisionz.com"><h3>Schedule a Meeting</h3></Button></div>
+					<Socials />
+					<Testimonials />
+				</div>
+				<div className={styles.attributions}>
+					<span> &copy; 2025, SysVisionz LLC</span>
+					<span>Built with icons by <a href="https://www.flaticon.com/authors/riajulislam">riajulislam</a> and images by <a href="https://www.freepik.com/author/harryarts">harryarts</a> and <a href="https://www.freepik.com/author/pressfoto">pressfoto</a></span>
+				</div>
 			</div>
-			<div className={styles.attributions}>
-				<span> &copy; 2025</span>
-				<span>built with icons by <a href="https://www.flaticon.com/authors/riajulislam">riajulislam</a> and images by <a href="https://www.freepik.com/author/harryarts">harryarts</a> and <a href="https://www.freepik.com/author/pressfoto">pressfoto</a></span>
-			</div>
-		</footer>
+		</footer></>
 	)
 }
 

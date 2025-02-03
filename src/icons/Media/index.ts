@@ -21,7 +21,7 @@ import forward from './Forward.svg';
 import chromecast from './Chromecast.svg';
 import airplay from './Airplay.svg';
 
-export default {
+const Media = {
 airplay,
 chromecast,
 forward,
@@ -44,4 +44,6 @@ volumeMinus,
 volumeOff02,
 volumeOff,
 volumePlus,
-}
+} as const
+
+export default Media

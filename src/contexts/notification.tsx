@@ -77,7 +77,7 @@ const NotificationProvider: FCWC = ({children}) => {
 		apply: (t, thisArg, [info]) => {
 			new Notice('info', info)
 		},
-		get: (t: NotificationContext['push'], p: keyof NotificationContext["push"], r: NotificationContext["push"]) => {
+		get: (t: NotificationContext['push'], p: keyof NotificationContext["push"]) => {
 			return t[p as 'success' | 'error' | 'info' | 'warn']
 		},
 		set: () => {

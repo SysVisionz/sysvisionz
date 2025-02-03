@@ -1,4 +1,4 @@
-import { ReactNode, MouseEventHandler } from "react"
+import { MouseEventHandler } from "react"
 import style from './scss/IconButton.module.scss'
 import Icon from "~/Icon"
 import { Icons } from "~/icons"

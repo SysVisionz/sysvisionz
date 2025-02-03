@@ -3,7 +3,7 @@ import styles from '~/scss/Footer.module.scss'
 import Socials from './Socials'
 import Testimonials from './Testimonials'
 import Button from './Button'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const Footer = () => {
 	const footer = useRef<HTMLDivElement>(null)

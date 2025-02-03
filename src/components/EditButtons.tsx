@@ -1,9 +1,8 @@
-import { FC, MouseEventHandler, ReactNode, useEffect, useState } from "react"
+import { FC, MouseEventHandler, ReactElement, ReactNode, useEffect, useState } from "react"
 import style from './scss/EditButtons.module.scss'
 import Tooltip from "./Tooltip"
 import IconButton from "./IconButton";
 import Button from "./Button";
-import { Icons } from "~/icons";
 
 type ObjectStyle = {onClick: MouseEventHandler<HTMLButtonElement>, content?: ReactNode}
 type Button = 'edit' | 'delete' | 'duplicate' | 'cancel' | 'undo'
@@ -32,14 +31,14 @@ const EditButtons: FC<{[K in Button]?: ObjectStyle["onClick"] | ObjectStyle} & {
 							: <IconButton category={category} icon={icon} onClick={props[b] as ObjectStyle["onClick"]}/>
 					}
 					else {
-						content = <Button onClick={(evt) => (props[b] as ObjectStyle)?.onClick?.(evt)}>{(props[b] as ObjectStyle).content}</Button>
+						content = <Button onClick={(evt) => (props[b] as ObjectStyle)?.onClick?.(evt)}>{(props[b] as ObjectStyle).content as ReactElement}</Button>
 					}
 					theButtons.push(<Tooltip key={b} tooltip={`${b[0].toUpperCase()}${b.substring(1)}`}>{content}</Tooltip>)
 				}
 			}
 			return theButtons
 		})
-	}, [props.cancel, props.delete, props.duplicate, props.edit, props.undo])
+	}, [props, props.cancel, props.delete, props.duplicate, props.edit, props.undo])
 	return <div className={[style.container, id || '', className || ''].join(' ')}>
 		{buttons}
 	</div>

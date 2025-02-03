@@ -1,7 +1,7 @@
 'use client'
-import { ChangeEvent, Dispatch, FC, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { useSiteNotify } from "~/contexts/notification";
-import { cleanObject, makeHeaders, useDelay } from "~/shared/utils";
+import { cleanObject, useDelay } from "~/shared/utils";
 import ChangingInput from "./ChangingInput";
 
 
@@ -48,6 +48,7 @@ const Proposal: FC<ProposalProps> = (projectOrProposal) => {
 			notify.error(`Please fill out all fields before submitting the ${project === null ? 'project' : 'feature'} proposal${projectOrProposal ? ' update' : ''}`)
 		}
 	}
+	console.log(save)
 	const proposalChange = useMemo(() => {
 		const curr = cleanObject({
 			name,
@@ -115,7 +116,7 @@ const Proposal: FC<ProposalProps> = (projectOrProposal) => {
 					}
 			}
 		}
-	}, [name, example, project, hasSolution, solutions, why, clients, useCases])
+	}, [projectOrProposal, name, example, project, hasSolution, solutions, why, clients, useCases])
 	const setProject = useDelay<[Partial<ProposalProps>]>({
 		onStart: (newProposal) => {
 			const modified: keyof ProposalProps = Object.keys(newProposal)[1] as keyof ProposalProps
@@ -138,6 +139,7 @@ const Proposal: FC<ProposalProps> = (projectOrProposal) => {
 		rerunOnStart: true
 
 	})
+	console.log(setProject)
 
 	const setValue = <T extends keyof ProposalProps>(k: T, i?: T extends 'clients' | 'solutions' | 'useCases' ? number : never, key?: T extends 'clients' ? keyof Required<ProposalProps>['clients'][number] : T extends 'solutions' ? keyof Required<ProposalProps>['solutions'][number] : never) => {
 		function propose (evt: ChangeEvent<HTMLTextAreaElement> ): void
@@ -232,6 +234,7 @@ const Proposal: FC<ProposalProps> = (projectOrProposal) => {
 			}
 		}
 	})
+	console.log(edit)
 	return <div>
 		{typeof project === 'string' && <ChangingInput value={project} save={setValue('project')} />}
 		{<ChangingInput label="name" value={name || ''} save={setValue('name')} />}

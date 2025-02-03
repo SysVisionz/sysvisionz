@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { type FC, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useEffectDelay } from "~/shared/utils";
 import style from './scss/Parallax.module.scss'
 const Parallax: FCWC<{image: Image}> = ({image, children}) => {
@@ -14,23 +14,24 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 	const img = useRef<HTMLImageElement>(null)
 	useEffectDelay({"onStart": adjustTop, onEnd: adjustTop, 'delay': 40}, [scrollY])
 	useEffect(() => {
+		const imag = img.current;
 	  const scrollListener = () => {
 		setScrollY(window.scrollY)
 	  }
 	  if (!isReady){
-		if (img.current?.complete) {
+		if (imag?.complete) {
 			ready()
 		}
 		else{
-			img.current?.addEventListener('load', ready)
+			imag?.addEventListener('load', ready)
 		}
 	  }
-	  !ready && window.addEventListener('scroll', scrollListener)
+	  window.addEventListener('scroll', scrollListener)
 	  return () => {
 		window.removeEventListener('scroll', scrollListener)
-		img.current?.removeEventListener('load', ready)
+		imag?.removeEventListener('load', ready)
 		}
-	}, [])
+	}, [isReady])
 	return <div className={`${style.content}${isReady ? ` ${style.ready}` : ''}`}>
 		<div className={style['dev-img']}><Image ref={img} src={image.src} alt="image" height={image.height} width={image.width} style={{top}} /></div>
 		{children}

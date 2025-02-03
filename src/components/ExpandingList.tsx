@@ -19,9 +19,11 @@ export default function ExpandingList({id, list, onChange, box}: {
 	box?: boolean,
 	onChange: (v: string[]) => void
 }){
+	console.log(id, onChange, box)
 	const [listVals, setListVals] = useState<[string, number, boolean][]>(list.map((v: string, i: number) => [v, i, true]))
 	const [editing, setEditing] = useState<number | null>(null)
 	const timeouts = useRef<[NodeJS.Timeout, number][]>([])
+	console.log(editing)
 	const add = () => {
 		setEditing(listVals.length)
 		setListVals(listVals.concat([['', listVals[listVals.length - 1][1] + 1, true]]))
@@ -44,7 +46,9 @@ export default function ExpandingList({id, list, onChange, box}: {
 		}, 400), listVals[i][1]])
 	}
 	const edit = (v: string, i: number) => {
+		console.log(v, i)
 	}
+	console.log(edit, remove, notEditing, add)
 	useEffect(() => {
 		// onChange(listVals.reduce((list: (string|number|boolean)[], v: [string | number | boolean, boolean]) => {
 		// 	const [value, active] = v;

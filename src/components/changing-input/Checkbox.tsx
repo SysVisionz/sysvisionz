@@ -1,7 +1,8 @@
 import { ReactNode } from "react"
 
-function Checkbox(props: {}): ReactNode
-function Checkbox(props: {}){
+function Checkbox(props: {label: string}): ReactNode
+function Checkbox(props: {label: string}){
+	console.log(props)
 	return <div></div>
 }
 

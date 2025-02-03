@@ -1,5 +1,5 @@
 'use client';
-import { type ReactNode, type FC, useRef, useContext, useEffect, useState } from "react";
+import { type ReactNode, type FC, useRef, useEffect, useState } from "react";
 import style from './scss/Tooltip.module.scss'
 
 type TooltipProps = {
@@ -16,15 +16,18 @@ const Tooltip: FC<TooltipProps> = ({
 	const intersect = useRef<IntersectionObserver>()
 	const [active, setActive] = useState<[boolean,boolean]>([false, false])
 	const [orientation, setOrientation] = useState<{x: string, y: string}>()
+	console.log(setOrientation)
 	useEffect(() => {
 		if (!intersect.current){
 			intersect.current = new IntersectionObserver((entries) => {
 				console.log(entries)
 			})
 		}
-		content.current && intersect.current.observe(content.current)
-		return () => {
-			content.current && intersect.current!.unobserve(content.current)
+		if (content.current){
+			intersect.current.observe(content.current)
+			return () => {
+				if (content.current) intersect.current!.unobserve(content.current)
+			}
 		}
 	}, [])
 	const content = useRef<HTMLDivElement>(null)

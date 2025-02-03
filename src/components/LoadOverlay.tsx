@@ -21,14 +21,14 @@ const LoadOverlay: FC<{timer?: number}> = ({timer = 1000}) => {
 			return step;
 		}).map((step, i) => {
 			return () => setTimeout(() => {
-				setCurrent(current+step)
+				setCurrent(c => c+step)
 				timers[i + 1]()
 			}, step/100 * timer)
 		}).concat(() => setTimeout(() => {
 			setCurrent(100)
 		}, total/100 * timer))
 		timers[0]()
-	}, [])
+	}, [timer])
 	return (
 		<div className={`${style.overlay}${loaded.every(v => v) ? ` ${style.hidden}` : ''}`}>
 			<Loading percent={current} at={at} />

@@ -51,6 +51,7 @@ const Proposal: FC = () => {
 					)}
 				}
 			}, [search.current?.name, search.current?.project, search.current?.page, search.current?.pageSize])
+			console.table(list)
 			return <div></div>
 }
 

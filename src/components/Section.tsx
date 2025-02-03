@@ -7,3 +7,5 @@ const Section: FCWC<{color: `#${string}`}> = ({ children, color }) => {
 	</section>
   );
 }
+
+export default Section

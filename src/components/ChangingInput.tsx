@@ -1,4 +1,4 @@
-import { ReactNode, RefObject, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import EditButtons from "./EditButtons";
 import style from './scss/ChangingInput.module.scss'
 import Icon from "./Icon";
@@ -44,7 +44,7 @@ function ChangingInput({type = 'text', editing, previous, value = "", label, sav
 	useEffect(() => {
 		const is = container.current?.closest('form')
 		if (is !== container.current && isForm !== !!is) {setIsForm(!!is)}
-	}, [container.current])
+	}, [ isForm])
 	useEffect(() => {
 		if (editingVal === true){
 			const input = container.current?.querySelector('input') as HTMLInputElement

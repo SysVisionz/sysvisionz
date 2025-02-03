@@ -61,7 +61,7 @@ export default function Home() {
                   When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.
                 </p>
                 <p>
-                  With extensive experience in the industry, we know what works and what doesn't, and have the experience to know the right questions to ask to ensure you get what you want the first time.
+                  With extensive experience in the industry, we know what works and what doesn&apos;t, and have the experience to know the right questions to ask to ensure you get what you want the first time.
                 </p>
                 <p>
                   After all, we know that your time is valuable, and we want to make sure that you can focus on what you do best, while we take care of the software development that makes your business not just survive, but thrive.
@@ -69,7 +69,7 @@ export default function Home() {
               </SlidingSection>
               <SlidingSection><h3>
                 So why wait?<br/> 
-                Let's get to work.<br/>
+                Let&apos;s get to work.<br/>
                 Let our Systems build your Visions today.
               </h3>
               <Links /></SlidingSection>

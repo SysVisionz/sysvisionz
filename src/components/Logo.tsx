@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './scss/Logo.module.scss'
-import { type FC, useRef } from "react";
+import type { FC } from "react";
 import { logo } from '~/images';
 // import icons from '~/icons'
 

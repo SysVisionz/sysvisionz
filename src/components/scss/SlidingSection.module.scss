@@ -1,15 +1,18 @@
 @use "forward.scss";
 @use "sass:map";
 .section{
+	box-shadow: map.get(forward.$shadow, default);
 	position: relative;
 	&:not(.left){
 		right: 70vw;
+		border-radius: 0 5px 5px 0;
 		transition: right 300ms ease;
 		&.show{
 			right: 0;
 		}
 	}
 	&.left{
+		border-radius: 5px 0 0 5px;
 		left: 100vw;
 		transition: left 300ms ease;
 		&.show{

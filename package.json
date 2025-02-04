@@ -7,7 +7,7 @@
     "dev": "node server.js dev",
     "build": "npm run build-server && next build",
     "start": "node server.js",
-    "test": "npm run build && node server.js test",
+    "test": "node server.js test",
     "lint": "next lint",
     "build-server": "tsc -p ./server-ts/tsconfig.json && cp -r ./server-ts/build/* ./ && rm -rf ./server-ts/build"
   },

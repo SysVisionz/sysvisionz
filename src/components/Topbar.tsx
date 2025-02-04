@@ -3,6 +3,7 @@ import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
 import { FC, useContext, useEffect, useRef, useState } from "react";
 import { userContext } from '../contexts/user';
+import Link from 'next/link';
 
 /** this component changes height, as well as the logo size/type */
 const Topbar: FC = () => {
@@ -32,13 +33,13 @@ const Topbar: FC = () => {
 	return<>
 		<div ref={spacer} className={`${style.spacer}${atTop ? ` ${style.top}` : ""}`}></div>
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
-			<div className={style.logo}><a href="/"><Logo {...(atTop ? {} : {
+			<div className={style.logo}><Link href="/"><Logo {...(atTop ? {} : {
 				color: 'blue',
 				style: 'small'
-			})} /></a></div>
+			})} /></Link></div>
 			<div className={style.links}>
-				<a href="/">Home</a>
-				<a href="/services">Services</a>
+				<Link href="/">Home</Link>
+				<Link href="/services">Services</Link>
 			</div>
 			<div style={{display: 'none'}}>
 				{user.privLevel ? <div>{user.displayName}</div> : <button>Login</button>}

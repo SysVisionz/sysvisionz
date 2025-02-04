@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js dev",
-    "build": "npm run build-server && next build",
+    "build": "rm -rf .next && npm run build-server && next build",
     "start": "node server.js",
     "test": "node server.js test",
     "lint": "next lint",

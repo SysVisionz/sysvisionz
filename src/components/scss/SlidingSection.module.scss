@@ -7,25 +7,19 @@
 	display: flex;
 	justify-content: center;
 	background-color: map-get(forward.$blue, default);
-	margin: 20px 0 20px 10%;
-	padding: 5px 20px 20px calc(10% + 20px);
+	margin: 20px 0 20px 25%;
+	padding: 5px 20px 20px calc(25% + 20px);
 	box-sizing: border-box;
 	position: relative;
 	background-color: map-get(forward.$blue, light);
 	margin: 20px 0;
 	>div{
 		box-sizing: border-box;
-		padding: 0px 20%;
+		padding: 0px 5%;
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		@include forward.tablet{
-			padding: 0px 10%;
-		}
-		@include forward.mobile{
-			padding: 0px 5%;
-		}
 	}
 	&:after{
 		content: "";

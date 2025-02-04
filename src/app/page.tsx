@@ -1,5 +1,5 @@
 'use client'
-import styles from '~/scss/LandingPage.module.scss'
+import styles from './LandingPage.module.scss'
 import Links from '~/Links'
 import SlidingSection from '~/SlidingSection'
 

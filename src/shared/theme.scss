@@ -32,6 +32,7 @@ $gradient: linear-gradient(260deg, map.get($grey, xlight), map.get($blue, light)
 	position: relative;
 	&:before {
 		content: "";
+		box-shadow: map.get($shadow, clicked);
 		position: absolute;
 		top: 100%;
 		background-color: $color;

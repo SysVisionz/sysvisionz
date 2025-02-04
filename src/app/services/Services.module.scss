@@ -1,0 +1,10 @@
+@use "forward.scss";
+@use "sass:map";
+
+.interested {
+	h4{
+			text-align: center;
+			color: map.get(forward.$grey, xlight);
+			text-shadow: map.get(forward.$shadow, clicked);
+		}
+}

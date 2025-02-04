@@ -67,21 +67,16 @@ $mobile-height: 60px;
 		a {
 			@include forward.underline;
 			color: map.get(forward.$grey, xlight);
+			text-shadow: map.get(forward.$shadow, clicked);
 			text-decoration: none;
-			color: map.get(forward.$blue, default);
-			&:before{
-				background-color: map.get(forward.$blue, default);
-			}
-		}
-	}
-	&.top{
-		height: $height;
-		.links a{
 			color: map.get(forward.$grey, xlight);
 			&:before{
 				background-color: map.get(forward.$grey, xlight);
 			}
 		}
+	}
+	&.top{
+		height: $height;
 	}
 
 	img:last-child {

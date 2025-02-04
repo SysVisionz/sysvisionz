@@ -101,3 +101,5 @@ E extends (...args: T) => void = S>(parametersOrFunc: {onStart?: S, onEnd?: E, r
 		}
 	}
 }
+
+export const classNamer = (...args: (string | undefined | false | null)[]) => args.filter(v => v).join(' ')

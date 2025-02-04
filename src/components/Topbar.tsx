@@ -32,11 +32,12 @@ const Topbar: FC = () => {
 	return<>
 		<div ref={spacer} className={`${style.spacer}${atTop ? ` ${style.top}` : ""}`}></div>
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
-			<div className={style.logo}><Logo {...(atTop ? {} : {
+			<div className={style.logo}><a href="/"><Logo {...(atTop ? {} : {
 				color: 'blue',
 				style: 'small'
-			})} /></div>
+			})} /></a></div>
 			<div className={style.links}>
+				<a href="/">Home</a>
 				<a href="/services">Services</a>
 			</div>
 			<div style={{display: 'none'}}>

@@ -40,18 +40,27 @@
 			color: map.get(forward.$grey, xlight);
 		}
 		h1{
-			font-size: 2.5em;		
+			font-size: 2.5em;
 			font-weight: bold;
+			@include forward.tablet{
+				font-size: 2em;
+			}		
 		}
 		h2{
 			font-size: 2.2em;
 			font-weight: bold;
 			text-decoration: underline;
+			@include forward.tablet{
+				font-size: 1.5em;
+			}
 		}
 		h3{
 			text-align: center;
 			font-size: 2em;
 			font-weight: bold;
+			@include forward.tablet{
+				font-size: 1.5em;
+			}
 		}
 		h4{
 			font-size: 1.8em;

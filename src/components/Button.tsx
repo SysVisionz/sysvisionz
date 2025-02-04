@@ -1,5 +1,6 @@
 import { cloneElement, FC, MouseEventHandler, ReactElement } from "react"
 import style from './scss/Button.module.scss'
+import { classNamer } from "~/shared/utils"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Button: FC<{navigate?: string, children: string | number | ReactElement<any, any>, onClick?: MouseEventHandler<HTMLButtonElement>, className?: string}> = ({className, children, onClick, navigate}) => {
 	let theChildren =['string', 'number'].includes(typeof children) 
@@ -7,7 +8,7 @@ const Button: FC<{navigate?: string, children: string | number | ReactElement<an
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 		: children as ReactElement<any, any>
 	theChildren = cloneElement(theChildren, {className: `${style.content} ${theChildren.props.className || ''}`})
-	const button = <button className={`${style.button}${!navigate && className ? ` ${className}` : ''}`} onClick={onClick}>{theChildren}</button>
+	const button = <button className={classNamer(style.button, !navigate && className)} onClick={onClick}>{theChildren}</button>
 	return navigate ? <a className={className} href={`${navigate.match(/\.(com|net|org|io)(\/*|)$/) ? 'https://' : ''}${navigate}`}>{button}</a> : button
 }
 

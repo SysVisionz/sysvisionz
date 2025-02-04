@@ -14,7 +14,7 @@ export default function Home() {
                   </div>  
                 </header>
               </SlidingSection>
-              <SlidingSection left>
+              <SlidingSection>
                 <div className={styles['main-section']}>
                   <div className={styles['let-us']}>
                     <h5>When you’re bringing your ideas to life,</h5>
@@ -24,9 +24,9 @@ export default function Home() {
                     <h2>Never worry<br/>about your website</h2>
                   </div>
                 </div>
+                <Links />
               </SlidingSection>
-              <SlidingSection><Links /></SlidingSection>
-              <SlidingSection left>
+              <SlidingSection>
                 <h2>What we Do</h2>
                 <p>
                   Here at SysVisionz, we believe that your website should be the least of your worries, and every team deserves to have the tools to realize their maximum potential. 
@@ -55,7 +55,7 @@ export default function Home() {
                   Not only that, but our team has proven experience meeting security and compliance requirements for even HIPAA level data sensitivity
                 </p>
               </SlidingSection>
-              <SlidingSection left>
+              <SlidingSection>
                 <h2>Why SysVisionz?</h2>
                 <p>
                   When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.

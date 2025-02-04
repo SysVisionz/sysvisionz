@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import style from "./style.module.scss";
+import style from "./Style.module.scss";
 import SiteProvider from "../contexts/site";
 import Footer from "~/Footer";
 import Parallax from "~/Parallax";
@@ -11,7 +11,7 @@ import Topbar from "~/Topbar";
 export const metadata: Metadata = {
   title: "SysVisionz",
   description: "SysVisionz, a website for the future",
-};
+}
 
 export default function RootLayout({
   children

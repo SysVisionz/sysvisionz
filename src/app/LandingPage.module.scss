@@ -13,12 +13,11 @@
 		h1{
 			text-align: center;
 			white-space: nowrap;
-			margin: 0 0;
+			margin: 10px 0 0 0;
 		}
 	}
 	.first{
 		position: relative;
-		right: 60px;
 		&.show{
 			h1{
 				display: block;
@@ -34,7 +33,7 @@
 				animation: revealrl 800ms forwards;
 			}
 		}
-	}	
+	}
 }
 .let-us{
 	margin-top: 30px;
@@ -42,7 +41,7 @@
 		text-shadow: map.get(forward.$shadow, default);
 		text-align: center;
 		margin: 0;
-		color: map.get(forward.$grey, xlight)
+		color: map.get(forward.$grey, xlight);
 	}
 	h2{
 		text-align: center;

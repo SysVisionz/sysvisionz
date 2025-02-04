@@ -12,10 +12,10 @@ const SlidingSection: FCWC<{left?: boolean, className?: string}> = ({ children, 
 			if (typeof window !== 'undefined' && rect){
 				if (lastTop.current < window.scrollY) {
 					// scrolling down
-					if (show && rect.bottom < 200 || rect.top > window.innerHeight - 200) {
+					if (show && rect.bottom < 200 || rect.top > window.innerHeight - 180) {
 						setShow(false);
 					}
-					else if (!show && rect.top < window.innerHeight - 200 && rect.bottom > 200) {
+					else if (!show && rect.top < window.innerHeight - 180 && rect.bottom > 200) {
 						setShow(true);
 					}
 				}
@@ -34,7 +34,7 @@ const SlidingSection: FCWC<{left?: boolean, className?: string}> = ({ children, 
 	}, 200)
 	useEffect(() => {
 		const rect = section.current?.getBoundingClientRect();
-		if (rect!.top < window.innerHeight - 200 && rect!.bottom > 60) {
+		if (rect!.top < window.innerHeight - 180 && rect!.bottom > 60) {
 			setShow(true);
 		}
 		if (typeof window !== 'undefined') {
@@ -42,7 +42,7 @@ const SlidingSection: FCWC<{left?: boolean, className?: string}> = ({ children, 
 			return () => window.removeEventListener('scroll', inout)
 		}
 	}, [inout])
-	return <div ref={section} className={classNamer(style.section, left && style.left, show && style.show, className)}>{children}</div>
+	return <div ref={section} className={classNamer(style.section, left && style.left, show && style.show, className)}><div className={style.content}>{children}</div></div>
 }
 
 export default SlidingSection;

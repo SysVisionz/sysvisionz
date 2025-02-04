@@ -17,6 +17,6 @@
 		transition: width 200ms ease;
 		height: 100%;
 		box-shadow: 1px 0 2px map.get(forward.$black, light);
-		background-color: map.get(forward.$blue, default)
+		background-color: map.get(forward.$blue, default);
 	}
 }

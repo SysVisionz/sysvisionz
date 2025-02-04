@@ -23,7 +23,7 @@
 			left: 10px;
 			margin-left: -5px;
 			border: 5px solid transparent;
-			border-top-color: map.get(forward.$black, default)
+			border-top-color: map.get(forward.$black, default);
 		}
 		&:after{
 			content: "";
@@ -42,5 +42,4 @@
 			visibility: visible;
 		}
 	}
-	
 }

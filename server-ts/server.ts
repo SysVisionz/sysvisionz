@@ -15,7 +15,7 @@ config({path: `${__dirname}/.env`})
 const args = process.argv.slice(2);
 const dev = args.some(v => v === "dev");
 const test = args.some(v => v === 'test');
-const port = (dev || test) ? 8082 : Number(args.find(v => v.match(/^port=/))?.substring(5)) || 8096;
+const port = dev ? 8082 : test ? 8083 : Number(args.find(v => v.match(/^port=/))?.substring(5)) || 8096;
 const hostname = (dev || test) ? 'localhost' : process.env.NEXT_PUBLIC_HOSTNAME
 const project = process.env.NEXT_PUBLIC_PROJECT
 // Init the Next app:

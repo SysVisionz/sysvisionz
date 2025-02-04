@@ -13,6 +13,6 @@
 	box-shadow: map.get(forward.$shadow, default);
 	&:hover{
 		color: map.get(forward.$blue, xdark);
-		background: linear-gradient(45deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% )
+		background: linear-gradient(45deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% );
 	}
 }

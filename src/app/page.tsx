@@ -2,6 +2,7 @@
 import styles from './LandingPage.module.scss'
 import Links from '~/Links'
 import SlidingSection from '~/SlidingSection'
+import { nights, site } from '~/images'
 
 export default function Home() {
   
@@ -26,7 +27,7 @@ export default function Home() {
                 </div>
                 <Links />
               </SlidingSection>
-              <SlidingSection>
+              <SlidingSection image={{src: site.src, alt: 'site image', fill: true}}> 
                 <h2>What we Do</h2>
                 <p>
                   Here at SysVisionz, we believe that your website should be the least of your worries, and every team deserves to have the tools to realize their maximum potential. 
@@ -55,7 +56,7 @@ export default function Home() {
                   Not only that, but our team has proven experience meeting security and compliance requirements for even HIPAA level data sensitivity
                 </p>
               </SlidingSection>
-              <SlidingSection>
+              <SlidingSection className={styles.why} image={{src: nights.src, alt: 'why image', fill: true}}>
                 <h2>Why SysVisionz?</h2>
                 <p>
                   When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.

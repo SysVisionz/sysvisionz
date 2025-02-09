@@ -7,6 +7,7 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 	const [top, setTop] = useState<number>(0)
 	const [scrollY, setScrollY] = useState<number>(0)
 	const [isReady, setReady] = useState<boolean>(false)
+	const resizer = useRef<ResizeObserver>()
 	const ready = () => setReady(true)
 	const adjustTop = () => {
 	  setTop(typeof window !== 'undefined' ? window.scrollY / (document.body.clientHeight - window.innerHeight) * (window.innerHeight - (img.current?.clientHeight || 0)) : 0)
@@ -25,9 +26,11 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 		else{
 			imag?.addEventListener('load', ready)
 		}
-	  }
+	}
+		resizer.current = new ResizeObserver(adjustTop)
 	  window.addEventListener('scroll', scrollListener)
 	  return () => {
+		resizer.current?.disconnect()
 		window.removeEventListener('scroll', scrollListener)
 		imag?.removeEventListener('load', ready)
 		}

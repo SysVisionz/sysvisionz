@@ -7,7 +7,7 @@ import { logo } from '~/images';
 const Logo: FC<{
 	style?: 'large' | 'small',
 	color?: 'gold' | 'blue'
-}> = ( {style = 'large', color = 'gold'}) => {
+}> = ( {style = 'large', color = 'blue'}) => {
 	return <div className={styles.container}>
 		{
 			(Object.entries(logo) as [keyof typeof logo, ((typeof logo)[keyof typeof logo])][]).reduce((full, [size, value]) => {

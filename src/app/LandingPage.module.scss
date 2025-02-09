@@ -36,13 +36,11 @@
 		}
 	}
 }
-.let-us{
+.main-section .let-us{
 	margin-top: 30px;
 	h5{
-		text-shadow: map.get(forward.$shadow, default);
 		text-align: center;
 		margin: 0;
-		color: map.get(forward.$grey, xlight);
 	}
 	h2{
 		text-align: center;

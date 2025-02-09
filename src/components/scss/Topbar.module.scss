@@ -16,9 +16,12 @@ $mobile-height: 60px;
 }
 
 .topbar{
+	h2 {
+		margin: 5px 10px 0px 10px;
+	}
 	&.top {
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
-		background: linear-gradient(45deg, transparent, transparent);
+		background: linear-gradient(30deg, transparent, transparent);
 		height: $height;
 
 		@include forward.mobile {
@@ -93,6 +96,6 @@ $mobile-height: 60px;
 
 	&.top {
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
-		background: linear-gradient(45deg, transparent, transparent);
+		background: linear-gradient(30deg, transparent, transparent);
 	}
 }

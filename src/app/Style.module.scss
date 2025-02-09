@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use "forward.scss";
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Markazi+Text:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Markazi+Text:wght@400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 .body{
 	margin:0;
 	display: flex;
@@ -8,7 +8,7 @@
 	align-items: center;
 	font-size: 18px;
 	font-family: "Josefin Sans", serif;
-	background: linear-gradient(45deg, map.get(forward.$grey, xlight), map.get(forward.$blue, default));
+	background: linear-gradient(forward.$deg, map.get(forward.$grey, xlight), map.get(forward.$blue, default));
 	@include forward.mobile{
 		font-size: 10px;
 	}
@@ -22,51 +22,52 @@
 		height: 100%;
 		z-index: -1;
 	}
-	.main{
-		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 100%;
-		margin-top: 10px;
-		transition: opacity 400ms ease;
-		@mixin mobile{
-			margin-top: 5px;
-		}
-		h1, h2, h3 {
-			text-shadow: map.get(forward.$shadow, default);
-			font-family: 'Krona One', sans-serif;
-			font-weight: bold;
-			color: map.get(forward.$grey, xlight);
-		}
-		h1{
-			font-size: 2.5em;
-			font-weight: bold;
-			@include forward.tablet{
-				font-size: 2em;
-			}		
-		}
-		h2{
-			font-size: 2.2em;
-			font-weight: bold;
-			text-decoration: underline;
-			@include forward.tablet{
-				font-size: 1.5em;
-			}
-		}
-		h3{
-			text-align: center;
+}
+.main{
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	margin-top: 10px;
+	transition: opacity 400ms ease;
+	@mixin mobile{
+		margin-top: 5px;
+	}
+	h1,h2,h3 {
+		font-family: "Roboto", serif;
+		font-weight: bold;
+		font-weight: bold;
+		text-shadow: map.get(forward.$shadow, clicked);
+	}
+	h1{
+		font-size: 2.5em;
+		font-weight: bold;
+		color: map.get(forward.$blue, default);
+		@include forward.tablet{
 			font-size: 2em;
-			font-weight: bold;
-			@include forward.tablet{
-				font-size: 1.5em;
-			}
-		}
-		h4{
-			font-size: 1.8em;
-		}
-		h5{
+		}		
+	}
+	h2{
+		font-size: 2.2em;
+		font-weight: bold;
+		text-decoration: underline;
+		@include forward.tablet{
 			font-size: 1.5em;
 		}
+	}
+	h3{
+		text-align: center;
+		font-size: 2em;
+		font-weight: bold;
+		@include forward.tablet{
+			font-size: 1.5em;
+		}
+	}
+	h4{
+		font-size: 1.8em;
+	}
+	h5{
+		font-size: 1.5em;
 	}
 }

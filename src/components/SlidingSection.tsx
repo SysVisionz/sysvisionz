@@ -3,10 +3,10 @@ import { useState, useEffect, useRef, ReactElement, ReactNode } from "react";
 import style from './scss/SlidingSection.module.scss';
 import { classNamer, useDelay } from "~/shared/utils";
 import Image from 'next/image';
-function SlidingSection({children, className, image}: {children: ReactNode, className?: string, image?: {src: string, alt: string}}): ReactElement
-function SlidingSection({children, className, image}: {children: ReactNode, className?: string, image?: {src: string, alt: string, height: number, width: number}}): ReactElement
-function SlidingSection({children, className, image}: {children: ReactNode, className?: string, image?: {src: string, alt: string, fill: boolean}}): ReactElement
-function SlidingSection({ children, className, image }: {children: ReactNode, className?: string, image?: {src: string, alt: string, height?: number, width?: number, fill?: boolean}}) {
+function SlidingSection({children, className, image, title, mobile}: {children: ReactNode, title?: string, mobile?: string, className?: string, image?: {src: string, alt: string}}): ReactElement
+function SlidingSection({children, className, image, title, mobile}: {children: ReactNode, title?: string, mobile?: string, className?: string, image?: {src: string, alt: string, height: number, width: number}}): ReactElement
+function SlidingSection({children, className, image, title, mobile}: {children: ReactNode, title?: string, mobile?: string, className?: string, image?: {src: string, alt: string, fill: boolean}}): ReactElement
+function SlidingSection({ children, className, image, title, mobile }: {children: ReactNode, title?: string, mobile?: string, className?: string, image?: {src: string, alt: string, height?: number, width?: number, fill?: boolean}}) {
 	const section = useRef<HTMLDivElement>(null);
 	const [show, setShow] = useState<boolean>(false);
 	const lastTop = useRef<number>(0);
@@ -49,7 +49,9 @@ function SlidingSection({ children, className, image }: {children: ReactNode, cl
 	return <div ref={section} className={classNamer(style.section, show && style.show, className)}>
 		<div className={`${style.content}${image ? ` ${style['with-image']}` : ''}`}>
 			{image ? <div className={style.image}><Image src={image.src} alt={image.alt} {...(image.height ? {height: image.height, width: image.width} : image.fill !== undefined ? {fill: image.fill} : {fill: true})}/></div> : null}
-			<div>{children}</div>
+			{title ? <h2>{title}</h2> : null}
+			<div {...(mobile ? {className: style.desktop} : {})}>{children}</div>
+			{mobile ? <div className={style.mobile}>{mobile}</div> : null}
 		</div>
 	</div>
 }

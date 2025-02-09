@@ -45,7 +45,7 @@
 		font-weight: bold;
 		color: map.get(forward.$blue, default);
 		@include forward.tablet{
-			font-size: 2em;
+			font-size: 2.5em;
 		}		
 	}
 	h2{

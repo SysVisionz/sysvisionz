@@ -2,7 +2,7 @@
 @use "forward.scss";
 
 $height: 80px;
-$mobile-height: 60px;
+$mobile-height: 70px;
 
 .topbar, .spacer {
 	box-shadow: none;
@@ -15,31 +15,8 @@ $mobile-height: 60px;
 	}
 }
 
-.topbar{
-	h2 {
-		margin: 5px 10px 0px 10px;
-	}
-	&.top {
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
-		background: linear-gradient(30deg, transparent, transparent);
-		height: $height;
-
-		@include forward.mobile {
-			height: $mobile-height;
-		}
-	}
-
-	&:not(.top) a {
-		&:before {
-			background-color: map.get(forward.$blue, xdark);
-		}
-
-		color: map.get(forward.$blue, xdark);
-	}
-}
-
 .topbar {
-	background: forward.$gradient;
+	background-color: map.get(forward.$blue, xlight);
 	position: fixed;
 	box-sizing: border-box;
 	top: 0;
@@ -50,7 +27,7 @@ $mobile-height: 60px;
 	justify-content: space-between;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
-	transition: 200ms ease height, 200ms ease background-image, 200ms ease box-shadow;
+	transition: 200ms ease height, 200ms ease background-color, 200ms ease box-shadow;
 	height: 50px;
 
 	@include forward.mobile {
@@ -60,26 +37,44 @@ $mobile-height: 60px;
 	.logo {
 		flex: 1;
 		height: 90%;
+		@include forward.mobile {
+			height: 60%;
+		}
 	}
 
 	.links {
 		flex: 2;
 		display: flex;
 		justify-content: space-around;
-
 		a {
 			@include forward.underline;
-			color: map.get(forward.$grey, xlight);
 			text-shadow: map.get(forward.$shadow, clicked);
 			text-decoration: none;
-			color: map.get(forward.$grey, xlight);
+			color: map-get(forward.$grey, xlight );
 			&:before{
+				color: map.get(forward.$blue, xdark);
 				background-color: map.get(forward.$grey, xlight);
+			}
+			h2{
+				font-size: 1.2em;
+				transition: font-size 200ms ease, 200ms ease margin;
+				margin: 5px 10px 0px 10px;
+				@include forward.mobile {
+					font-size: 1.2em;
+				}
 			}
 		}
 	}
-	&.top{
+	&.top {
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+		background: transparent;
 		height: $height;
+		@include forward.mobile {
+			height: $mobile-height;
+		}
+		a h2{
+			font-size: 1.5em;
+		}
 	}
 
 	img:last-child {
@@ -90,12 +85,7 @@ $mobile-height: 60px;
 
 	@include forward.mobile {
 		padding-top: 15px;
-		height: 30px;
+		height: 40px;
 		padding: 0 5px;
-	}
-
-	&.top {
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0);
-		background: linear-gradient(30deg, transparent, transparent);
 	}
 }

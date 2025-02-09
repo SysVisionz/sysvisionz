@@ -1,0 +1,7 @@
+name: Deploy SysVisionz Site
+
+on:
+  push:
+    branches:
+      - master
+      

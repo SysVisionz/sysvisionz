@@ -3,7 +3,7 @@ import { FC } from "react"
 import Links from "~/Links"
 import SlidingSection from "~/SlidingSection"
 import style from './Services.module.scss'
-import { fe, fs, be, mentor, consult} from "~/images";
+import { fe, fs, be, mentor, consult, letsGo} from "~/images";
 
 const Services: FC = () => (<>
 		<SlidingSection><h1>Services</h1>
@@ -11,8 +11,8 @@ const Services: FC = () => (<>
 		for you to optimize your business and ensure that you are always ahead of the curve. Our services include:</p>
 		</SlidingSection>,
 		<SlidingSection image={{src: fe.src, alt: 'services'}}>
-			<h2>Web Services:</h2>
-		<p>We provide development services that focus on both fixing issues within your current application frontends and building frontends for your greenfield applications. Our front-end expertise includes working with PHP, HTMX, ReactJS, SCSS or simply constructing highly performant sites in root Javascript, CSS, and HTML. Whether your solution requires an update to its existing code, a rescuscitation of a broken code base, or you&apos;re starting fresh, we ensure smooth, responsive, and modern user interfaces with a focus on performance and perfected user experience, not to mention flawless search engine optimization that will put you at the top of the game.</p>
+		<h2>Web Services:</h2>
+		<p>We provide development services that focus on both fixing issues within your current application front-ends and building front-ends for your greenfield applications. Our front-end expertise includes working with PHP, HTMX, ReactJS, SCSS or simply constructing highly performant sites in root Javascript, CSS, and HTML. Whether your solution requires an update to its existing code, a rescuscitation of a broken code base, or you&apos;re starting fresh, we ensure smooth, responsive, and modern user interfaces with a focus on performance and perfected user experience, not to mention flawless search engine optimization that will put you at the top of the game.</p>
 		</SlidingSection>,
 		<SlidingSection image={{src: be.src, alt: 'backend'}}><h2>Backend Services:</h2>
 		<p>Our experienced developers can also provide excellent backends for your existing or greenfield applications as well. We specialize in solutions built with NodeJS or GoLang supported by MongoDB or SQL databases. Whether you need us to optimize, rescue, or create your backend systems, we provide scalable architectures that ensure secure, efficient, and reliable systems that provide every system the smoothest data handling and fastest performance around.</p>
@@ -26,7 +26,7 @@ const Services: FC = () => (<>
 		<SlidingSection image={{src: consult.src, alt: 'consulting'}}><h2>Consulting:</h2>
 		<p>Our consulting services offer expert guidance on software architecture, tooling, and optimization. We provide direction on both implementation and strategy for improving performance, scalability, maintainability, as well as marketing and SEO strategies to maximize your project&apos;s ROI. We ensure that you know how to deliver on your business goals consistently and with confidence.</p>
 		</SlidingSection>,
-		<SlidingSection className={style.interested}><h4>Interested? Good. Let&apos;s get  you on the path to your company&apos;s best future, today.</h4>
+		<SlidingSection image={{src: letsGo.src, alt: 'let\'s go!'}}className={style.interested}><h4>Interested? Good. Let&apos;s get  you on the path to your company&apos;s best future, today.</h4>
 		<Links />
 		</SlidingSection></>)
 	

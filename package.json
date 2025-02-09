@@ -10,7 +10,8 @@
     "start": "node server.js",
     "test": "node server.js test",
     "lint": "next lint",
-    "build-server": "tsc -p ./server-ts/tsconfig.json && cp -r ./server-ts/build/* ./ && rm -rf ./server-ts/build"
+    "build-server": "tsc -p ./server-ts/tsconfig.json && cp -r ./server-ts/build/* ./ && rm -rf ./server-ts/build",
+    "docker": "./.docker.sh"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

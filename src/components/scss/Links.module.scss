@@ -2,11 +2,21 @@
 @use "sass:map";
 
 .meet{
+	width: 50%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
+	@include forward.mobile{
+		width: 100%;
+		span{
+			display: none;	
+		}
+	}
 	.schedule{
+		width: 100%;
+		>button{
+			width: 100%;
+		}
 		margin-top: 20px;
 		h2,h3,h4,h5{
 			color: map.get(forward.$grey, xlight);
@@ -18,7 +28,13 @@
 	>div{
 		display: flex;
 		justify-content: space-around;
-		margin: 20px;
+		padding: 20px;
+		box-sizing: border-box	;
 		width: 100%;
+		>div{
+			flex: 1;
+			display: flex;
+			justify-content: center;
+		}
 	}
 }

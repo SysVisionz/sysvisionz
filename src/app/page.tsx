@@ -2,7 +2,7 @@
 import styles from './LandingPage.module.scss'
 import Links from '~/Links'
 import SlidingSection from '~/SlidingSection'
-import { nights, site } from '~/images'
+import { howWork, nights, noWorries, whatDo } from '~/images'
 
 export default function Home() {
   
@@ -15,19 +15,19 @@ export default function Home() {
                   </div>  
                 </header>
               </SlidingSection>
-              <SlidingSection>
+              <SlidingSection image={{src: noWorries.src, alt: 'no worries'}}>
                 <div className={styles['main-section']}>
                   <div className={styles['let-us']}>
                     <h5>When you’re bringing your ideas to life,</h5>
                     <h5>there can be a lot to worry about.</h5>
                     <br/>
                     <h5>Let us make sure one thing always goes right.</h5>
-                    <h2>Never worry<br/>about your website</h2>
+                    <h2>Never worry about your website</h2>
                   </div>
                 </div>
                 <Links />
               </SlidingSection>
-              <SlidingSection image={{src: site.src, alt: 'site image', fill: true}}> 
+              <SlidingSection image={{src: whatDo.src, alt: 'site'}}> 
                 <h2>What we Do</h2>
                 <p>
                   Here at SysVisionz, we believe that your website should be the least of your worries, and every team deserves to have the tools to realize their maximum potential. 
@@ -44,7 +44,7 @@ export default function Home() {
                   no matter what the future throws at you.
                 </p>
               </SlidingSection>
-              <SlidingSection>
+              <SlidingSection image={{src: howWork.src, alt: 'how work'}}>
                 <h2>How we Work</h2>
                 <p>
                   Our applications are built with the latest technologies, providing the performance and security you expect and deserve from your software.
@@ -56,7 +56,7 @@ export default function Home() {
                   Not only that, but our team has proven experience meeting security and compliance requirements for even HIPAA level data sensitivity
                 </p>
               </SlidingSection>
-              <SlidingSection className={styles.why} image={{src: nights.src, alt: 'why image', fill: true}}>
+              <SlidingSection className={styles.why} image={{src: nights.src, alt: 'why', fill: true}}>
                 <h2>Why SysVisionz?</h2>
                 <p>
                   When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.
@@ -68,12 +68,12 @@ export default function Home() {
                   After all, we know that your time is valuable, and we want to make sure that you can focus on what you do best, while we take care of the software development that makes your business not just survive, but thrive.
                 </p>
               </SlidingSection>
-              <SlidingSection><h3>
+              <SlidingSection className={styles["why-wait"]}><h3>
                 So why wait?<br/> 
                 Let&apos;s get to work.<br/>
                 Let our Systems build your Visions today.
               </h3>
-              <Links /></SlidingSection>
+              <Links className={styles["interested-links"]} /></SlidingSection>
             </>
   );
 }

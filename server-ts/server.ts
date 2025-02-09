@@ -15,7 +15,8 @@ config({path: `${__dirname}/.env`})
 const args = process.argv.slice(2);
 const dev = args.some(v => v === "dev");
 const test = args.some(v => v === 'test');
-const port = dev ? 8082 : test ? 8083 : Number(args.find(v => v.match(/^port=/))?.substring(5)) || 8080;
+console.log(args.find(v => v.match(/^port=/)) || 'no port')
+const port = Number(args.find(v => v.match(/^port=/))?.substring(5)) || (dev ? 8082 : test ? 8083 : 8080);
 const hostname = (dev || test) ? 'localhost' : process.env.NEXT_PUBLIC_HOSTNAME
 const project = process.env.NEXT_PUBLIC_PROJECT
 const app = next({ ...(dev ? {dev} : {}), hostname, port, dir: __dirname });

@@ -39,18 +39,15 @@
 .main-section .let-us{
 	margin-top: 30px;
 	h5{
-		text-align: center;
 		margin: 0;
-	}
-	h2{
-		text-align: center;
 	}
 }
 .meet{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	text-align: right;
 	.links{
 		display: flex;
 		flex-direction: column;
@@ -64,6 +61,13 @@
 	justify-content: space-between;
 	>div{
 		flex: 1;
+	}
+}
+.why-wait .interested-links{
+	width: 100%;
+	align-items: center;
+	a{
+		width: 50%
 	}
 }
 @keyframes reveallr{

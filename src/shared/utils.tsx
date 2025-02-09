@@ -2,57 +2,104 @@
 import { useEffect, useRef } from "react"
 
 
-export const useEffectDelay = ({triggers = [], delay = 500, onStart, onEnd}: {triggers?: any[], delay?: number, onStart?: () => void, onEnd?: ()=> void} = {}) => {
+type UseEffectDelayParameters = {
+	onStart?: () => void,
+	onEnd?: ()=> void,
+	resets?: boolean,
+	delay?: number
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const cleanObject = <T extends object >(object: T, test?: (val: any) => boolean) => Object.keys(object).reduce((newObj: Partial<T>, key: string) => {
+		if (test ? test(object[key as keyof T]) : object[key as keyof T] !== undefined){
+			newObj[key as keyof T] = object[key as keyof T]
+		}
+		return newObj
+}, {})
+
+export const makeHeaders = (headers: {[key: string]: string|number|boolean}) => new Headers(Object.keys(headers).map(v => [v, String(headers[v])]))
+
+export function useEffectDelay (parameters: UseEffectDelayParameters, 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+triggers: any[]): void
+export function useEffectDelay (func: () => void, 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+triggers: any[]): void
+export function useEffectDelay (funcOrParameters: UseEffectDelayParameters | (() => void),
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+triggers: any[]) {
 	const timeout = useRef<NodeJS.Timeout | null>(null)
-	const onStartFunc = useRef<(() => void) | undefined>(onStart)
-	const onEndFunc = useRef<(() => void) |undefined >(onEnd)
-	const clearTrigger = useRef<[() => void, () => void]>([() => {}, () => {}])
+	const {onStart, onEnd, resets, delay = 100} = typeof funcOrParameters === 'function' ? {onStart: funcOrParameters} : funcOrParameters
+	return useEffect(() => {
+		let time = timeout.current
+		if (!time){
+			onStart?.()
+			time = setTimeout(() => {
+				onEnd?.()
+				time = null;
+			}, delay)
+		}
+		else if (resets){
+			clearTimeout(time)
+			time = setTimeout(() => {
+				onEnd?.()
+				time = null;
+			})
+		}
+	}, [...triggers, delay, onEnd, onStart, resets])
+}
+
+export function useDelay
+<
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+T extends any[] = [], 
+S extends (...args: T) => void = (...args: T) => void,
+E extends (...args: T) => void = S
+> (parameters: {onStart?: S, onEnd?: E, resets?: boolean, rerunOnStart?: false }, delay?: number): S
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useDelay
+<
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+T extends any[] = [], 
+S extends (...args: T) => void = (...args: T) => void,
+E extends (...args: T) => void = S
+> (parameters: {onStart: S, onEnd?: E, resets?: boolean, rerunOnStart: true}, delay?: number): S
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useDelay<T extends any[] = [],
+S extends (...args: T) => void = (...args: T) => void
+>(onStart: S, delay?: number): S
+export function useDelay <
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+T extends any[] = [],
+S extends (...args: T) => void = (...args: T) => void,
+E extends (...args: T) => void = S>(parametersOrFunc: {onStart?: S, onEnd?: E, resets?: boolean, rerunOnStart?: boolean} | S, delay: number = 100){
+	const {onStart, onEnd, resets, rerunOnStart} = typeof parametersOrFunc === 'function' ? {onStart: parametersOrFunc} : parametersOrFunc
+	const timeout = useRef<NodeJS.Timeout | null>(null)
+	const onStartFunc = useRef<((...args: T) => void) | undefined>(onStart);
+	const onEndFunc = useRef<((...args: T) => void) | undefined>(onEnd);
 	useEffect(() => {
+		onStartFunc.current = onStart
+		onEndFunc.current = onEnd
+	}, [onStart, onEnd])
+	return (...args: T) => {
 		if (!timeout.current){
-			clearTrigger.current[0] = onStartFunc.current?.() || clearTrigger.current[0]
+			onStartFunc.current?.(...args)
 			timeout.current = setTimeout(() => {
-				clearTrigger.current[1] = onEndFunc.current?.() || clearTrigger.current[1]
+				onEndFunc.current?.(...args)
 				timeout.current = null;
 			}, delay)
 		}
-		return () => {
-			clearTrigger.current.forEach(v => {v()})
-		}
-	}, triggers)
-	return {
-		/** this will play at the start of the delay, and will not play again until the delay has completed and reset. */
-		start: (callback: () => void) => {
-			onStartFunc.current = callback
-			return {
-				/** this will play only at the end of the delay, not including any resets. */
-				after: (callback: () => void): void => {
-					onEndFunc.current = callback;
-				}
+		else if (resets){
+			clearTimeout(timeout.current)
+			if (rerunOnStart){
+				onStart?.(...args)
 			}
-		},
-		/** this will play only at the end of the delay, not including any resets. */
-		end: (callback: () => void) => {
-			onEndFunc.current = callback
-			return {
-				/** this will play at the start of the delay, and will not play again until the delay has completed and reset. */
-				before: (callback: () => void): void => {
-					onStartFunc.current = callback;
-				}
-			}
+			timeout.current = setTimeout(() => {
+				onEndFunc.current?.(...args)
+				timeout.current = null;
+			}, delay)
 		}
 	}
 }
 
-export const useDelay = ({onStart, onEnd, delay = 500}: {onStart?: () => void, onEnd?: () => void, delay?: number} = {}) => {
-	const timeout = useRef<NodeJS.Timeout | null>(null)
-	const onStartFunc = useRef<(() => void) | undefined>(onStart);
-	const onEndFunc = useRef<(() => void) | undefined>(onEnd);
-	return () => {
-		if (!timeout.current){
-			onStartFunc.current?.()
-			timeout.current = setTimeout(() => {
-				onEndFunc.current?.()
-			}, delay)
-		}
-	}
-}
+export const classNamer = (...args: (string | undefined | false | null)[]) => args.filter(v => v).join(' ')

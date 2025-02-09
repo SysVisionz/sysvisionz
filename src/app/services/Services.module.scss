@@ -1,0 +1,9 @@
+@use "forward.scss";
+@use "sass:map";
+
+.interested {
+	h4{
+			text-align: center;
+			text-shadow: map.get(forward.$shadow, clicked);
+		}
+}

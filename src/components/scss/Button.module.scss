@@ -2,17 +2,27 @@
 @use 'sass:map';
 
 .button {
-	background: linear-gradient(45deg, map.get(forward.$blue, light) 20%, map-get(forward.$blue, default) 70%, map-get(forward.$blue, dark) 100%);
-	color: forward.$background;
+	background: map.get(forward.$blue, light);
+	color: map.get(forward.$grey, xlight);
 	border: none;
-	text-decoration: none;
 	padding: 10px 20px;
+	text-decoration: none;
 	border-radius: 5px;
 	font-weight: bold;
-	transition: 200ms ease background-image, 200ms ease color;
-	box-shadow: forward.$shadow;
-	&:hover{
-		color: map.get(forward.$blue, xdark);
-		background: linear-gradient(45deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% )
+	transition: color 200ms ease;
+	box-shadow: map.get(forward.$shadow, default);
+	@include forward.mobile{
+		padding: 5px 10px;
+	}
+	.content {
+		transition: text-shadow 200ms ease;
+		text-shadow: map.get(forward.$shadow, clicked);
+		text-align: center;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		margin: 5px;
+	}
+	&:active{
+		box-shadow: map.get(forward.$shadow, clicked);
 	}
 }

@@ -1,35 +1,38 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import style from "./Style.module.scss";
+import SiteProvider from "../contexts/site";
+import Footer from "~/Footer";
+import Parallax from "~/Parallax";
+import { dev } from "~/images";
+import { ReactElement } from "react";
 import Topbar from "~/Topbar";
-import style from "./style.module.scss";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "SysVisionz",
   description: "SysVisionz, a website for the future",
-};
+}
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactElement<HTMLDivElement>[];
 }>) {
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${style.body}`}>
-        <div className={style.background} />
-        <Topbar />
-        <main className={style.main}>{children}</main>
+      <body className={style.body}>
+        <Parallax image={dev}>
+          <SiteProvider>
+              <Topbar/>
+                <main className={style.main} id="main">
+                  <div className={style.layout}>
+                    {children}
+                  </div>
+                </main>
+              <Footer />
+          </SiteProvider>
+        </Parallax>
       </body>
     </html>
   );

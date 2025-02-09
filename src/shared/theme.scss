@@ -1,18 +1,20 @@
 @use "sass:map";
 
 $black: ("xlight": #444, "light": #333, "default": #222, "dark": #111, "xdark": #000);
-$blue: ("xlight": #c1ecff, "light": #6FCAF1, "default": #156DDD, "dark": #1360c5, "xdark": #0a3c81);
+$blue: ("xlight": #adcfff, "light": #7ab2ff, "default": #4190ff, "dark": #205aac, "xdark": #09387a);
 $green: ("xlight": #c1ffcc, "light": #6FF1A8, "default": #1DD1A1, "dark": #0f9d8f, "xdark": #0a6a5f);
 $red: ("xlight": #ffccc1, "light": #f1a86f, "default": #d11d1d, "dark": #9d0f0f, "xdark": #6a0a0a);
 $yellow: ("xlight": #fff6c1, "light": #f1e16f, "default": #d1c11d, "dark": #9d8f0f, "xdark": #6a5f0a);
-$background: #F3EBED;
+$grey: (xlight: #FCFCFC, light: #D1C1C1, default: #A19191, dark: #918181, xdark: #716161);
+$gradient: linear-gradient(260deg, map.get($grey, xlight), map.get($blue, light));
+$deg: 40deg;
 @mixin mobile {
 	@media (max-width: 768px) {
 		@content;
 	}
 }
 @mixin tablet {
-	@media (min-width: 769px) and (max-width: 1024px) {
+	@media (max-width: 1024px) {
 		@content;
 	}
 }
@@ -26,11 +28,12 @@ $background: #F3EBED;
 		@content;
 	}
 }
-@mixin underline ($color: $background) {
+@mixin underline ($color: map.get($grey, xlight)) {
 	margin-bottom: 0;
 	position: relative;
 	&:before {
 		content: "";
+		box-shadow: map.get($shadow, clicked);
 		position: absolute;
 		top: 100%;
 		background-color: $color;
@@ -47,4 +50,4 @@ $background: #F3EBED;
 	}
 }
 
-$shadow: 2px 2px 5px map-get($black, light );
+$shadow: ("default": 2px 2px 5px map.get($black, light ), "clicked": 1px 1px 2px map.get($black, light));

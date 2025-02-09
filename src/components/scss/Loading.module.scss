@@ -1,0 +1,22 @@
+@use "sass:map";
+@use "forward.scss";
+.container{
+	position: relative;
+	height: 1em;
+	border-radius: .2em;
+	background-color: map.get(forward.$grey, xlight);
+	overflow: hidden;
+	box-shadow: map.get(forward.$shadow, default);
+	min-width: 200px;
+	.bar {
+		position: absolute;
+		border-radius: .2em;
+		left: 0;
+		top: 0;
+		width: 0;
+		transition: width 200ms ease;
+		height: 100%;
+		box-shadow: 1px 0 2px map.get(forward.$black, light);
+		background-color: map.get(forward.$blue, default);
+	}
+}

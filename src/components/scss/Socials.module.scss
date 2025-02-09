@@ -1,0 +1,10 @@
+.socials{
+	display: flex;
+	flex: 1;
+	justify-content: space-around;
+	align-items: center;
+	a{
+		height: 40px;
+		width: 40px;
+	}
+}

@@ -1,0 +1,17 @@
+.text.editing{
+	position: relative;
+	.label{
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		transition: transform 400ms ease;
+		&:focus + input{
+			transform: scale(0.8);
+			background-color: white;
+		}
+	}
+}
+.container>div{
+	display: flex;
+	justify-content: space-between;
+}

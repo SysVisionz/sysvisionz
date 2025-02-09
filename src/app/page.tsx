@@ -1,48 +1,79 @@
 'use client'
-import { type FC, useEffect, useState } from 'react'
-import styles from '~/scss/LandingPage.module.scss'
-import Layout from '~/Layout'
-import LineDrawer from '~/LineDrawer'
-import Button from '~/Button'
+import styles from './LandingPage.module.scss'
+import Links from '~/Links'
+import SlidingSection from '~/SlidingSection'
+import { howWork, nights, noWorries, whatDo } from '~/images'
 
 export default function Home() {
-	const [started, setStarted] = useState<boolean>(false)
-	useEffect(() => {
-		setStarted(true)
-	})
-  return (
-          <Layout>
-            <div className={styles.title} key="title-div">
-              <div className={styles['sys-vis']}>
-                <div className={`${styles.first} ${started ? ` ${styles.show}` : ''}`}>
-                  <h1>Our Systems</h1>
+  
+  // const {breakpoint} = useContext(siteContext)
+  return (<>
+              <SlidingSection>
+                <header className={styles['sys-vis']}>
+                  <div className={styles.first}>
+                    <h1>Our Systems, Your Visions</h1>
+                  </div>  
+                </header>
+              </SlidingSection>
+              <SlidingSection image={{src: noWorries.src, alt: 'no worries'}}>
+                <div className={styles['main-section']}>
+                  <div className={styles['let-us']}>
+                    <h5>When you’re bringing your ideas to life,</h5>
+                    <h5>there can be a lot to worry about.</h5>
+                    <br/>
+                    <h5>Let us make sure one thing always goes right.</h5>
+                    <h2>Never worry about your website</h2>
+                  </div>
                 </div>
-                <div className={`${styles.second} ${started ? ` ${styles.show}` : ''}`}>
-                  <h1>Your Visions</h1>
-                </div>
-                <div className={styles.lines}>
-                  <LineDrawer size={4} width={20} position={{x: -120, y: -10 }} delay={200} duration={100} direction="down" />
-                  <LineDrawer size={4} width={32} position={{x: -122, y: -30 }} delay={375} duration={100} direction="right" />
-                </div>
-              </div>
-              <div className={styles['let-us']}>
-                <h5>When you’re bringing your ideas to life,</h5>
-                <h5>there can be a lot to worry about.</h5>
-                <br/>
-                <h5>Let us make sure one thing always goes right.</h5>
-                <h2>Never worry<br/>about your website</h2>
-              </div>
-              <div className={styles.meet}>
-                <Button navigate="meet.sysvisionz.com">Schedule a Meeting</Button>
-                <div className={styles.links}>
-                  Call us at <a href="tel:5417357873">(541) 735-7873</a><br/>
-                  Email us at <a href="mailto:contact@sysvisionz.com">contact@sysvisionz.com</a>
-                </div>
-              </div>
-            </div>
-             <div>
-
-            </div>
-          </Layout>
+                <Links />
+              </SlidingSection>
+              <SlidingSection image={{src: whatDo.src, alt: 'site'}}> 
+                <h2>What we Do</h2>
+                <p>
+                  Here at SysVisionz, we believe that your website should be the least of your worries, and every team deserves to have the tools to realize their maximum potential. 
+                  We are dedicated to providing custom tailored software development for your business, as well as 
+                  providing guidance on how your team can onboard, mentor, and improve your own developers, settng you up for success now and in the future.
+                </p>
+                <p>
+                  Our goal is your goal; to make your business thrive in the rapidly shifting, unpredictable tech landscape.
+                  Our experienced team of developers work closely with you to build, refine, or refactor your application.
+                </p>
+                <p>
+                  If you have a team already, we work closely with your developers to help them revitalize their innovative spirit
+                  giving them the tools and ways of working that will provide your business with the edge it needs to stay on top,
+                  no matter what the future throws at you.
+                </p>
+              </SlidingSection>
+              <SlidingSection image={{src: howWork.src, alt: 'how work'}}>
+                <h2>How we Work</h2>
+                <p>
+                  Our applications are built with the latest technologies, providing the performance and security you expect and deserve from your software.
+                </p>
+                <p>
+                  Whether your application is internal or customer facing, we work with you to ensure that it not only meets your specifications, but provides a future-proof, scalable and maintainable solution that will keep you prepared to meet all your business needs.
+                </p>
+                <p>
+                  Not only that, but our team has proven experience meeting security and compliance requirements for even HIPAA level data sensitivity
+                </p>
+              </SlidingSection>
+              <SlidingSection className={styles.why} image={{src: nights.src, alt: 'why', fill: true}}>
+                <h2>Why SysVisionz?</h2>
+                <p>
+                  When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.
+                </p>
+                <p>
+                  With extensive experience in the industry, we know what works and what doesn&apos;t, and have the experience to know the right questions to ask to ensure you get what you want the first time.
+                </p>
+                <p>
+                  After all, we know that your time is valuable, and we want to make sure that you can focus on what you do best, while we take care of the software development that makes your business not just survive, but thrive.
+                </p>
+              </SlidingSection>
+              <SlidingSection className={styles["why-wait"]}><h3>
+                So why wait?<br/> 
+                Let&apos;s get to work.<br/>
+                Let our Systems build your Visions today.
+              </h3>
+              <Links className={styles["interested-links"]} /></SlidingSection>
+            </>
   );
 }

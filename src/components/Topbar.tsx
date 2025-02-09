@@ -3,40 +3,59 @@ import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
 import { FC, useContext, useEffect, useRef, useState } from "react";
 import { userContext } from '../contexts/user';
+import Link from 'next/link';
+import { useDelay } from '~/shared/utils';
 
 /** this component changes height, as well as the logo size/type */
 const Topbar: FC = () => {
 	const [atTop, setAtTop] = useState<boolean>(true)
+	const [tablet, setTablet] = useState<boolean>(false)
 	const spacer = useRef<HTMLDivElement>(null)
+	const iObserv = useRef<IntersectionObserver>()
+	const setTabSize = useDelay({onEnd: () => {
+		if (tablet !== window.innerWidth <= 768){
+			setTablet(window.innerWidth <= 768)
+		}
+	}}, 300)
+	const observer = useRef<ResizeObserver>()
 	useEffect(() => {
-		const iObserv = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting){
-				setAtTop(true)
-			} else {
-				setAtTop(false)
-			}
-		}, {threshold: 0.1})
-		if (!(typeof window === 'undefined')){
+		if (!iObserv.current){
+			iObserv.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting){
+					setAtTop(true)
+				} else {
+					setAtTop(false)
+				}
+			}, {threshold: 0.8})
+		}
+		if (!observer.current) { observer.current = new ResizeObserver(setTabSize) }
+		if (typeof window !== 'undefined'){
 			setAtTop(window.scrollY <= 70)
+			if (tablet !== window.innerWidth <= 768){
+				setTablet(window.innerWidth <= 768)
+			}
 		}
-		spacer.current && iObserv.observe(spacer.current)
+		if (spacer.current){ iObserv.current.observe(spacer.current) }
+		if (observer.current && typeof window !== 'undefined') { observer.current.observe(document.body) }
 		return () => {
-			spacer.current && iObserv.unobserve(spacer.current)
+			if (spacer.current) {iObserv.current?.unobserve(spacer.current)}
+			if (observer.current) {observer.current?.disconnect()}
 		}
-		
 	}, [])
 	const {user} = useContext(userContext)
 	return<>
 		<div ref={spacer} className={`${style.spacer}${atTop ? ` ${style.top}` : ""}`}></div>
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
-			<div className={style.logo}><Logo style={atTop ? 'large' : 'small'}/></div>
+			<div className={style.logo}><Link href="/"><Logo {...(atTop ? tablet ? {style: 'small'} : {} : {
+				color: 'blue',
+				style: 'small'
+			})} /></Link></div>
 			<div className={style.links}>
-				<a href="/about">About</a>
-				<a href="/services">Services</a>
-				<a href="/contact">Contact</a>
+				<Link href="/"><h2>Home</h2></Link>
+				<Link href="/services"><h2>Services</h2></Link>
 			</div>
 			<div style={{display: 'none'}}>
-				{/* {user.privLevel ? : <button>Login</button>} */}
+				{user.privLevel ? <div>{user.displayName}</div> : <button>Login</button>}
 			</div>
 		</div>
 	</>

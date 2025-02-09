@@ -1,17 +1,30 @@
+import Image from 'next/image';
 import styles from './scss/Logo.module.scss'
-import { type FC, useRef, useState } from "react";
+import type { FC } from "react";
 import { logo } from '~/images';
+// import icons from '~/icons'
 
 const Logo: FC<{
 	style?: 'large' | 'small',
 	color?: 'gold' | 'blue'
 }> = ( {style = 'large', color = 'blue'}) => {
-	const lg = useRef<HTMLImageElement>(null)
-	const sm = useRef<HTMLImageElement>(null)
-
 	return <div className={styles.container}>
-		<img ref={lg} className={`${styles.large}${style === 'large' ? ` ${styles.show}` : ''}`} src={logo.large[color].src} alt="logo-lg" />
-		<img ref={sm} className={`${styles.small}${style === 'small' ? ` ${styles.show}` : ''}`} src={logo.small[color].src} alt="logo-sm" />
+		{
+			(Object.entries(logo) as [keyof typeof logo, ((typeof logo)[keyof typeof logo])][]).reduce((full, [size, value]) => {
+				return full.concat(Object.entries(value).reduce((full, [theColor, {src, width, height}]) => {
+					return full.concat(<Image 
+						key={`${size}-${theColor}`}
+						width={width} 
+						height={height}
+						className={`${styles.large}${style === size && theColor === color ? ` ${styles.show}` : ''}`} 
+						src={src}
+						alt={`logo-${size}-${theColor}`}
+						
+					/>)
+				}, [] as JSX.Element[]))
+			}, [] as JSX.Element[])
+		}
+		
 	</div>
 }
 

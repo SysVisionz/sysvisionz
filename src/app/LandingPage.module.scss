@@ -1,0 +1,97 @@
+@use 'forward.scss';
+@use 'sass:map';
+
+.logo{
+	display: flex;
+	justify-content: center;
+	img{
+		max-width: 80%;
+	}
+}
+.sys-vis{
+	.first, .second{
+		h1{
+			text-align: center;
+			white-space: nowrap;
+			margin: 10px 0 0 0;
+			white-space:initial;
+		}
+	}
+	.first{
+		position: relative;
+		&.show{
+			h1{
+				display: block;
+				animation: reveallr 400ms forwards;
+			}
+		}
+	}
+	.second{
+		position: relative;
+		&.show{
+			h1{
+				display: block;
+				animation: revealrl 800ms forwards;
+			}
+		}
+	}
+}
+.main-section .let-us{
+	margin-top: 30px;
+	h5{
+		margin: 0;
+	}
+}
+.meet{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	text-align: right;
+	.links{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-top: 30px;
+	}
+}
+.main-section{
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	>div{
+		flex: 1;
+	}
+}
+.why-wait .interested-links{
+	width: 100%;
+	align-items: center;
+	a{
+		width: 50%
+	}
+}
+@keyframes reveallr{
+	from{
+		opacity: 0;
+		clip-path: inset(0 0 0 100%);
+	}
+	to{
+		opacity: 1;
+		clip-path: inset(0 0 0 0);
+	}
+}
+@keyframes revealrl{
+	0%{
+		opacity: 0;
+		clip-path: inset(0 100% 0 0);
+	}
+	66%{
+		opacity: 0;
+		clip-path: inset(0 100% 0 0);
+	}
+	
+	100%{
+		opacity: 1;
+		clip-path: inset(0 0 0 0);
+	}
+}

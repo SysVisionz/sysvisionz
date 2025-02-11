@@ -1,12 +1,10 @@
 import fs from "node:fs";
 import next from "next";
-import compression from "compression";
 import spdy from "spdy";
 import express, { Request, Response } from "express";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { config } from 'dotenv'
-import { set } from "mongoose";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 

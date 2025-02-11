@@ -46,8 +46,8 @@ function SlidingSection({ children, className, image, title, mobile }: {children
 			return () => window.removeEventListener('scroll', inout)
 		}
 	}, [inout])
-	return <div ref={section} className={classNamer(style.section, show && style.show, className)}>
-		<div className={`${style.content}${image ? ` ${style['with-image']}` : ''}`}>
+	return <div ref={section} className={classNamer(style.section, show && style.show)}>
+		<div className={classNamer(style.content, !!image && style['with-image'], className)}>
 			{image ? <div className={style.image}><Image src={image.src} alt={image.alt} {...(image.height ? {height: image.height, width: image.width} : image.fill !== undefined ? {fill: image.fill} : {fill: true})}/></div> : null}
 			{title ? <h2>{title}</h2> : null}
 			<div {...(mobile ? {className: style.desktop} : {})}>{children}</div>

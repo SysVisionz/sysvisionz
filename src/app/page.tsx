@@ -30,42 +30,31 @@ export default function Home() {
               <SlidingSection image={{src: whatDo.src, alt: 'site'}}> 
                 <h2>What we Do</h2>
                 <p>
-                  Here at SysVisionz, we believe that your website should be the least of your worries, and every team deserves to have the tools to realize their maximum potential. 
-                  We are dedicated to providing custom tailored software development for your business, as well as 
-                  providing guidance on how your team can onboard, mentor, and improve your own developers, settng you up for success now and in the future.
+                  At SysVisionz, we believe that your applications should be the least of your worries.
                 </p>
                 <p>
-                  Our goal is your goal; to make your business thrive in the rapidly shifting, unpredictable tech landscape.
-                  Our experienced team of developers work closely with you to build, refine, or refactor your application.
-                </p>
-                <p>
-                  If you have a team already, we work closely with your developers to help them revitalize their innovative spirit
-                  giving them the tools and ways of working that will provide your business with the edge it needs to stay on top,
-                  no matter what the future throws at you.
+                  Our goal is your goal; to provide you with the team to make your business thrive in the rapidly changing tech landscape,
                 </p>
               </SlidingSection>
               <SlidingSection image={{src: howWork.src, alt: 'how work'}}>
                 <h2>How we Work</h2>
                 <p>
-                  Our applications are built with the latest technologies, providing the performance and security you expect and deserve from your software.
+                  Our applications are built with the latest technologies, providing top tier performance and security.
                 </p>
                 <p>
-                  Whether your application is internal or customer facing, we work with you to ensure that it not only meets your specifications, but provides a future-proof, scalable and maintainable solution that will keep you prepared to meet all your business needs.
-                </p>
-                <p>
-                  Not only that, but our team has proven experience meeting security and compliance requirements for even HIPAA level data sensitivity
+                  Whether your application is for your team or for your clients, we ensure you have a future-proof, scalable and maintainable solution.
                 </p>
               </SlidingSection>
               <SlidingSection className={styles.why} image={{src: nights.src, alt: 'why', fill: true}}>
                 <h2>Why SysVisionz?</h2>
                 <p>
-                  When you choose us, you can be assured that your applications will be delivered with the care and attention to detail you have always wanted from your contractors.
+                  When you choose us, you can be assured that your applications are delivered with the care and attention to detail.
                 </p>
                 <p>
-                  With extensive experience in the industry, we know what works and what doesn&apos;t, and have the experience to know the right questions to ask to ensure you get what you want the first time.
+                  Our extensive experience ensures we know how to ensure you get what you want the first time.
                 </p>
                 <p>
-                  After all, we know that your time is valuable, and we want to make sure that you can focus on what you do best, while we take care of the software development that makes your business not just survive, but thrive.
+                  We know that your time is valuable, and we ensure you can focus on what you do best, while we give you the tools to not just survive, but thrive.
                 </p>
               </SlidingSection>
               <SlidingSection className={styles["why-wait"]}><h3>

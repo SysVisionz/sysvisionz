@@ -6,6 +6,7 @@ import Parallax from "~/Parallax";
 import { dev } from "~/images";
 import { ReactElement } from "react";
 import Topbar from "~/Topbar";
+import "./global.css"
 
 
 export const metadata: Metadata = {

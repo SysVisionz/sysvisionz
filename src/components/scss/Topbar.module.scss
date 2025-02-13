@@ -50,7 +50,7 @@ $mobile-height: 70px;
 			@include forward.underline;
 			text-shadow: map.get(forward.$shadow, clicked);
 			text-decoration: none;
-			color: map-get(forward.$grey, xlight );
+			color: map.get(forward.$grey, xlight );
 			&:before{
 				color: map.get(forward.$blue, xdark);
 				background-color: map.get(forward.$grey, xlight);

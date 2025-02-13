@@ -2,7 +2,7 @@
 @use 'sass:map';
 
 .button {
-	background: linear-gradient(forward.$deg, map.get(forward.$blue, light) 20%, map-get(forward.$blue, default) 70%, map-get(forward.$blue, dark) 100%);
+	background: linear-gradient(forward.$deg, map.get(forward.$blue, light) 20%, map.get(forward.$blue, default) 70%, map.get(forward.$blue, dark) 100%);
 	color: map.get(forward.$grey, xlight);
 	border: none;
 	padding: 4px 3px 0px 3px;
@@ -13,6 +13,6 @@
 	box-shadow: map.get(forward.$shadow, default);
 	&:hover{
 		color: map.get(forward.$blue, xdark);
-		background: linear-gradient(forward.$deg, map-get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% );
+		background: linear-gradient(forward.$deg, map.get(forward.$blue, dark) 0%, map.get(forward.$blue, light) 70% );
 	}
 }

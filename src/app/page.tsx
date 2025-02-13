@@ -1,4 +1,5 @@
 'use client'
+import Head from 'next/head'
 import styles from './LandingPage.module.scss'
 import Links from '~/Links'
 import SlidingSection from '~/SlidingSection'
@@ -8,6 +9,7 @@ export default function Home() {
   
   // const {breakpoint} = useContext(siteContext)
   return (<>
+              <Head><title>SysVisionz: Our Systems, Your Visionz</title></Head>
               <SlidingSection>
                 <header className={styles['sys-vis']}>
                   <div className={styles.first}>

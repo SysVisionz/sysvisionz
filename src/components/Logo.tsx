@@ -1,28 +1,30 @@
 import Image from 'next/image';
 import styles from './scss/Logo.module.scss'
-import type { FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { logo } from '~/images';
 // import icons from '~/icons'
 
 const Logo: FC<{
-	style?: 'large' | 'small',
 	color?: 'gold' | 'blue'
-}> = ( {style = 'large', color = 'blue'}) => {
+}> = ( settings ) => {
+	const [theColor, setColor] = useState<Required<typeof settings.color>>()
+	useEffect(() => {
+		const {color= "blue"} = settings
+		setColor(color)
+	}, [settings.color])
 	return <div className={styles.container}>
 		{
-			(Object.entries(logo) as [keyof typeof logo, ((typeof logo)[keyof typeof logo])][]).reduce((full, [size, value]) => {
-				return full.concat(Object.entries(value).reduce((full, [theColor, {src, width, height}]) => {
+			(Object.entries(logo) as [keyof typeof logo, ((typeof logo)[keyof typeof logo])][]).reduce((full, [color, {src, width, height}]) => {
 					return full.concat(<Image 
-						key={`${size}-${theColor}`}
+						key={`logo-${color}`}
 						width={width} 
 						height={height}
-						className={`${styles.large}${style === size && theColor === color ? ` ${styles.show}` : ''}`} 
+						className={`${styles.large}${color === theColor ? ` ${styles.show}` : ` ${styles.hide}`}`} 
 						src={src}
-						alt={`logo-${size}-${theColor}`}
+						alt={`logo-${color}`}
 						
 					/>)
-				}, [] as JSX.Element[]))
-			}, [] as JSX.Element[])
+				}, [] as JSX.Element[])
 		}
 		
 	</div>

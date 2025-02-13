@@ -8,7 +8,7 @@
 	align-items: center;
 	font-size: 24px;
 	font-family: "Josefin Sans", serif;
-	background: linear-gradient(forward.$deg, map.get(forward.$grey, xlight), map.get(forward.$blue, default));
+	background: linear-gradient(forward.$deg, map.get(forward.$grey, xlight), map.get(forward.$blue, xlight));
 	@include forward.mobile{
 		font-size: 10px;
 	}

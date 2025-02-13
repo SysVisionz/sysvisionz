@@ -1,8 +1,8 @@
 @use "forward.scss";
 
 .container {
-	height: 90%;
-	position: relative;
+	height: 120%;
+	position: absolute;
 	box-sizing: border-box;
 	width: 400px;
 	@include forward.mobile {
@@ -10,17 +10,29 @@
 	}
 	img {
 		box-sizing: border-box;
-		opacity: 0;
 		top: 0;
-		transition: opacity 400ms ease;
+		opacity: 0;
 		height: 100%;
 		width: auto;
 		position: absolute;
+		transition: opacity 300ms ease;
 		&.show {
+			opacity: 1;
+			animation: show forwards 300ms;
 			position: relative;
 			top: 0;
-			transition: 50ms 100ms ease opacity;
-			opacity: 1;
 		}
+	}
+}
+
+@keyframes show {
+	0% {
+		opacity: 0;
+	}
+	50%{
+		opacity: 0;
+	}
+	100%{
+		opacity: 100%;
 	}
 }

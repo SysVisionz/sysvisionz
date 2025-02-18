@@ -7,6 +7,7 @@ import { dev } from "~/images";
 import { ReactElement } from "react";
 import Topbar from "~/Topbar";
 import "./global.css"
+import favicon from "./favicon.ico";
 
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <link rel="apple-touch-icon" href={favicon.src} />
       <body className={style.body}>
         <Parallax image={dev}>
           <SiteProvider>

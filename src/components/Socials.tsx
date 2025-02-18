@@ -1,8 +1,10 @@
 import style from './scss/Socials.module.scss'
 import Icon from './Icon'
-const Socials = () => {
+import { FC } from 'react'
+import { classNamer } from '~/shared/utils'
+const Socials: FC<{className?: string}> = ({className}) => {
 	return (
-		<div className={style.socials}>
+		<div className={classNamer(style.socials, className)}>
 			<div>
 				<a href="https://www.linkedin.com/company/sysvisionz">
 					<Icon category='social' icon="linkedin" />

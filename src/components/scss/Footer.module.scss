@@ -1,15 +1,14 @@
 @use "forward.scss";
 @use "sass:map";
-.spacer{
-	height: 170px;
+.spacer, .footer{
 	width: 100%;
+	box-sizing: content-box;
 }
 .footer{
+	padding: 10px 0;
 	z-index: 1000;
 	position: fixed;
 	bottom: 0;
-	width: 100%;
-	padding: 10px;
 	display: flex;
 	justify-content: center;
 	background: map.get(forward.$blue, xlight);
@@ -22,9 +21,9 @@
 		width: 70%;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		align-items: space-around;
 		.content{
-			margin-bottom: 20px;
 			display: flex;
 			justify-content: space-around;
 			.meet{

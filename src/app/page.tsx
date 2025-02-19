@@ -50,10 +50,10 @@ export default function Home() {
               <SlidingSection className={styles.why} image={{src: nights.src, alt: 'why', fill: true}}>
                 <h2>Why SysVisionz?</h2>
                 <p>
-                  When you choose us, you can be assured that your applications are delivered with the care and attention to detail.
+                  When you choose us, you can be assured that your applications are delivered with the care and attention to detail you've always wanted.
                 </p>
                 <p>
-                  Our extensive experience ensures we know how to ensure you get what you want the first time.
+                  Our extensive experience ensures we know how to ensure you get what you want the first time, and make sure that happens.
                 </p>
                 <p>
                   We know that your time is valuable, and we ensure you can focus on what you do best, while we give you the tools to not just survive, but thrive.

@@ -26,10 +26,16 @@
 		.content{
 			display: flex;
 			justify-content: space-around;
+			margin-bottom: 5px;
 			.meet{
 				flex: 1;
 				display: flex;
 				justify-content: center;
+			}
+			@include forward.mobile{
+				h3{
+					font-size: 1em;
+				}
 			}
 		}
 		.attributions{

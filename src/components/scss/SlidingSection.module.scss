@@ -59,6 +59,9 @@
 			border-radius: 0 3px 3px 0;
 			img{
 				object-fit:cover;
+				@include forward.mobile{
+					object-position: 70%;
+				}
 			}
 		}
 	}
@@ -81,6 +84,11 @@
 				right: unset;
 				left: 0;
 				mask-image: linear-gradient(to left, transparent 0% 25%, black 70% 100%);
+				@include forward.mobile{
+					img {
+						object-position: 30%;
+					}
+				}
 			}
 		}
 		h1, h2{

@@ -1,3 +1,6 @@
+@use "forward.scss";
+@use "sass:map";
+
 .socials{
 	display: flex;
 	flex: 1;
@@ -7,5 +10,9 @@
 		display: inline-block;
 		height: 40px;
 		width: 40px;
+		@include forward.mobile{
+			height:30px;
+			width: 30px;
+		}
 	}
 }

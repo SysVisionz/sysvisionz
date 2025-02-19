@@ -33,6 +33,14 @@
 		box-sizing: border-box	;
 		width: 100%;
 		>div{
+			a{
+				height:40px;
+				width: 40px;
+				@include forward.mobile{
+					height: 30px;
+					width: 30px;
+				}
+			}
 			display: flex;
 			align-items: center;
 			flex: 1;

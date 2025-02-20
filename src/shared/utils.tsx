@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 
 type UseEffectDelayParameters = {
@@ -103,3 +103,26 @@ E extends (...args: T) => void = S>(parametersOrFunc: {onStart?: S, onEnd?: E, r
 }
 
 export const classNamer = (...args: (string | undefined | false | null)[]) => args.filter(v => v).join(' ')
+
+type SearchObject<T> = T & {toSearchString: () => string}
+
+export const useSearch = <T extends {[key: string]: string | number | boolean} = {[key: string]: string | number | boolean}>(): SearchObject<T> => {
+	const [search, setSearch] = useState<SearchObject<T>>({} as SearchObject<T>)
+	useEffect(() => {
+		if (typeof window !== 'undefined'){
+			setSearch(() => {
+				const s: SearchObject<T>  = location.search.slice(1).split('&').reduce((obj: SearchObject<T>, v) => {
+					const [key, value] = v.split('=').map(decodeURIComponent)
+					obj[key as keyof SearchObject<T>] = (!isNaN(Number(value)) ? Number(value)
+						: value === 'true' ? true
+						: value === 'false' ? false
+						: value) as SearchObject<T>[keyof SearchObject<T>]
+					return obj
+				}, {} as SearchObject<T>)
+				s.toSearchString = () => `?${Object.entries(s).map(v => `${encodeURIComponent(v[0])}=${encodeURIComponent(v[1].toString())}`).join('&')}`
+				return s
+			})
+		}
+	}, [])
+	return search
+}

@@ -3,24 +3,29 @@ import style from './scss/ExpandingList.module.scss'
 
 export default function ExpandingList(props: {
 	id: string,
+	label?: string,
 	list: string[],
 	box: true,
 	onChange: (v: string[]) => void
 }): ReactNode
 export default function ExpandingList(props: {
 	id: string,
+	label?: string,
 	list: string[],
 	box?: false,
 	onChange: (v: string[]) => void
 }): ReactNode
-export default function ExpandingList({id, list, onChange, box}: {
+export default function ExpandingList({id, list, label, onChange, box}: {
 	id: string,
+	label?: string,
 	list: string[],
 	box?: boolean,
 	onChange: (v: string[]) => void
 }){
-	console.log(id, onChange, box)
-	const [listVals, setListVals] = useState<[string, number, boolean][]>(list.map((v: string, i: number) => [v, i, true]))
+	const [
+		/** listVals is a list containing each entry with a series consisting of the value, current id, and whether it's been deleted. */
+		listVals
+	, setListVals] = useState<[string, number, boolean][]>(list.map((v: string, i: number) => [v, i, true]))
 	const [editing, setEditing] = useState<number | null>(null)
 	const timeouts = useRef<[NodeJS.Timeout, number][]>([])
 	console.log(editing)
@@ -50,13 +55,13 @@ export default function ExpandingList({id, list, onChange, box}: {
 	}
 	console.log(edit, remove, notEditing, add)
 	useEffect(() => {
-		// onChange(listVals.reduce((list: (string|number|boolean)[], v: [string | number | boolean, boolean]) => {
-		// 	const [value, active] = v;
-		// 	if (active){
-		// 		list = [...list, value]
-		// 	}
-		// 	return list
-		// }, [] as string | boolean)[]) as string[] | boolean[])
+		onChange(listVals.reduce((list: (string|number|boolean)[], v: [string | number | boolean, boolean]) => {
+			const [value, active] = v;
+			if (active){
+				list = [...list, value]
+			}
+			return list
+		}, [] as string | boolean)[]) as string[] | boolean[])
 	}, [listVals])
 	return <div className={style.container}>
 		

@@ -1,6 +1,6 @@
 import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import EditButtons from "./EditButtons";
-import style from './scss/ChangingInput.module.scss'
+import style from './scss/Input.module.scss'
 import Icon from "./Icon";
 // import {Checkbox} from './changingInput'
 
@@ -20,23 +20,23 @@ function ChangingInput(props: {
 	expanding?: never
 } & ChangingInputCore<string>): ReactNode
 function ChangingInput(props: {
-	type: 'box',
+	type: 'textbox',
 	expanding?: boolean
 } & ChangingInputCore<string>): ReactNode
 function ChangingInput(props: {
 	expanding?: never
 	type?: 'checkbox',
 } & ChangingInputCore<boolean>): ReactNode
-function ChangingInput({type = 'text', editing, previous, value = "", label, save, className, id, expanding}: {type?: 'checkbox' | 'text' | 'box', expanding?: boolean | never} & (ChangingInputCore<boolean> | ChangingInputCore<string>) = {type: 'text', value: '', save: () => {}, }){
+function ChangingInput({type = 'text', editing, previous, value = "", label, save, className, id, expanding}: {type?: 'checkbox' | 'text' | 'textbox', expanding?: boolean | never} & (ChangingInputCore<boolean> | ChangingInputCore<string>) = {type: 'text', value: '', save: () => {}, }){
 	const [editingVal, setEditing] = useState(editing || false)
 	const [val, setValue] = useState(value)
 	const needsFocus = useRef(false)
 	const Router: {
-		[K in 'checkbox' | 'text' | 'box']: ReactNode
+		[K in 'checkbox' | 'text' | 'textbox']: ReactNode
 	} = {
 		text: <input type="text" value={val as string} onChange={e => setValue(e.target.value)} />,
 		checkbox: <input type="checkbox" checked={val as boolean} onChange={e => setValue(e.target.checked)} />,
-		box: <textarea value={val as string} onChange={e => setValue(e.target.value)} />
+		textbox: <textarea value={val as string} onChange={e => setValue(e.target.value)} />
 	}
 	const container = useRef<HTMLDivElement|HTMLFormElement>(null)
 	const [isForm, setIsForm] = useState<boolean>()
@@ -61,7 +61,7 @@ function ChangingInput({type = 'text', editing, previous, value = "", label, sav
 		editingVal 
 		? Router[type || 
 			typeof value === 'string' 
-			? expanding ? 'box' : 'text'
+			? expanding ? 'textbox' : 'text'
 			: 'checkbox']
 		: typeof value === 'string' ? <p>{value}</p> : <Icon category="interfce" icon={value ? "checkboxCheck" : "checkboxUnchecked"} />
 		}</div><div><EditButtons {...(!editingVal ? {

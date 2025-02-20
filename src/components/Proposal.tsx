@@ -2,7 +2,7 @@
 import { ChangeEvent, Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { useSiteNotify } from "~/contexts/notification";
 import { cleanObject, useDelay } from "~/shared/utils";
-import ChangingInput from "./ChangingInput";
+import ChangingInput from "./Input";
 
 
 export interface ProposalProps{

@@ -63,14 +63,19 @@
 
 		}
 		@include forward.mobile{
+			
 			>div:not(.image){
 				padding-right: 0;
 			}
 			.image{
 				height: 100%;
 				top: unset;
-				bottom:0;
+				bottom:50%;
+				transform: translateY(50%);
+
 				padding-right: 0;
+				max-height: 220px;
+				mask-image: linear-gradient(to right, transparent 0% 35%, black 60% 100%);
 				img{
 					object-position: 70%;
 				}

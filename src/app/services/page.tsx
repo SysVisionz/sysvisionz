@@ -26,7 +26,7 @@ const Services: FC = () => (<>
 		<SlidingSection image={{src: consult.src, alt: 'consulting'}}><h2>Consulting:</h2>
 		<p>Our consulting services offer expert guidance on software architecture, tooling, and optimization. We provide direction on both implementation and strategy for improving performance, scalability, maintainability, as well as marketing and SEO strategies to maximize your project&apos;s ROI. We ensure that you know how to deliver on your business goals consistently and with confidence.</p>
 		</SlidingSection>,
-		<SlidingSection image={{src: letsGo.src, alt: 'let\'s go!'}}className={style.interested}><h4>Interested? Good. Let&apos;s get  you on the path to your company&apos;s best future, today.</h4> their 
+		<SlidingSection image={{src: letsGo.src, alt: 'let\'s go!'}}className={style.interested}><h4>Interested? Good. Let&apos;s get  you on the path to your company&apos;s best future, today.</h4>
 		<Links />
 		</SlidingSection></>)
 	

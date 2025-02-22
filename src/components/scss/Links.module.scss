@@ -9,7 +9,7 @@
 	span{
 		height: fit-content;
 	}
-	@include forward.mobile{
+	@include forward.tablet{
 		width: 100%;
 		span{
 			display: none;	
@@ -33,6 +33,10 @@
 		box-sizing: border-box	;
 		width: 100%;
 		>div{
+			display: flex;
+			align-items: center;
+			flex: 1;
+			justify-content: center;
 			a{
 				height:40px;
 				width: 40px;
@@ -41,10 +45,6 @@
 					width: 30px;
 				}
 			}
-			display: flex;
-			align-items: center;
-			flex: 1;
-			justify-content: center;
 		}
 	}
 	h3{

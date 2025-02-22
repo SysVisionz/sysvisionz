@@ -1,6 +1,25 @@
 @use 'sass:map';
 @use "forward.scss";
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Markazi+Text:wght@400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+	font-family: "Josefin Sans";
+	src:
+		local("Josefin Sans"),
+		url("../fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Roboto";
+	src:
+		local("Roboto"),
+		url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Markazi Text";
+	src:
+		local("Markazi Text"),
+		url("../fonts/Markazi_Text/MarkaziText-VariableFont_wght.ttf") format("truetype");
+}
+
+
 
 .body{
 	margin:0;
@@ -8,7 +27,7 @@
 	flex-direction: column;
 	align-items: center;
 	font-size: 24px;
-	font-family: "Josefin Sans", serif;
+	font-family: "Josefin Sans", sans-serif;
 	background: linear-gradient(forward.$deg, map.get(forward.$grey, xlight), map.get(forward.$blue, xlight));
 	@include forward.mobile{
 		font-size: 10px;
@@ -44,11 +63,10 @@
 	h1,h2,h3 {
 		font-family: "Roboto", serif;
 		font-weight: bold;
-		font-weight: bold;
 		text-shadow: map.get(forward.$shadow, clicked);
 	}
 	h4, h5{
-		font-family: "Merriweather", serif;
+		font-family: "Markazi Text", serif;
 	}
 	h1{
 		font-size: 2.5em;

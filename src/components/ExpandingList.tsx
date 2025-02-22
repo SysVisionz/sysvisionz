@@ -1,5 +1,22 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, FC, useRef, useState, useEffect } from "react";
 import style from './scss/ExpandingList.module.scss'
+import { classNamer, random } from "~/shared/utils";
+import EditButtons from "./EditButtons";
+import Button from "./Button";
+
+const Entry: FC<{className?: string, value: string, 
+	save?: (v: string) => void, 
+	edit?: () => void, 
+	delete?: () => void
+	cancel?: () => void,
+	duplicate?: () => void,
+	undo?: () => void
+}> = ({className, value, save, edit, delete: del, duplicate, cancel, undo }) => {
+	return <div className={className}>
+		<input type="text" value={value} />
+		<EditButtons {...{delete: del, save, edit, duplicate, cancel, undo}} />
+	</div>
+}
 
 export default function ExpandingList(props: {
 	id: string,
@@ -22,48 +39,80 @@ export default function ExpandingList({id, list, label, onChange, box}: {
 	box?: boolean,
 	onChange: (v: string[]) => void
 }){
+	const initialState = useRef<{[id: string]: string}>({})
 	const [
-		/** listVals is a list containing each entry with a series consisting of the value, current id, and whether it's been deleted. */
+		/** {id: [value, editing, visible ]} */
 		listVals
-	, setListVals] = useState<[string, number, boolean][]>(list.map((v: string, i: number) => [v, i, true]))
-	const [editing, setEditing] = useState<number | null>(null)
-	const timeouts = useRef<[NodeJS.Timeout, number][]>([])
-	console.log(editing)
-	const add = () => {
-		setEditing(listVals.length)
-		setListVals(listVals.concat([['', listVals[listVals.length - 1][1] + 1, true]]))
-	}
-	const notEditing = (v: [string | boolean, boolean] ) => {
-		const [value, active] = v;
-		return <div className={`${style.input}${active ? ` ${style.active}` : '' }`}>
-			<div><span>{value}</span></div><div></div></div>
-	}
-	const remove = (i: number) => {
-		const act = timeouts.current.findIndex(v => v[1] === i)
-		if (act){
-			clearTimeout(timeouts.current[act][0])
-			delete timeouts.current[act]
-		}
-		listVals[i][2] = false
-		setListVals([...listVals])
-		timeouts.current.push([setTimeout(() => {
-			listVals.splice(i, 1)
-		}, 400), listVals[i][1]])
-	}
-	const edit = (v: string, i: number) => {
-		console.log(v, i)
-	}
-	console.log(edit, remove, notEditing, add)
-	useEffect(() => {
-		onChange(listVals.reduce((list: (string|number|boolean)[], v: [string | number | boolean, boolean]) => {
-			const [value, active] = v;
-			if (active){
-				list = [...list, value]
+	, setListVals] = useState<{[id: string]: [string, boolean, boolean]}>({})
+	const timeouts = useRef<{[id: string]: number}>({})
+	const countdown = useRef<NodeJS.Timeout | null>(null)
+	const update = () => {
+		onChange(Object.keys(listVals).reduce((list: string[], id: string) => {
+			if (listVals[id][2]){
+				list.push(listVals[id][0])
 			}
 			return list
-		}, [] as string | boolean)[]) as string[] | boolean[])
-	}, [listVals])
+		}, []))
+	}
+	const add = (value?: string) => {
+		listVals[random()] = [value || '', true, true]
+		setListVals(listVals)
+	}
+	const remove = (id: string) => {
+		listVals[id][2] = false
+		setListVals(listVals)
+		timeouts.current[id] = 400;
+		update()
+		if (!countdown.current){
+			countdown.current = setInterval(() => {
+				for (const i in timeouts.current){
+					timeouts.current[i] -= 40;
+					if (timeouts.current[i] <= 0){
+						delete timeouts.current[i]
+						delete listVals[i]
+					}
+					if (Object.keys(timeouts.current).length === 0){
+						clearInterval(countdown.current as NodeJS.Timeout)
+						countdown.current = null
+					}
+				}
+			}, 40)
+		}
+	}
+	const edit = (id: string, active: boolean = !!listVals[id]?.[1]) => {
+		if (![undefined, active].includes(listVals[id]?.[1])){
+			listVals[id][1] = active
+			setListVals(listVals)
+		}
+	}
+	const save = (id: string, value: string) => {
+		listVals[id][0] = value
+		listVals[id][1] = false
+		setListVals(listVals)
+		update()
+	}
+	useEffect(() => {
+		for (const i in list){
+			const id = random()
+			listVals[id] = [list[i], false, true]
+			initialState.current[id] = list[i]
+		}
+	}, [])
+
 	return <div className={style.container}>
-		
+		{Object.entries(listVals).map(([id, [value, editing, visible]]) => <Entry 
+			className={classNamer(style.entry, !visible && style.hide)}
+			value={value}
+			{...(editing ? {
+				save: (v: string) => save(id, v),
+				cancel: () => edit(id),
+				duplicate: () => add(value),
+				...(initialState.current[id] === value ? {} : {undo: () => save(id, initialState.current[id])})
+			} : {
+				delete: () => remove(id),
+				edit: () => edit(id)
+			})}
+		/>)}
+		<Button onClick={() => add()}>+ New Entry</Button>
 	</div>
 }

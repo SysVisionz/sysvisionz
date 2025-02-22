@@ -53,10 +53,10 @@ export default function Home() {
                   When you choose us, you can be assured that your applications are delivered with the care and attention to detail you&apos;ve always envisioned.
                 </p>
                 <p>
-                  Our extensive experience ensures we know how to ensure you get what you want the first time, and make sure that happens.
+                  Our extensive experience ensures we know the right questions to get you what you want the first time, and make sure that happens.
                 </p>
                 <p>
-                  We know that your time is valuable, and we ensure you can focus on what you do best, while we give you the tools to not just survive, but thrive.
+                  We know that your time is valuable, and we let you focus on what you do best, while we give you the tools to thrive.
                 </p>
               </SlidingSection>
               <SlidingSection className={styles["why-wait"]}><h3>

@@ -38,7 +38,7 @@ function SlidingSection({ children, className, image, title, mobile }: {children
 	}, 200)
 	useEffect(() => {
 		const rect = section.current?.getBoundingClientRect();
-		if (rect!.top < window.innerHeight - 180 && rect!.bottom > 60) {
+		if (rect!.top <= window.innerHeight - 250 && rect!.bottom >= 60) {
 			setShow(true);
 		}
 		if (typeof window !== 'undefined') {

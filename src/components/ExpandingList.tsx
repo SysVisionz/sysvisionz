@@ -4,16 +4,17 @@ import { classNamer, random } from "~/shared/utils";
 import EditButtons from "./EditButtons";
 import Button from "./Button";
 
-const Entry: FC<{className?: string, value: string, 
+const Entry: FC<{className?: string, value: string, box?: boolean, 
 	save?: (v: string) => void, 
 	edit?: () => void, 
 	delete?: () => void
 	cancel?: () => void,
 	duplicate?: () => void,
 	undo?: () => void
-}> = ({className, value, save, edit, delete: del, duplicate, cancel, undo }) => {
+}> = ({className, value, box, save, edit, delete: del, duplicate, cancel, undo }) => {
 	return <div className={className}>
-		<input type="text" value={value} />
+		{box ? <textarea value={value}/> : <input type="text" value={value} />}
+
 		<EditButtons {...{delete: del, save, edit, duplicate, cancel, undo}} />
 	</div>
 }
@@ -32,7 +33,7 @@ export default function ExpandingList(props: {
 	box?: false,
 	onChange: (v: string[]) => void
 }): ReactNode
-export default function ExpandingList({id, list, label, onChange, box}: {
+export default function ExpandingList({list, label, onChange, box}: {
 	id: string,
 	label?: string,
 	list: string[],
@@ -100,9 +101,12 @@ export default function ExpandingList({id, list, label, onChange, box}: {
 	}, [])
 
 	return <div className={style.container}>
+		<h3>{label}</h3>
 		{Object.entries(listVals).map(([id, [value, editing, visible]]) => <Entry 
 			className={classNamer(style.entry, !visible && style.hide)}
 			value={value}
+			box={box}
+			key={id}
 			{...(editing ? {
 				save: (v: string) => save(id, v),
 				cancel: () => edit(id),

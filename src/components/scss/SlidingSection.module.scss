@@ -59,6 +59,7 @@
 			border-radius: 0 3px 3px 0;
 			img{
 				object-fit:cover;
+				object-position: 85%
 			}
 
 		}
@@ -95,12 +96,15 @@
 			>div:not(.image){
 				padding-right: unset;
 				padding-left: 15%;
-			}
+			}	
 			.image{
 				border-radius: 3px 0 0 3px;
 				right: unset;
 				left: 15%;
 				mask-image: linear-gradient(to left, transparent 0% 25%, black 70% 100%);
+				img{
+					object-position: 15%;
+				}
 		}
 			@include forward.mobile{
 				>div:not(.image){

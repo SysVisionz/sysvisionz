@@ -1,5 +1,5 @@
 'use client'
-import { useState, FC, MutableRefObject, useRef } from "react";
+import { useState, FC, MutableRefObject } from "react";
 // import Loading from "~/Loading";
 import { useEffectDelay, useSearch } from "~/shared/utils";
 

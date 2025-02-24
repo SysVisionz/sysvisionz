@@ -22,6 +22,7 @@ const Proposal: FC = () => {
 	const [edited, SetEdited] = useState<Partial<ProposalProps>>({})
 	const notify = useSiteNotify()
 	const search = useSearch()
+	console.log(proposal, edited, SetEdited, notify)
 	useEffect(() => {
 		fetch(
 			`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/proposal${search.toSearchString()}`

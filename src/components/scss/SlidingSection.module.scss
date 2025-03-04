@@ -40,7 +40,8 @@
 		padding-right: 20%;
 		display: flex;
 		>div:not(.image) {
-			width: 85%;
+			box-sizing: border-box;
+			width: 100%;
 			padding-right: 30%; 
 			z-index: 1;
 			display: flex;
@@ -83,51 +84,13 @@
 			}
 		}
 	}
-	&:nth-child(4n), &:nth-child(4n+1){
-		text-align: right;
-		button {
-			h1, h2{
-				text-align: center;
-			}
-		}
-		.with-image{
-			padding-right: unset;
-			padding-left: 20%;
-			>div:not(.image){
-				padding-right: unset;
-				padding-left: 15%;
-			}	
-			.image{
-				border-radius: 3px 0 0 3px;
-				right: unset;
-				left: 15%;
-				mask-image: linear-gradient(to left, transparent 0% 25%, black 70% 100%);
-				img{
-					object-position: 15%;
-				}
-		}
-			@include forward.mobile{
-				>div:not(.image){
-					padding-left:30%
-				}
-				.image{
-					img {
-						object-position: 30%;
-					}
-				}
-			}
-		}
-		h1, h2{
-			text-align: right;
-		}
-	}
 	>div{
 		box-sizing: border-box;
 		padding: 0px 5%;
 		width: 100%;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
 	}
 	.content {
 		opacity: 0;
@@ -137,6 +100,44 @@
 		align-items: center;
 		>div>p{
 			width: 100%;
+		}
+	}
+	&:nth-child(4n), &:nth-child(4n+1){
+		text-align: right;
+		button {
+			h1, h2{
+				text-align: center;
+			}
+		}
+		.with-image{
+			padding-right: unset;
+			padding-left: 40%;
+			>div:not(.image){
+				padding-right: unset;
+				align-items: flex-end;
+			}	
+			.image{
+				border-radius: 3px 0 0 3px;
+				right: unset;
+				left: 15%;
+				mask-image: linear-gradient(to left, transparent 0% 25%, black 70% 100%);
+				img{
+					object-position: 10%;
+				}
+			}
+			@include forward.mobile{
+				>div:not(.image){
+					box-sizing: border-box;
+				}
+				.image{
+					img {
+						object-position: 25%;
+					}
+				}
+			}
+		}
+		h1, h2{
+			text-align: right;
 		}
 	}
 	&.show .content{

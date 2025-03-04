@@ -14,7 +14,7 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 .dev-img{
 	flex:2;
 	top: 0;
-	transition: top 40ms ease;
+	transition: top 100ms ease;
 	left: 75%;
 	position: fixed;
 	height: 100%;
@@ -32,9 +32,5 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 		height: 110%;
 		width: auto;
 		position: absolute;
-		transform: translateX(-20%);
-		@include forward.mobile{
-			transform: translateX(-35%);
-		}
 	}
 }

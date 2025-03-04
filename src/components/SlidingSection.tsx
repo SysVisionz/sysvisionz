@@ -10,6 +10,7 @@ function SlidingSection({ children, className, image, title, mobile }: {children
 	const section = useRef<HTMLDivElement>(null);
 	const [show, setShow] = useState<boolean>(false);
 	const lastTop = useRef<number>(0);
+	const ResizeObserve = useRef<ResizeObserver>()
 	const inout = useDelay({
 		onEnd: () => {
 			const rect = section.current?.getBoundingClientRect();
@@ -25,10 +26,10 @@ function SlidingSection({ children, className, image, title, mobile }: {children
 				}
 				else if (lastTop.current > window.scrollY) {
 					// scrolling up
-					if (!show && rect.bottom > 60 && rect.top < window.innerHeight - 250) {
+					if (!show && rect.bottom > 0 && rect.top < window.innerHeight - 200) {
 						setShow(true);
 					}
-					else if (show && rect.top > window.innerHeight - 250 || rect.bottom < 60) {
+					else if (show && rect.top > window.innerHeight - 200 || rect.bottom < 0) {
 						setShow(false);
 					}
 				}
@@ -38,11 +39,12 @@ function SlidingSection({ children, className, image, title, mobile }: {children
 	}, 200)
 	useEffect(() => {
 		const rect = section.current?.getBoundingClientRect();
-		if (rect!.top <= window.innerHeight - 250 && rect!.bottom >= 60) {
+		if (rect!.top <= window.innerHeight - 200 && rect!.bottom >= 0) {
 			setShow(true);
 		}
 		if (typeof window !== 'undefined') {
 			window.addEventListener('scroll', inout)
+			ResizeObserve.current = new ResizeObserver(inout)
 			return () => window.removeEventListener('scroll', inout)
 		}
 	}, [inout])

@@ -9,12 +9,15 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 	transition: opacity 200ms ease;
 	&.ready{
 		opacity: 1;
+		.dev-img{
+			transition: top 100ms ease;
+		}
 	}
 }
 .dev-img{
 	flex:2;
+	transition: top 0ms ease;
 	top: 0;
-	transition: top 100ms ease;
 	left: 75%;
 	position: fixed;
 	height: 100%;
@@ -25,7 +28,8 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 	mask-repeat: repeat-x;
 	z-index: -1;
 	@include forward.mobile{
-		left:78%
+		left:78%;
+		width: calc(22% - 15px);
 	}
 	>img{
 		min-width: 100%;

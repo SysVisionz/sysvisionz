@@ -56,8 +56,11 @@
 			position: absolute;
 			overflow: hidden;
 			right: 0;
-			mask-image: linear-gradient(to right, transparent 0% 25%, black 70% 100%);
 			border-radius: 0 3px 3px 0;
+			mask-image: linear-gradient(to right, transparent 0% 25%, black 70% 100%);
+			@include forward.mobile{
+				mask-image: none;
+			}
 			img{
 				object-fit:cover;
 				object-position: 85%
@@ -65,7 +68,7 @@
 
 		}
 		@include forward.mobile{
-			
+			padding-right: 30%;
 			>div:not(.image){
 				padding-right: 0;
 			}
@@ -126,6 +129,7 @@
 				}
 			}
 			@include forward.mobile{
+				padding-left: 45%;
 				>div:not(.image){
 					box-sizing: border-box;
 				}

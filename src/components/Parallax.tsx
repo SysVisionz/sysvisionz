@@ -8,10 +8,10 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 	const [isReady, setReady] = useState<boolean>(false)
 	const resizer = useRef<ResizeObserver>()
 	const timeout = useRef<NodeJS.Timeout>()
-	const ready = () => setReady(true)
 	const max = useRef<number>(0)
+	const readyTimeout = useRef<NodeJS.Timeout>()
 	const getTarget = () => {
-		return -Math.floor(((img.current?.clientHeight || 0) - window.innerHeight) - (window.scrollY / (document.body.clientHeight - window.innerHeight) * ((img.current?.clientHeight || 0) - window.innerHeight)))
+		return -Math.floor((document.body.clientHeight - (img.current?.clientHeight || 0)) * (document.body.scrollTop / (document.body.scrollHeight - document.body.clientHeight))) + document.body.clientHeight - (img.current?.clientHeight || 0)
 	}
 	const adjustTop = () => {
 		if (typeof window !== 'undefined'){
@@ -19,7 +19,7 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 				clearTimeout(timeout.current)
 				const top = parseInt(img.current?.style.top || '0')
 				const diff = getTarget() - top
-				if (Math.abs(diff) > 3){
+				if (Math.abs(diff) > 3 && isReady){
 					// console.log(top + diff * .1)
 					setTop(top + diff * .5)
 					timeout.current = setTimeout(getCloser, 40)
@@ -32,8 +32,15 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 	}
 	const img = useRef<HTMLImageElement>(null)
 	const adjust = useDelay({"onStart": adjustTop, onEnd: adjustTop}, 40)
+	const ready = () => {
+		adjust()
+		clearTimeout(readyTimeout.current)
+		readyTimeout.current = setTimeout(() => {
+			setReady(true)
+		}, 40)
+	}
 	useEffect(() => {
-		max.current = document.body.clientHeight * (window.innerHeight / (img.current?.clientHeight || 0)) - window.innerHeight
+		max.current = document.body.clientHeight * (document.body.clientHeight / (img.current?.clientHeight || 0)) - document.body.clientHeight
 		const imag = img.current;
 	  if (!isReady){
 		if (imag?.complete) {
@@ -44,12 +51,12 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 		}
 	}
 		resizer.current = new ResizeObserver(() => {
-			max.current = -(document.body.clientHeight * (window.innerHeight / (img.current?.clientHeight || 0)) - window.innerHeight)
+			max.current = -(document.body.clientHeight * (document.body.clientHeight / (img.current?.clientHeight || 0)) - document.body.clientHeight)
 			adjust()
 		})
-		window.addEventListener('scroll', adjust)
+		document.body.addEventListener('scroll', adjust)
 	  return () => {
-		window.removeEventListener('scroll', adjust)
+		document.body.removeEventListener('scroll', adjust)
 		resizer.current?.disconnect()
 		imag?.removeEventListener('load', ready)
 		}

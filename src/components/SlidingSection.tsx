@@ -15,37 +15,37 @@ function SlidingSection({ children, className, image, title, mobile }: {children
 		onEnd: () => {
 			const rect = section.current?.getBoundingClientRect();
 			if (typeof window !== 'undefined' && rect){
-				if (lastTop.current < window.scrollY) {
+				if (lastTop.current < document.body.scrollTop) {
 					// scrolling down
-					if (show && rect.bottom < 200 || rect.top > window.innerHeight - 180) {
+					if (show && rect.bottom < 200 || rect.top > document.body.clientHeight - 180) {
 						setShow(false);
 					}
-					else if (!show && rect.top < window.innerHeight - 180 && rect.bottom > 200) {
+					else if (!show && rect.top < document.body.clientHeight - 180 && rect.bottom > 200) {
 						setShow(true);
 					}
 				}
-				else if (lastTop.current > window.scrollY) {
+				else if (lastTop.current > document.body.scrollTop) {
 					// scrolling up
-					if (!show && rect.bottom > 0 && rect.top < window.innerHeight - 200) {
+					if (!show && rect.bottom > 0 && rect.top < document.body.clientHeight - 200) {
 						setShow(true);
 					}
-					else if (show && rect.top > window.innerHeight - 200 || rect.bottom < 0) {
+					else if (show && rect.top > document.body.clientHeight - 200 || rect.bottom < 0) {
 						setShow(false);
 					}
 				}
-				lastTop.current = window.scrollY
+				lastTop.current = document.body.scrollTop
 			}
 		}
 	}, 200)
 	useEffect(() => {
 		const rect = section.current?.getBoundingClientRect();
-		if (rect!.top <= window.innerHeight - 200 && rect!.bottom >= 0) {
+		if (rect!.top <= document.body.clientHeight - 200 && rect!.bottom >= 0) {
 			setShow(true);
 		}
 		if (typeof window !== 'undefined') {
-			window.addEventListener('scroll', inout)
+			document.body.addEventListener('scroll', inout)
 			ResizeObserve.current = new ResizeObserver(inout)
-			return () => window.removeEventListener('scroll', inout)
+			return () => document.body.removeEventListener('scroll', inout)
 		}
 	}, [inout])
 	return <div ref={section} className={classNamer(style.section, show && style.show)}>

@@ -1,12 +1,10 @@
 @use "forward.scss";
 @use "sass:map";
 .section{
-	box-shadow: map.get(forward.$shadow, default);
 	position: relative;
 	width: 85%;
 	display: flex;
 	justify-content: center;
-	margin: 20px 0 20px 25%;
 	padding: 5px 20px 20px calc(15% + 20px);
 	box-sizing: border-box;
 	position: relative;

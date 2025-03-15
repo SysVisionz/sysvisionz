@@ -38,11 +38,16 @@
 			flex: 1;
 			justify-content: center;
 			a{
-				height:40px;
-				width: 40px;
-				@include forward.mobile{
-					height: 30px;
-					width: 30px;
+				display: flex;
+				align-items: center;
+				color:inherit;
+				>div{
+					height:35px;
+					width: 35px;
+					@include forward.mobile{
+						height: 25px;
+						width: 25px;
+					}
 				}
 			}
 		}

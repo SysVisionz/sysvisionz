@@ -5,6 +5,7 @@ import { FC, useContext, useEffect, useRef, useState } from "react";
 import { userContext } from '../contexts/user';
 import Link from 'next/link';
 import { useDelay } from '~/shared/utils';
+import Login from './Login';
 
 /** this component changes height, as well as the logo size/type */
 const Topbar: FC = () => {

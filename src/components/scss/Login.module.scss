@@ -1,0 +1,11 @@
+	.login-box{
+		position: absolute;
+		top: 100%;
+		right: 0;
+		overflow: hidden;
+		transition: height 200ms ease, width 200ms ease;
+		&.hidden{
+			height: 0;
+			width: 0;
+		}
+	}

@@ -6,7 +6,7 @@ $mobile-height: 55px;
 
 .topbar, .spacer {
 	box-shadow: none;
-	width: 100%;
+	width: calc(100% - 15px);
 	height: $height;
 	box-sizing: border-box;
 	padding: 0 15px;

@@ -1,8 +1,9 @@
 @use "forward.scss";
 @use "sass:map";
 .spacer, .footer{
-	width: 100%;
+	width: calc(100% - 15px);
 	box-sizing: content-box;
+	overflow-x: hidden;
 }
 .footer{
 	padding: 10px 0;

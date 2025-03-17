@@ -1,12 +1,14 @@
-import { FC, use, useRef, useState } from "react";
+import { FC, useContext, useRef, useState } from "react";
 import Button from "./Button";
 import style from "./scss/Login.module.scss";
 import { classNamer } from "~/shared/utils";
+import { notificationContext } from "~/contexts/notification";
 
 const Login: FC = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const u= useRef<HTMLInputElement>(null);
 	const contain = useRef<HTMLDivElement>(null);
+	const {push} = useContext(notificationContext);
 	const close =(e: MouseEvent) => {
 		e.stopPropagation();
 		document.body.removeEventListener('click', close);
@@ -41,10 +43,10 @@ const Login: FC = () => {
 					}
 				}).then((res) => res.json().then((data) => {
 					if (data.success){
-						setOpen
+						setOpen(false);
 					}
 				})).catch((err) => {
-					
+					push.error(err.message)
 				})
 			}}>Login</button>
 			</form>

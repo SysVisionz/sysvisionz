@@ -109,24 +109,14 @@
 			font-family: "Josefin Sans", sans-serif;
 			font-optical-sizing: auto;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 	&.body-#{$type}-1{
 		#{$select}{
 			font-family: "Krona One", sans-serif;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 	&.body-#{$type}-2{
@@ -134,12 +124,7 @@
 			font-family: "Markazi Text", serif;
 			font-optical-sizing: auto;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 	&.body-#{$type}-3{
@@ -147,12 +132,7 @@
 			font-family: "Merriweather", serif;
 			font-optical-sizing: auto;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 	&.body-#{$type}-4{
@@ -160,12 +140,7 @@
 			font-family: "Red Rose", serif;
 			font-optical-sizing: auto;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 	&.body-#{$type}-5{
@@ -173,24 +148,14 @@
 			font-family: "Roboto", sans-serif;
 			font-optical-sizing: auto;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 	&.body-#{$type}-6{
 		#{$select}{
 			font-family: "Sree Krushnadevaraya", serif;
 			font-style: normal;
-			@if $type == "header"{
-				font-weight: 500;
-			}
-			@else {
-				font-weight: 300;
-			}
+			font-weight: 500;
 		}
 	}
 }

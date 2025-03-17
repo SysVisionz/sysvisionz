@@ -5,7 +5,7 @@ import { FC, useContext, useEffect, useRef, useState } from "react";
 import { userContext } from '../contexts/user';
 import Link from 'next/link';
 import { useDelay } from '~/shared/utils';
-import Login from './Login';
+// import Login from './Login';
 
 /** this component changes height, as well as the logo size/type */
 const Topbar: FC = () => {
@@ -51,6 +51,7 @@ const Topbar: FC = () => {
 			<div className={style.links}>
 				<Link href="/"><h2>Home</h2></Link>
 				<Link href="/services"><h2>Services</h2></Link>
+				{/* <Login /> */}
 			</div>
 			<div style={{display: 'none'}}>
 				{user.privLevel ? <div>{user.displayName}</div> : <button>Login</button>}

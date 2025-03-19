@@ -35,7 +35,7 @@ const Services: FC = () => <>
 		}}
 	>
 		<h2>Mentorship</h2>
-		<p>Additionally, the innovative methodologies our team uses that provides optimal delivery and consistently top-tier applications, as well as a long-time policy of prioritization of mentorship and growth on our teams has resulted in our offering the additional service of working alongside your existing team in a format designed to help your developers grow, no matter where they are in their career. For new and midlevel developers, we offer personalized career guidance to help them navigate the evolving tech landscape and guarantee long term, consistent delivery of the best development in the business. For senior developers, we provide instructional support to build leadership and development capabilities, and guide them in expanding their technical expertise. Whether individually or as part of a team, our mentorship helps developers become more proficient and confident so your company can flourish.</p>
+		<p>Additionally, the innovative methodologies our team uses to provide consistently top-tier applications and growth mindset on our teams allows us to offer the service of working alongside your team to help your developers grow. For new and midlevel developers, we offer personalized guidance to navigate the evolving tech landscape and guarantee consistent delivery of the best development in the business. For seniors, we build leadership and development skills, expanding their technical expertise. Our mentorship builds proficient and confident developers, equipped to make your company flourish.</p>
 	</SlidingSection><SlidingSection
 		image={{src: consult.src, alt: 'consulting'}}
 	>

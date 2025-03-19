@@ -169,6 +169,7 @@
 	font-size: 24px;
 	font-family: "Josefin Sans", sans-serif;
 	background: map.get(forward.$blue, xlight);
+	color: map-get(forward.$grey, xlight)	;
 	@include forward.mobile{
 		font-size: 10px;
 	}
@@ -212,7 +213,6 @@
 	h1{
 		font-size: 2.5em;
 		font-weight: bold;
-		color: map.get(forward.$blue, default);
 		@include forward.tablet{
 			font-size: 2.5em;
 		}		

@@ -5,18 +5,17 @@
 	width: 85%;
 	display: flex;
 	justify-content: center;
-	padding: 5px 20px 20px calc(15% + 20px);
 	box-sizing: border-box;
 	position: relative;
 	background: map.get(forward.$grey, xlight);
 	margin: 20px 0;
 	border-radius: 0 5px 5px 0;
+	background-color: map.get(forward.$blue, light);
 	.mobile{
 		display: none;
 	}
 	@include forward.mobile{
 		width: 95%;
-		padding: 5px 20px 20px calc(5% + 20px);
 		.desktop{
 			display: none;
 		}
@@ -36,12 +35,12 @@
 	}
 	.with-image{
 		overflow: hidden;
-		padding-right: 20%;
+		padding-right: 40%;
 		display: flex;
 		>div:not(.image) {
 			box-sizing: border-box;
 			width: 100%;
-			padding-right: 30%; 
+			padding: 20px 0 20px 0;
 			z-index: 1;
 			display: flex;
 			flex-direction: column;
@@ -51,31 +50,29 @@
 			top: 0;
 			z-index: 0;
 			height: 100%;
-			width: 50%;
+			width: 100%;
 			position: absolute;
 			overflow: hidden;
 			right: 0;
 			border-radius: 0 3px 3px 0;
 			img{
 				object-fit:cover;
-				object-position: 85%
+				object-position: 100%;
 			}
 
 		}
 		@include forward.mobile{
-			padding-right: 30%;
 			>div:not(.image){
-				padding-right: 0;
+				padding: 20px 0 20px 0;
 			}
 			.image{
 				width: 100%;
 				top: unset;
 				bottom:50%;
 				transform: translateY(50%);
-
 				padding-right: 0;
 				img{
-					object-position: 70%;
+					object-position: 85%;
 				}
 			}
 		}
@@ -83,20 +80,22 @@
 	>div{
 		box-sizing: border-box;
 		padding: 0px 5%;
-		min-width: calc(100% + 20px);
+		width: 100%;
 		min-height: calc(100% + 20px);
 		display: flex;
 		justify-content: center;
 		align-items: flex-start;
 	}
 	.content {
-		opacity: 0;
-		transition: opacity 300ms ease;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		>div>p{
-			width: 100%;
+		>div:not(.image){
+			transition: opacity 300ms ease;
+			opacity: 0;
+			>p{
+				width: 100%;
+			}
 		}
 	}
 	&:nth-child(4n), &:nth-child(4n+1){
@@ -109,27 +108,22 @@
 		.with-image{
 			padding-right: unset;
 			padding-left: 40%;
+			padding-right: 20px;
 			>div:not(.image){
-				padding-right: unset;
 				align-items: flex-end;
 			}	
 			.image{
 				border-radius: 3px 0 0 3px;
 				right: unset;
 				left: 0;
-				img{
-					object-position: 10%;
-				}
 			}
 			@include forward.mobile{
 				padding-left: 45%;
 				>div:not(.image){
 					box-sizing: border-box;
 				}
-				.image{
-					img {
-						object-position: 25%;
-					}
+				img{
+					object-position: 30%;
 				}
 			}
 		}
@@ -137,7 +131,7 @@
 			text-align: right;
 		}
 	}
-	&.show .content{
+	&.show .content >div:not(.image){
 		opacity: 1;
 	}
 

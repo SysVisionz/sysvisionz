@@ -8,7 +8,7 @@
    viewBox="0 0 1250 500"
    xml:space="preserve"
    id="svg333"
-   sodipodi:docname="fs2.svg"
+   sodipodi:docname="fs.svg"
    width="1250"
    height="500"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -25,93 +25,19 @@
    inkscape:pageopacity="0.0"
    inkscape:pagecheckerboard="0"
    showgrid="false"
-   inkscape:zoom="1.0687489"
-   inkscape:cx="443.50923"
-   inkscape:cy="277.89502"
+   inkscape:zoom="1.8433254"
+   inkscape:cx="300.00129"
+   inkscape:cy="221.33911"
    inkscape:window-width="1920"
    inkscape:window-height="1008"
    inkscape:window-x="0"
    inkscape:window-y="0"
    inkscape:window-maximized="1"
    inkscape:current-layer="svg333" />
+
 <g
-   id="BACKGROUND">
-	<g
-   id="g12">
-		<rect
-   x="277.14999"
-   style="fill:#21384d"
-   width="195.69901"
-   height="500"
-   id="rect2"
-   y="0" />
-		<rect
-   transform="rotate(-180,69.2876,250)"
-   style="fill:#21384d"
-   width="138.575"
-   height="500"
-   id="rect4"
-   x="0"
-   y="0" />
-		
-			<rect
-   x="138.575"
-   transform="rotate(-180,207.86275,250)"
-   style="fill:#1b2e40"
-   width="138.575"
-   height="500"
-   id="rect6"
-   y="0" />
-		
-			<rect
-   x="472.85001"
-   transform="rotate(180,542.1372,250)"
-   style="fill:#1b2e40"
-   width="138.575"
-   height="500"
-   id="rect8"
-   y="0" />
-		
-			<rect
-   x="611.42499"
-   transform="rotate(-180,680.7124,250)"
-   style="fill:#21384d"
-   width="138.575"
-   height="500"
-   id="rect10"
-   y="0" /><rect
-   x="-888.57483"
-   transform="scale(-1)"
-   style="fill:#1b2e40"
-   width="138.575"
-   height="500"
-   id="rect8-3"
-   y="-500" /><rect
-   x="-1027.1501"
-   transform="scale(-1)"
-   style="fill:#21384d"
-   width="138.575"
-   height="500"
-   id="rect10-6"
-   y="-500" /><rect
-   x="-1165.7251"
-   transform="scale(-1)"
-   style="fill:#1b2e40"
-   width="138.575"
-   height="500"
-   id="rect8-3-7"
-   y="-500" /><rect
-   x="-1251.2019"
-   transform="scale(-1)"
-   style="fill:#21384d;stroke-width:0.785384"
-   width="85.476898"
-   height="500"
-   id="rect10-6-5"
-   y="-500" />
-	</g>
-</g>
-<g
-   id="OBJECTS">
+   id="OBJECTS"
+   transform="matrix(0.66837549,0,0,0.9314454,8.7500619,12.406818)">
 	<g
    id="g41">
 		<path
@@ -272,7 +198,7 @@
 				<rect
    x="573.37097"
    y="383.11099"
-   transform="rotate(-180,593.54205,385.02495)"
+   transform="rotate(180,593.54205,385.02495)"
    style="fill:#6b7075"
    width="40.341999"
    height="3.8269999"
@@ -290,7 +216,7 @@
 				<rect
    x="565.87701"
    y="375.297"
-   transform="rotate(-180,589.7951,377.21045)"
+   transform="rotate(180,589.7951,377.21045)"
    style="fill:#6b7075"
    width="47.835999"
    height="3.8269999"
@@ -555,11 +481,11 @@
 	<g
    id="g207">
 		<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="m 689.71,209.964 v 152.812 c 0,3.45 -2.797,6.247 -6.247,6.247 H 636.07"
    id="path203" />
 		<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="m 673.158,209.964 v 138.224 c 0,2.866 -2.272,5.189 -5.075,5.189 H 636.07"
    id="path205" />
 	</g>
@@ -606,11 +532,11 @@
 	<g
    id="g229">
 		<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="m 219.753,202.4 v 65.601 c 0,2.866 2.272,5.189 5.075,5.189 h 74.609"
    id="path225" />
 		<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 302.631,272.397 -14.624,-5.062 c -0.545,-0.189 -1.114,0.216 -1.114,0.793 v 10.123 c 0,0.577 0.569,0.982 1.114,0.793 l 14.624,-5.062 c 0.753,-0.26 0.753,-1.324 0,-1.585 z"
    id="path227" />
 	</g>
@@ -619,22 +545,22 @@
 		<g
    id="g235">
 			<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="M 76.777,258.724 V 87.023 c 0,-3.103 2.516,-5.619 5.619,-5.619 h 36.356"
    id="path231" />
 			<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="M 120.694,80.611 106.07,75.549 c -0.545,-0.189 -1.114,0.216 -1.114,0.793 v 10.123 c 0,0.577 0.568,0.982 1.114,0.793 l 14.624,-5.062 c 0.753,-0.26 0.753,-1.324 0,-1.585 z"
    id="path233" />
 		</g>
 		<g
    id="g241">
 			<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="M 93.929,258.724 V 105.36 c 0,-2.753 1.639,-4.985 3.66,-4.985 h 21.163"
    id="path237" />
 			<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 94.722,261.808 5.062,-14.624 c 0.189,-0.545 -0.216,-1.114 -0.793,-1.114 H 88.868 c -0.577,0 -0.982,0.568 -0.793,1.114 l 5.062,14.624 c 0.26,0.753 1.325,0.753 1.585,0 z"
    id="path239" />
 		</g>
@@ -642,11 +568,11 @@
 	<g
    id="g249">
 		<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="m 203.201,200.4 v 82.189 c 0,3.45 2.797,6.247 6.247,6.247 h 89.989"
    id="path245" />
 		<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 202.408,199.246 -5.062,14.624 c -0.189,0.545 0.216,1.114 0.793,1.114 h 10.123 c 0.577,0 0.982,-0.569 0.793,-1.114 l -5.062,-14.624 c -0.26,-0.753 -1.325,-0.753 -1.585,0 z"
    id="path247" />
 	</g>
@@ -655,38 +581,39 @@
 		<g
    id="g257">
 			<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="m 464.04,233.815 h 78.806 c 2.865,0 5.188,2.272 5.188,5.075 v 44.452"
    id="path251"
    sodipodi:nodetypes="cssc" />
 			<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 448.894,234.608 14.624,5.062 c 0.545,0.189 1.113,-0.216 1.113,-0.793 v -10.123 c 0,-0.577 -0.568,-0.982 -1.113,-0.793 l -14.624,5.062 c -0.753,0.26 -0.753,1.325 0,1.585 z"
    id="path253" />
 			<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 548.828,286.588 5.062,-14.624 c 0.189,-0.545 -0.216,-1.114 -0.793,-1.114 h -10.123 c -0.577,0 -0.982,0.568 -0.793,1.113 l 5.062,14.624 c 0.26,0.754 1.325,0.754 1.585,0.001 z"
    id="path255" />
 		</g>
 		<g
    id="g265">
 			<path
-   style="fill:none;stroke:#a1bad1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+   style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    d="m 451.188,217.263 h 106.247 c 3.45,0 6.247,2.797 6.247,6.247 v 59.831"
    id="path259" />
 			<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 564.475,286.588 5.062,-14.624 c 0.189,-0.545 -0.216,-1.114 -0.793,-1.114 h -10.123 c -0.577,0 -0.982,0.568 -0.793,1.113 l 5.062,14.624 c 0.26,0.754 1.324,0.754 1.585,0.001 z"
    id="path261" />
 			<path
-   style="fill:#a1bad1"
+   style="fill:#ffffff;fill-opacity:1"
    d="m 448.894,218.056 14.624,5.062 c 0.545,0.189 1.113,-0.216 1.113,-0.793 v -10.123 c 0,-0.577 -0.568,-0.982 -1.113,-0.793 l -14.624,5.062 c -0.753,0.26 -0.753,1.325 0,1.585 z"
    id="path263" />
 		</g>
 	</g>
 </g>
 <g
-   id="TEXTS">
+   id="TEXTS"
+   transform="matrix(0.66837549,0,0,0.9314454,8.7500619,12.406818)">
 	
 		<g
    aria-label="API"

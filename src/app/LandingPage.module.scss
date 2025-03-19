@@ -37,7 +37,6 @@
 	}
 }
 .main-section .let-us{
-	margin-top: 30px;
 	h5{
 		margin: 0;
 	}
@@ -48,6 +47,9 @@
 	align-items: center;
 	justify-content: flex-start;
 	text-align: right;
+	img{
+		object-position: 85%;
+	}
 	.links{
 		display: flex;
 		flex-direction: column;

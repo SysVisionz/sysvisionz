@@ -16,9 +16,9 @@ export default function Home() {
             <h1>Our Systems, Your Visions</h1>
           </div>  
         </header>
-      </SlidingSection><SlidingSection
+      </SlidingSection><SlidingSection className={styles['main-section']}
         image={{src: noWorries.src, alt: 'no worries'}}>
-        <div className={styles['main-section']}>
+        <div>
           <div className={styles['let-us']}>
             <h5>When you’re bringing your ideas to life,</h5>
             <h5>there can be a lot to worry about.</h5>

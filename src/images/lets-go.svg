@@ -8,7 +8,7 @@
    viewBox="0 0 1000 640.2998"
    xml:space="preserve"
    id="svg490"
-   sodipodi:docname="11668422_20943564.svg"
+   sodipodi:docname="lets-go.svg"
    width="1000"
    height="640.2998"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -29,9 +29,9 @@
    fit-margin-left="0"
    fit-margin-right="0"
    fit-margin-bottom="0"
-   inkscape:zoom="1.1328262"
-   inkscape:cx="869.50675"
-   inkscape:cy="390.1746"
+   inkscape:zoom="0.62967494"
+   inkscape:cx="967.16569"
+   inkscape:cy="525.66805"
    inkscape:window-width="1920"
    inkscape:window-height="1008"
    inkscape:window-x="0"
@@ -41,7 +41,7 @@
 
 <g
    id="Illustration"
-   transform="matrix(0.22867845,0,0,0.22867845,300.22897,-104.31269)">
+   transform="matrix(0.13463362,0,0,0.13463362,599.38566,61.80327)">
 	<g
    id="g487">
 		<linearGradient
@@ -1270,13 +1270,13 @@
 				<g
    id="g458">
 					
-						<ellipse
+						<circle
    transform="matrix(0.7071,-0.7071,0.7071,0.7071,-839.7303,2050.1453)"
    style="fill:#91b3fa"
    cx="2054.8789"
    cy="2038.717"
    id="ellipse454"
-   r="174.451" />
+   r="0" />
 					<path
    style="fill:#91b3fa"
    d="m 2229.011,2022.689 h -174.132 -174.451 c 0,0 -13.888,100.166 141.806,365.379 6.793,11.571 19.205,20.155 32.623,20.161 13.418,0.01 25.852,-9.296 32.644,-20.868 155.68,-265.236 141.51,-364.672 141.51,-364.672 z"
@@ -1290,13 +1290,13 @@
    id="path460" />
 				</g>
 				
-					<ellipse
+					<circle
    transform="matrix(0.7071,-0.7071,0.7071,0.7071,-839.1677,2050.3784)"
    style="opacity:0.8;fill:#ffffff"
    cx="2055.4419"
    cy="2038.1541"
    id="ellipse464"
-   r="100.731" />
+   r="0" />
 				<g
    id="g473">
 					

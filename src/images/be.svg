@@ -26,8 +26,8 @@
    inkscape:pagecheckerboard="0"
    showgrid="false"
    inkscape:zoom="0.76464628"
-   inkscape:cx="940.30406"
-   inkscape:cy="193.55355"
+   inkscape:cx="689.20756"
+   inkscape:cy="190.93796"
    inkscape:window-width="1920"
    inkscape:window-height="1008"
    inkscape:window-x="0"
@@ -37,7 +37,7 @@
 
 <g
    id="OBJECTS"
-   transform="matrix(1.289186,0,0,1.2676728,608.0464,-75.357279)">
+   transform="matrix(0.678619,0,0,0.71811199,841.37954,65.656081)">
 	<g
    id="g13">
 		<path
@@ -126,7 +126,7 @@
 	</g>
 	<polygon
    style="fill:#0f1e36"
-   points="159.224,153.132 151.488,160.867 147.25,156.629 154.985,148.893 150.997,144.906 169.318,138.799 163.211,157.12 "
+   points="169.318,138.799 163.211,157.12 159.224,153.132 151.488,160.867 147.25,156.629 154.985,148.893 150.997,144.906 "
    id="polygon51" />
 	<g
    id="g73">
@@ -155,7 +155,7 @@
    id="path63" />
 		<polygon
    style="fill:#ffffff"
-   points="417.036,376.18 152.125,376.18 152.765,226.321 417.676,226.321 "
+   points="152.125,376.18 152.765,226.321 417.676,226.321 417.036,376.18 "
    id="polygon65" />
 		<path
    style="fill:#ff6238"

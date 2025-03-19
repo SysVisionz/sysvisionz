@@ -48,7 +48,7 @@ const Topbar: FC = () => {
 		<div ref={spacer} className={`${style.spacer}${atTop ? ` ${style.top}` : ""}`}></div>
 		<div className={`${style.topbar}${atTop ? ` ${style.top}` : ''}`}>
 			<div className={style.logo}><Link href="/"><Logo color="blue" /></Link></div>
-			<div className={style.links}>
+			<div className={style.links}><div className={style.shadow}>
 				<Link href="/"><h2>Home</h2></Link>
 				<Link href="/services"><h2>Services</h2></Link>
 				{/* <Login /> */}
@@ -56,7 +56,7 @@ const Topbar: FC = () => {
 			<div style={{display: 'none'}}>
 				{user.privLevel ? <div>{user.displayName}</div> : <button>Login</button>}
 			</div>
-		</div>
+		</div></div>
 	</>
 }
 

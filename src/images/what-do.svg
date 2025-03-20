@@ -5,12 +5,12 @@
    version="1.1"
    x="0px"
    y="0px"
-   viewBox="0 0 736.16949 250.93689"
+   viewBox="0 0 736.16949 300"
    xml:space="preserve"
    id="svg567"
    sodipodi:docname="what-do.svg"
    width="736.16949"
-   height="250.93689"
+   height="300"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -26,8 +26,8 @@
    inkscape:pagecheckerboard="0"
    showgrid="false"
    inkscape:zoom="1.2956891"
-   inkscape:cx="395.15651"
-   inkscape:cy="172.10918"
+   inkscape:cx="691.52392"
+   inkscape:cy="172.10919"
    inkscape:window-width="1920"
    inkscape:window-height="1008"
    inkscape:window-x="0"
@@ -407,7 +407,7 @@
 		</g>
 		<polygon
    style="fill:#8f6fc9"
-   points="227.669,127.196 222.041,132.435 231.365,136.808 "
+   points="222.041,132.435 231.365,136.808 227.669,127.196 "
    id="polygon193" />
 	</g>
 	<g
@@ -422,7 +422,7 @@
 		</g>
 		<polygon
    style="fill:#8f6fc9"
-   points="401.042,252.639 393.633,254.695 394.782,244.461 "
+   points="393.633,254.695 394.782,244.461 401.042,252.639 "
    id="polygon201" />
 	</g>
 	<g
@@ -437,7 +437,7 @@
 		</g>
 		<polygon
    style="fill:#8f6fc9"
-   points="324.401,131.457 326.457,138.866 316.223,137.717 "
+   points="326.457,138.866 316.223,137.717 324.401,131.457 "
    id="polygon209" />
 	</g>
 	<g
@@ -452,7 +452,7 @@
 		</g>
 		<polygon
    style="fill:#8f6fc9"
-   points="67.175,284.431 74.584,286.488 73.435,276.254 "
+   points="74.584,286.488 73.435,276.254 67.175,284.431 "
    id="polygon217" />
 	</g>
 	<g
@@ -754,11 +754,11 @@
    id="g373">
 			<polygon
    style="fill:#f1f1f1"
-   points="271.398,356.04 270.117,339.169 228.35,339.169 227.069,356.04 "
+   points="270.117,339.169 228.35,339.169 227.069,356.04 271.398,356.04 "
    id="polygon359" />
 			<polygon
    style="fill:#808080"
-   points="228.35,339.169 270.117,339.169 269.413,329.906 229.054,329.906 "
+   points="270.117,339.169 269.413,329.906 229.054,329.906 228.35,339.169 "
    id="polygon361" />
 			<path
    style="fill:#a4cde7"
@@ -1015,11 +1015,11 @@
    id="g493">
 			<polygon
    style="opacity:0.2;fill:#ffffff"
-   points="152.474,263.243 217.464,198.243 243.744,198.243 152.474,289.503 "
+   points="217.464,198.243 243.744,198.243 152.474,289.503 152.474,263.243 "
    id="polygon489" />
 			<polygon
    style="opacity:0.2;fill:#ffffff"
-   points="170.814,306.413 278.994,198.243 328.654,198.243 220.494,306.413 "
+   points="278.994,198.243 328.654,198.243 220.494,306.413 170.814,306.413 "
    id="polygon491" />
 		</g>
 	</g>

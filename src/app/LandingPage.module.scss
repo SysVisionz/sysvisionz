@@ -36,11 +36,7 @@
 		}
 	}
 }
-.main-section .let-us{
-	h5{
-		margin: 0;
-	}
-}
+#main-section 
 .meet{
 	display: flex;
 	flex-direction: column;
@@ -57,12 +53,30 @@
 		margin-top: 30px;
 	}
 }
-.main-section{
+#main-section{
 	position: relative;
 	display: flex;
 	justify-content: space-between;
+	color: map.get(forward.$grey, xlight);
+	text-shadow: 0 0 5px map-get(forward.$blue, xdark);
+	a img {
+		filter:brightness(0) invert(1);
+	}
 	>div{
+		padding-right:25%;
+		>div{
+			height:100%;
+		}
+	}
+	.let-us{
+		h5{
+			margin: 0;
+		}
+	}
+	.main-content{
+		padding-right: 10%;
 		flex: 1;
+		align-items: flex-start;
 	}
 }
 .why-wait > div{

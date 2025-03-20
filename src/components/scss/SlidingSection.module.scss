@@ -10,7 +10,7 @@
 	background: map.get(forward.$grey, xlight);
 	margin: 20px 0;
 	border-radius: 0 5px 5px 0;
-	background-color: map.get(forward.$blue, light);
+	background-color: map.get(forward.$blue, xlight);
 	.mobile{
 		display: none;
 	}
@@ -57,7 +57,7 @@
 			border-radius: 0 3px 3px 0;
 			img{
 				object-fit:cover;
-				object-position: 100%;
+				object-position: 100% 40%;
 			}
 
 		}
@@ -71,6 +71,7 @@
 				bottom:50%;
 				transform: translateY(50%);
 				padding-right: 0;
+				height: 70%;
 				img{
 					object-position: 85%;
 				}
@@ -98,7 +99,7 @@
 			}
 		}
 	}
-	&:nth-child(4n), &:nth-child(4n+1){
+	&:nth-child(4n-1), &:nth-child(4n){
 		text-align: right;
 		button {
 			h1, h2{
@@ -116,6 +117,9 @@
 				border-radius: 3px 0 0 3px;
 				right: unset;
 				left: 0;
+				@include forward.mobile{
+					height: 60%;	
+				}
 			}
 			@include forward.mobile{
 				padding-left: 45%;
@@ -123,7 +127,7 @@
 					box-sizing: border-box;
 				}
 				img{
-					object-position: 30%;
+					object-position: 20%;
 				}
 			}
 		}

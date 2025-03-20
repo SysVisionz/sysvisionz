@@ -168,8 +168,8 @@
 	align-items: center;
 	font-size: 24px;
 	font-family: "Josefin Sans", sans-serif;
-	background: map.get(forward.$blue, xlight);
-	color: map-get(forward.$grey, xlight)	;
+	background: map.get(forward.$blue, default);
+	color: map-get(forward.$blue, xdark)	;
 	@include forward.mobile{
 		font-size: 10px;
 	}
@@ -191,6 +191,9 @@
 		width: 10%;
 		z-index: 999999;
 	}
+	a{
+		color: map.get(forward.$blue, xdark)
+	}
 }
 .main{
 	overflow: hidden;
@@ -198,8 +201,9 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 30px;
 	transition: opacity 400ms ease;
+	font-size: 1.8vw;
 	@mixin mobile{
 		margin-top: 5px;
 	}
@@ -207,36 +211,27 @@
 		width: 100%;
 	}
 	p, span {
-		font-size: 1em;
+		font-size: 1.2em;
 	}
 	@include fonts("header");	
 	h1{
 		font-size: 2.5em;
 		font-weight: bold;
-		@include forward.tablet{
-			font-size: 2.5em;
-		}		
 	}
 	h2{
 		font-size: 2.2em;
 		font-weight: bold;
 		text-decoration: underline;
-		@include forward.tablet{
-			font-size: 1.5em;
-		}
 	}
 	h3{
 		text-align: center;
 		font-size: 2em;
 		font-weight: bold;
-		@include forward.tablet{
-			font-size: 1.5em;
-		}
 	}
 	h4{
-		font-size: 1.8em;
+		font-size: 1.9em;
 	}
 	h5{
-		font-size: 1.5em;
+		font-size: 1.3em;
 	}
 }

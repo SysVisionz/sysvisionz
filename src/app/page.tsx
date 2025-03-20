@@ -10,21 +10,15 @@ export default function Home() {
   // const {breakpoint} = useContext(siteContext)
   return (<>
       <Head><title>SysVisionz: Our Systems, Your Visionz</title></Head>
-      <SlidingSection>
-        <header className={styles['sys-vis']}>
-          <div className={styles.first}>
-            <h1>Our Systems, Your Visions</h1>
-          </div>  
-        </header>
-      </SlidingSection><SlidingSection className={styles['main-section']}
+      <SlidingSection id={styles['main-section']}
         image={{src: noWorries.src, alt: 'no worries'}}>
-        <div>
+        <div className={styles['main-content']}>
           <div className={styles['let-us']}>
-            <h5>When you’re bringing your ideas to life,</h5>
+            <h5>When you’re bringing ideas to life,</h5>
             <h5>there can be a lot to worry about.</h5>
             <br/>
-            <h5>Let us make sure one thing always goes right.</h5>
-            <h2>Never worry about your website</h2>
+            <h5>Make one thing always go right.</h5>
+            <h4>Never worry <br />about your website</h4>
           </div>
         </div>
         <Links />

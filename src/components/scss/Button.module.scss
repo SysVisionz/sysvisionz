@@ -2,7 +2,7 @@
 @use 'sass:map';
 
 .button {
-	background: map.get(forward.$blue, xlight);
+	background: map.get(forward.$blue, default);
 	color: map.get(forward.$grey, xlight);
 	border: none;
 	padding: 10px 20px;

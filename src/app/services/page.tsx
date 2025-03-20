@@ -6,11 +6,7 @@ import style from './Services.module.scss'
 import { fe, fs, be, mentor, consult, letsGo} from "~/images";
 
 const Services: FC = () => <>
-	<SlidingSection>
-		<h1>Services</h1>
-		<p>Our team is ready to help you with your business needs at a moment&apos;s notice. We provide a variety of services
-		for you to optimize your business and be certain that you are always ahead of the curve.</p>
-	</SlidingSection><SlidingSection
+	<SlidingSection
 		image={{src: fe.src, alt: 'services'}}
 	>
 		<h2>Frontend Development</h2>

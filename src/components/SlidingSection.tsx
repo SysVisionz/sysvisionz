@@ -3,10 +3,10 @@ import { useState, useEffect, useRef, ReactElement, ReactNode } from "react";
 import style from './scss/SlidingSection.module.scss';
 import { classNamer, useDelay } from "~/shared/utils";
 import Image from 'next/image';
-function SlidingSection({children, className, id, image, title, mobile}: {children: ReactNode, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string}}): ReactElement
-function SlidingSection({children, className, id, image, title, mobile}: {children: ReactNode, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, height: number, width: number}}): ReactElement
-function SlidingSection({children, className, id, image, title, mobile}: {children: ReactNode, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, fill: boolean}}): ReactElement
-function SlidingSection({ children, className, id, image, title, mobile }: {children: ReactNode, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, height?: number, width?: number, fill?: boolean}}) {
+function SlidingSection({children, className, id, image, title, mobile, flip}: {children: ReactNode, flip?: boolean,title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string}}): ReactElement
+function SlidingSection({children, className, id, image, title, mobile, flip}: {children: ReactNode, flip?: boolean, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, height: number, width: number}}): ReactElement
+function SlidingSection({children, className, id, image, title, mobile, flip}: {children: ReactNode, flip?: boolean, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, fill: boolean}}): ReactElement
+function SlidingSection({ children, className, id, image, title, mobile, flip }: {children: ReactNode, flip?: boolean, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, height?: number, width?: number, fill?: boolean}}) {
 	const section = useRef<HTMLDivElement>(null);
 	const [show, setShow] = useState<boolean>(false);
 	const lastTop = useRef<number>(0);
@@ -48,7 +48,7 @@ function SlidingSection({ children, className, id, image, title, mobile }: {chil
 			return () => document.body.removeEventListener('scroll', inout)
 		}
 	}, [inout])
-	return <div ref={section} id={id} className={classNamer(style.section, show && style.show)}>
+	return <div ref={section} id={id} className={classNamer(style.section, show && style.show, flip && style.flip)}>
 		<div className={classNamer(style.content, !!image && style['with-image'], className)}>
 			{image ? <div className={style.image}><Image src={image.src} alt={image.alt} {...(image.height ? {height: image.height, width: image.width} : image.fill !== undefined ? {fill: image.fill} : {fill: true})}/></div> : null}
 			{title ? <h2>{title}</h2> : null}

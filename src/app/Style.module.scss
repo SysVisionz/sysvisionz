@@ -169,7 +169,7 @@
 	font-size: 24px;
 	font-family: "Josefin Sans", sans-serif;
 	background: map.get(forward.$blue, default);
-	color: map-get(forward.$blue, xdark)	;
+	color: map.get(forward.$blue, xdark)	;
 	@include forward.mobile{
 		font-size: 10px;
 	}
@@ -203,7 +203,7 @@
 	width: 100%;
 	margin-top: 30px;
 	transition: opacity 400ms ease;
-	font-size: 1.8vw;
+	font-size: 2vw;
 	@mixin mobile{
 		margin-top: 5px;
 	}

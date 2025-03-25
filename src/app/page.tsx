@@ -10,7 +10,7 @@ export default function Home() {
   // const {breakpoint} = useContext(siteContext)
   return (<>
       <Head><title>SysVisionz: Our Systems, Your Visionz</title></Head>
-      <SlidingSection id={styles['main-section']}
+      <SlidingSection id={styles['main-section']} flip
         image={{src: noWorries.src, alt: 'no worries'}}>
         <div className={styles['main-content']}>
           <div className={styles['let-us']}>
@@ -21,7 +21,7 @@ export default function Home() {
             <h4>Never worry <br />about your website</h4>
           </div>
         </div>
-        <Links />
+        <Links className={styles.meet}/>
       </SlidingSection>
       <SlidingSection image={{src: whatDo.src, alt: 'site'}}> 
         <h2>What we Do</h2>

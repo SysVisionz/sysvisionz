@@ -57,9 +57,8 @@
 			border-radius: 0 3px 3px 0;
 			img{
 				object-fit:cover;
-				object-position: 100% 40%;
+				object-position: 100%;
 			}
-
 		}
 		@include forward.mobile{
 			>div:not(.image){
@@ -71,7 +70,6 @@
 				bottom:50%;
 				transform: translateY(50%);
 				padding-right: 0;
-				height: 70%;
 				img{
 					object-position: 85%;
 				}
@@ -99,7 +97,7 @@
 			}
 		}
 	}
-	&:nth-child(4n-1), &:nth-child(4n){
+	&:not(.flip):nth-child(4n-1), &:not(.flip):nth-child(4n), &.flip:nth-child(4n-3), &.flip:nth-child(4n-2){
 		text-align: right;
 		button {
 			h1, h2{
@@ -107,9 +105,8 @@
 			}
 		}
 		.with-image{
-			padding-right: unset;
 			padding-left: 40%;
-			padding-right: 20px;
+			padding-right: 40px;
 			>div:not(.image){
 				align-items: flex-end;
 			}	
@@ -117,17 +114,15 @@
 				border-radius: 3px 0 0 3px;
 				right: unset;
 				left: 0;
-				@include forward.mobile{
-					height: 60%;	
+				img{
+					object-position: 20%;
 				}
 			}
 			@include forward.mobile{
+				padding-right: 10%;
 				padding-left: 45%;
 				>div:not(.image){
 					box-sizing: border-box;
-				}
-				img{
-					object-position: 20%;
 				}
 			}
 		}

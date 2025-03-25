@@ -2,10 +2,10 @@
 @use "sass:map";
 
 .meet{
-	width: 50%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	width: 100%;
 	span{
 		height: fit-content;
 	}
@@ -38,6 +38,7 @@
 				display: flex;
 				align-items: center;
 				color:inherit;
+				text-decoration: none;
 				>div{
 					height:35px;
 					width: 35px;

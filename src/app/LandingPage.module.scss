@@ -36,36 +36,24 @@
 		}
 	}
 }
-#main-section 
-.meet{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	text-align: right;
-	img{
-		object-position: 85%;
-	}
-	.links{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		margin-top: 30px;
-	}
-}
 #main-section{
 	position: relative;
 	display: flex;
 	justify-content: space-between;
-	color: map.get(forward.$grey, xlight);
-	text-shadow: 0 0 5px map-get(forward.$blue, xdark);
-	a img {
-		filter:brightness(0) invert(1);
+	@include forward.tablet {
+		color: map.get(forward.$grey, xlight);
+		text-shadow: 0 0 5px map.get(forward.$blue, xdark);
+		a img {
+			filter:brightness(0) invert(1);
+		}
 	}
 	>div{
-		padding-right:25%;
+		padding-left: 45%;
 		>div{
 			height:100%;
+			img{
+				object-position: 35%;
+			}
 		}
 	}
 	.let-us{
@@ -74,16 +62,34 @@
 		}
 	}
 	.main-content{
-		padding-right: 10%;
 		flex: 1;
 		align-items: flex-start;
+	}
+	.meet{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		text-align: right;
+		width: 100%;
+		img{
+			 object-position: 85%;
+		}
+		.links{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-top: 30px;
+		}
 	}
 }
 .why-wait > div{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
+	.interested-links{
+		width: 50%;
+	}
 }
 @keyframes reveallr{
 	from{

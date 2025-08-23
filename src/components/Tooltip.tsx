@@ -25,8 +25,9 @@ const Tooltip: FC<TooltipProps> = ({
 		}
 		if (content.current){
 			intersect.current.observe(content.current)
+			const [con, int] = [content.current, intersect.current]
 			return () => {
-				if (content.current) intersect.current!.unobserve(content.current)
+				if (con) int.unobserve(con)
 			}
 		}
 	}, [])

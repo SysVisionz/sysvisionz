@@ -6,21 +6,21 @@ export default function ExpandingList(props: {
 	label?: string,
 	list: string[],
 	box: true,
-	onChange: (v: string[]) => void
-}): ReactNode
+	onChange: (v: (string|number|boolean)[]) => void
+}): ReactNode;
 export default function ExpandingList(props: {
 	id: string,
 	label?: string,
 	list: string[],
 	box?: false,
-	onChange: (v: string[]) => void
-}): ReactNode
-export default function ExpandingList({id, list, label, onChange, box}: {
+	onChange: (v: (string|number|boolean)[]) => void
+}): ReactNode;
+export default function ExpandingList({list,onChange}: {
 	id: string,
 	label?: string,
 	list: string[],
 	box?: boolean,
-	onChange: (v: string[]) => void
+	onChange: (v: (string|number|boolean)[]) => void
 }){
 	const [
 		/** listVals is a list containing each entry with a series consisting of the value, current id, and whether it's been deleted. */
@@ -55,13 +55,13 @@ export default function ExpandingList({id, list, label, onChange, box}: {
 	}
 	console.log(edit, remove, notEditing, add)
 	useEffect(() => {
-		onChange(listVals.reduce((list: (string|number|boolean)[], v: [string | number | boolean, boolean]) => {
-			const [value, active] = v;
+		const newList = (listVals as [string|number|boolean, number, boolean][]).reduce((list: (string|number|boolean)[], [value, index, active]: [string | number | boolean, number, boolean]) => {
 			if (active){
-				list = [...list, value]
+				list[index] = value
 			}
 			return list
-		}, [] as string | boolean)[]) as string[] | boolean[])
+		}, [] as (string | number | boolean)[])
+		onChange(newList)
 	}, [listVals])
 	return <div className={style.container}>
 		

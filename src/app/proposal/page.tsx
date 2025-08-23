@@ -1,6 +1,6 @@
 'use client'
 import { FC, useEffect, useState } from "react";
-import { useSiteNotify } from "../../contexts/notification";
+// import { useSiteNotify } from "../../contexts/notification";
 import { useSearch } from "~/shared/utils";
 
 
@@ -19,9 +19,10 @@ interface ProposalProps{
 
 const Proposal: FC = () => {
 	const [proposal, setProposal] = useState<ProposalProps>()
-	const [edited, SetEdited] = useState<Partial<ProposalProps>>({})
-	const notify = useSiteNotify()
+	// const [edited, SetEdited] = useState<Partial<ProposalProps>>({})
+	// const notify = useSiteNotify()
 	const search = useSearch()
+	console.log(proposal)
 	useEffect(() => {
 		fetch(
 			`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/proposal${search.toSearchString()}`

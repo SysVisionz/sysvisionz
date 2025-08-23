@@ -5,9 +5,19 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	opacity: 0;
-	transition: opacity 200ms ease;
+	animation-name: fallback;
+	animation-duration: 1000ms;
 	&.ready{
+		animation: none;
+		transition: opacity 200ms ease;
+		opacity: 1;
+	}
+}
+@keyframes fallback {
+	0%, 75% {
+		opacity: 0;
+	}
+	100% {
 		opacity: 1;
 	}
 }

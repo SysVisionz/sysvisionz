@@ -37,9 +37,10 @@ const Topbar: FC = () => {
 		}
 		if (spacer.current){ iObserv.current.observe(spacer.current) }
 		if (observer.current && typeof window !== 'undefined') { observer.current.observe(document.body) }
+		const [iO, ob, space] = [iObserv.current, observer.current, spacer.current]
 		return () => {
-			if (spacer.current) {iObserv.current?.unobserve(spacer.current)}
-			if (observer.current) {observer.current?.disconnect()}
+			if (space) {iO?.unobserve(space)}
+			if (ob) {ob?.disconnect()}
 		}
 	}, [])
 	const {user} = useContext(userContext)

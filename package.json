@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node server.js dev",
     "build": "rm -rf .next && npm run build-server && next build && npm run build-export",
-    "build-export": "rm -rf ../export && cp -r ./db ../export && cp -r ./middleware ../export && cp -r ./.next ../export && cp -r ./models ../export && cp ./package.json ../export && cp ./server.js ../export && cp ./.env-prod ../export/.env && cp ./.npmrc-prod ../export/.npmrc",
+    "build-export": "rm -rf ../export && cp -r ./.next ../export && cp ./package.json ../export && cp ./server.js ../export && cp ./.env-prod ../export/.env && cp ./.npmrc-prod ../export/.npmrc",
     "start": "node server.js",
     "test": "node server.js test",
     "lint": "next lint",

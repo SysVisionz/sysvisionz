@@ -6,16 +6,42 @@ import { hashTag } from '../db/dataConfig';
 
 export interface UserObj extends Document{
 	_id: ObjectId,
-	displayName: string,
-	persist?: boolean,
-	password: string,
-	email: string,
-	tokens?: string[],
-	privs?: PrivLevel,
-	hasAtLeast: {[P in PrivLevel]: boolean}
-	generateAuthToken: () => Promise<string>,
-	removeToken: (token: string) => void,
-	toJSON: () => {displayName: string, email: string, privs: UserObj["privs"]}
+	'email': string,
+	name: Name,
+	'password'?: string,
+	'invite'?: {
+		id: string
+		timestamp: Date
+	},
+	'persist'?: boolean,
+	'displayName'?: string,
+	'phone'?: number,
+	'privs': PrivLevel,
+	'tokens'?: string[],
+	'createdAt': Date,
+	'updatedAt': Date,
+	'verified'?: boolean,
+	'avatar'?: string,
+	'projects'?: {
+		id: ObjectId
+		name: string
+		company: string
+	}[],
+	'friendList'?: ObjectId[],
+	'messages'?: ObjectId,
+	'company'?: { _id: ObjectId, validated: boolean },
+	'alerts'?: {
+		message?: boolean;
+		project?: { [name: string]: boolean };
+		task?: boolean;
+	},
+	'hasAtLeast': {[P in PrivLevel]: boolean},
+	'generateAuthToken': () => Promise<string>,
+	'removeToken': (token: string) => void,
+	'findByToken': (token?: string, privLevel?: 'user' | 'mod' | 'admin' | 'master') => Promise<UserObj>,
+	'findByDisplayName': (displayName: string, token: string) => Promise<UserObj>,
+	'findByCredentials': ({email, displayName}: {email: string, displayName: string}, password: string) => Promise<UserObj>,
+	'toJSON': () => User<'fe'>
 }
 interface UserMethods {
 	generateAuthToken: () => Promise<string>,
@@ -50,17 +76,14 @@ const UserSchema = new Schema<
 	QueryHelpers
 >  (
 	{
-		displayName: {
-			type: String,
-			required: true,
-			unique: true,
-			minlength: 4
-		},
 		persist: Boolean,
-		password: {
+		password: {	
 			type: String,
-			required: true,
+			required: false,
 			minlength: 8
+		},
+		avatar: {
+			type: String,
 		},
 		email: {
 			type: String,
@@ -73,12 +96,22 @@ const UserSchema = new Schema<
 				message: '{VALUE} is not a valid email.'
 			},
 		},
+		displayName: {
+			type: String,
+			required: false,
+			unique: true,
+			minlength: 4
+		},
 		tokens: [String],
 		privs: {
 			type: String,
-			enum: {values: ["admin", "mod", "user", "master"], message: "only admin, mod, and user are acceptable privilege levels."}
-			
-		}
+			enum: {values: ["admin", "mod", "client", "user", "master"], message: "only admin, mod, client, and user are acceptable privilege levels."}
+		},
+		name: {
+			first: {type: String},
+			last: {type: String},
+			middle: {type: String}
+		},
 	}, {
 		virtuals: {
 			hasAtLeast: {
@@ -87,8 +120,11 @@ const UserSchema = new Schema<
 					return new Proxy({master: false, admin: false, mod: false, user: false} as {[P in PrivLevel]: boolean}, {
 						get: (t, p, r) => {
 							const level = (v: PrivLevel) => typeof level === 'number' ? v
-							: {master: 3, admin: 2, mod: 1, user: 0}[v]
-							return level(p as keyof typeof t) <= level(user.privs!)		 
+							: {master: 5, admin: 4, mod: 3, client: 2, user: 1, invite: 0}[v]
+							if (level === undefined){
+								return null
+							}
+							return level(p as keyof typeof t) <= level(user.privs!)
 						}
 					})
 				}
@@ -115,22 +151,25 @@ const UserSchema = new Schema<
 					}
 				})
 			},
-			priv: (level: "master" | "admin" | "mod" | "user") => 0 | 1 | 2 | 3
+			priv: (level: "master" | "admin" | "mod" | "client" | "user") => 0 | 1 | 2 | 3 | 4
 		},
 		statics: {
 			findByCredentials: function ({email, displayName}: {email?: string, displayName?: string}, password: string) {
 				const User = this;
 				return User.findOne({$or:[{email}, {displayName}]}).then( (user) => {
 					if (!user) {
-						return Promise.reject({status: 400, message: "No matching user found"});
+						return Promise.reject({status: 404, message: "No matching user found"});
 					}
 					return new Promise((resolve, reject) => {
+						if (!user.password){
+							return reject({status: 403, message: "Invitation not yet accepted"})
+						}
 						bcrypt.compare(password, user.password, (err, res ) => {
 							if (res){
 								resolve (user);
 							}
 							else {
-								reject({status: 403, message: "Invalid credentials"});
+								reject({status: 401, message: "Invalid credentials"});
 							}
 						})
 					})
@@ -186,7 +225,7 @@ const UserSchema = new Schema<
 						return targetUser;
 					})
 				});
-			}
+			},
 		},
 		timestamps: true
 	}
@@ -195,18 +234,21 @@ const UserSchema = new Schema<
 UserSchema.pre('save', function (next) {
 	var user = this;
 	if (user.isModified('password')) {
-		bcrypt.genSalt(10, (err, salt) => {
-			bcrypt.hash(user.password, salt, (err, hash) => {
-				user.password = hash;
-				next();
-			}); 
-		});
+		const password = user.password
+		if (password){
+			bcrypt.genSalt(10, (err, salt) => {
+				bcrypt.hash(password, salt, (err, hash) => {
+					user.password = hash;
+					next();
+				}); 
+			});
+		}
 	}
 	else {
 		next();
 	}
 })
 
-const User = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
-export default User;
+export default UserModel;

@@ -3,20 +3,18 @@ import Button from "./Button";
 import style from "./scss/Login.module.scss";
 import { classNamer } from "~/shared/utils";
 import { notificationContext } from "~/contexts/notification";
+import ExpandaBox from "./ExpandaBox";
 
 const Login: FC = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const u= useRef<HTMLInputElement>(null);
-	const contain = useRef<HTMLDivElement>(null);
 	const {push} = useContext(notificationContext);
 	const close =(e: MouseEvent) => {
 		e.stopPropagation();
 		document.body.removeEventListener('click', close);
-		if (contain.current && !contain.current.contains(e.target as Node)){
-			setOpen(false);
-		}
+		setOpen(false);
 	}
-	  return <div>
+	  return <div className={style.login}>
 		<Button onClick={() => {
 			if (!open){
 				setOpen(true);
@@ -28,12 +26,8 @@ const Login: FC = () => {
 				}
 			}
 		}}>Login</Button>
-		<div className={classNamer(style["login-box"], !open && style.hidden)} ref={contain}>
-			<h1>Login</h1>
-			<form>
-			<input type="text" ref={u} placeholder="Username" />
-			<input type="password" placeholder="Password" />
-			<button type="submit" onClick={(e) => {
+		<ExpandaBox className={style["login-box"]} open= {open}>
+			<form onSubmit={(e) => {
 				e.preventDefault();
 				fetch('/api/login', {
 					method: 'POST',
@@ -48,9 +42,12 @@ const Login: FC = () => {
 				})).catch((err) => {
 					push.error(err.message)
 				})
-			}}>Login</button>
+			}}>
+				<input type="text" ref={u} placeholder="Username" />
+				<input type="password" placeholder="Password" />
+				<button type="submit">Login</button>
 			</form>
-	  	</div>
+	  	</ExpandaBox>
 	</div>
 }
 export default Login; 

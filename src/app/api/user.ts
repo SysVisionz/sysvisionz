@@ -1,7 +1,6 @@
-import { getIronSession } from "iron-session";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
-export async function get(req: NextRequest) {
+export async function get(req: NextRequest, res: NextResponse) {
   return new Response();
 }

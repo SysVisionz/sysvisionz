@@ -51,7 +51,15 @@ const NotificationProvider: FCWC = ({children}) => {
 
 export default NotificationProvider
 
-export const useHasAtLeast = (privLevel: PrivLevel, callback: () => void) => {
-	const {user} = useContext(userContext)
-	return user.privLevel && user.privLevel >= privLevel ? callback ? callback() : true : false
+export function useHasAtLeast (privLevel: PrivLevel, callback: () => boolean): boolean
+export function useHasAtLeast (privLevel: {[Priv in PrivLevel]?: () => boolean}): boolean
+export function useHasAtLeast (privLevel: PrivLevel | {[Priv in PrivLevel]?: () => boolean}, callback?: () => boolean): boolean {
+	const {user: {privLevel: userPriv}} = useContext(userContext)
+	if (!userPriv){
+		return false;
+	}
+	if (typeof privLevel === 'string'){
+		return userPriv && userPriv >= privLevel ? callback ? callback() : true : false
+	}
+	return privLevel[userPriv]?.() || false
 }

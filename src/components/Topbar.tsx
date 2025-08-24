@@ -3,7 +3,7 @@ import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
 import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from 'next/link';
-import { cleanObject, useDelay } from '~/shared/utils';
+import { useDelay } from '~/shared/utils';
 import Login from './Login';
 import { useHasAtLeast, userContext } from '~/contexts/user';
 
@@ -35,13 +35,16 @@ const Topbar: FC = () => {
 	useHasAtLeast({
 		mod: () => {
 			addLink('dropdown', ['Dashboard', '/dashboard'])
+			return true;
 		},
 		'client': () => {
 			addLink('dropdown', ['Projects', '/projects'], ['Team Chat', '/team-chat'])
+			return true;
 		},
 		'user': () => {
 			addLink('dropdown', ['Messages', '/messages'], ['Profile', '/profile'])
 			addLink('links', ['Proposals', '/proposals'])
+			return true;
 		},
 	})
 	const setTabSize = useDelay({onEnd: () => {

@@ -1,6 +1,165 @@
 @use 'sass:map';
 @use "forward.scss";
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Markazi+Text:wght@400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+	font-family: "Josefin Sans";
+	src:
+		local("Josefin Sans"),
+		url("../fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Krona One";
+	src:
+		local("Krona One"),
+		url("../fonts/Krona_One/KronaOne-Regular.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Markazi Text";
+	src:
+		local("Markazi Text"),
+		url("../fonts/Markazi_Text/MarkaziText-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-Black.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-Bold.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-Light.ttf") format("truetype");
+	font-weight: 100;
+	font-style: normal;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-BlackItalic.ttf") format("truetype");
+	font-weight: 700;
+	font-style: italic;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-BoldItalic.ttf") format("truetype");
+	font-weight: 500;
+	font-style: italic;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-RegularItalic.ttf") format("truetype");
+	font-weight: 300;
+	font-style: italic;
+}
+@font-face {
+	font-family: "Merriweather";
+	src:
+		local("Merriweather"),
+		url("../fonts/Merriweather/Merriweather-LightItalic.ttf") format("truetype");
+	font-weight: 100;
+	font-style: italic;
+}
+@font-face {
+	font-family: "Red Rose";
+	src:
+	local("Red Rose"),
+	url("../fonts/Red_Rose/RedRose-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Roboto";
+	src:
+		local("Roboto"),
+		url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Sree Krushnadevaraya";
+	src: 
+		local("Sree Krushnadevaraya"),
+		url("../fonts/Sree_Krushnadevaraya/SreeKrushnadevaraya-Regular.ttf") format("truetype");
+}
+
+
+@mixin fonts($type){
+	$select: if($type=="header","h1, h2, h3, h4, h5","p, span");
+	&.body-#{$type}-0{
+		#{$select}{
+			font-family: "Josefin Sans", sans-serif;
+			font-optical-sizing: auto;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+	&.body-#{$type}-1{
+		#{$select}{
+			font-family: "Krona One", sans-serif;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+	&.body-#{$type}-2{
+		#{$select}{
+			font-family: "Markazi Text", serif;
+			font-optical-sizing: auto;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+	&.body-#{$type}-3{
+		#{$select}{
+			font-family: "Merriweather", serif;
+			font-optical-sizing: auto;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+	&.body-#{$type}-4{
+		#{$select}{
+			font-family: "Red Rose", serif;
+			font-optical-sizing: auto;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+	&.body-#{$type}-5{
+		#{$select}{
+			font-family: "Roboto", sans-serif;
+			font-optical-sizing: auto;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+	&.body-#{$type}-6{
+		#{$select}{
+			font-family: "Sree Krushnadevaraya", serif;
+			font-style: normal;
+			font-weight: 500;
+		}
+	}
+}
+
 
 .body{
 	margin:0;
@@ -8,11 +167,14 @@
 	flex-direction: column;
 	align-items: center;
 	font-size: 24px;
-	font-family: "Josefin Sans", serif;
-	background: linear-gradient(forward.$deg, map.get(forward.$grey, xlight), map.get(forward.$blue, xlight));
+	font-family: "Josefin Sans", sans-serif;
+	background: map.get(forward.$blue, default);
+	color: map.get(forward.$blue, xdark)	;
 	@include forward.mobile{
 		font-size: 10px;
 	}
+	@include fonts("header");
+	@include fonts("body");
 	.background{
 		mask-size: 100%;
 		mask-repeat: no-repeat;
@@ -23,6 +185,15 @@
 		height: 100%;
 		z-index: -1;
 	}
+	.changers{
+		position: fixed;
+		top: 400px;
+		width: 10%;
+		z-index: 999999;
+	}
+	a{
+		color: map.get(forward.$blue, xdark)
+	}
 }
 .main{
 	overflow: hidden;
@@ -30,8 +201,9 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 30px;
 	transition: opacity 400ms ease;
+	font-size: 2vw;
 	@mixin mobile{
 		margin-top: 5px;
 	}
@@ -39,45 +211,27 @@
 		width: 100%;
 	}
 	p, span {
-		font-size: 1em;
+		font-size: 1.2em;
 	}
-	h1,h2,h3 {
-		font-family: "Roboto", serif;
-		font-weight: bold;
-		font-weight: bold;
-		text-shadow: map.get(forward.$shadow, clicked);
-	}
-	h4, h5{
-		font-family: "Merriweather", serif;
-	}
+	@include fonts("header");	
 	h1{
 		font-size: 2.5em;
 		font-weight: bold;
-		color: map.get(forward.$blue, default);
-		@include forward.tablet{
-			font-size: 2.5em;
-		}		
 	}
 	h2{
 		font-size: 2.2em;
 		font-weight: bold;
 		text-decoration: underline;
-		@include forward.tablet{
-			font-size: 1.5em;
-		}
 	}
 	h3{
 		text-align: center;
 		font-size: 2em;
 		font-weight: bold;
-		@include forward.tablet{
-			font-size: 1.5em;
-		}
 	}
 	h4{
-		font-size: 1.8em;
+		font-size: 1.9em;
 	}
 	h5{
-		font-size: 1.5em;
+		font-size: 1.3em;
 	}
 }

@@ -210,9 +210,6 @@
 	>div {
 		width: 100%;
 	}
-	p, span {
-		font-size: 1.2em;
-	}
 	@include fonts("header");	
 	h1{
 		font-size: 2.5em;
@@ -229,9 +226,9 @@
 		font-weight: bold;
 	}
 	h4{
-		font-size: 1.9em;
+		font-size: 1.6em;
 	}
 	h5{
-		font-size: 1.3em;
+		font-size: 1.1em;
 	}
 }

@@ -1,18 +1,24 @@
 @use "forward.scss";
 @use "sass:map";
 .spacer, .footer{
-	width: 100%;
+	width: calc(100% - 15px);
 	box-sizing: content-box;
 }
 .footer{
-	padding: 10px 0;
 	z-index: 1000;
 	position: fixed;
 	bottom: 0;
-	display: flex;
-	justify-content: center;
-	background: map.get(forward.$blue, xlight);
-	box-shadow: map.get(forward.$shadow, default);
+	padding-top: 10px;
+	overflow-x: hidden;
+	.shadow{
+		display: flex;
+		justify-content: center;
+		background: map.get(forward.$blue, xlight);
+		padding: 10px 0;
+		height: 100%;
+		width: 100%;
+		box-shadow: map.get(forward.$shadow, default);
+	}
 	h3{
 		margin: 5px;
 	}

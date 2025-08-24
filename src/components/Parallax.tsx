@@ -1,24 +1,47 @@
 'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from "react";
-import { useEffectDelay } from "~/shared/utils";
+import { useDelay } from "~/shared/utils";
 import style from './scss/Parallax.module.scss'
 const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 	const [top, setTop] = useState<number>(0)
-	const [scrollY, setScrollY] = useState<number>(0)
 	const [isReady, setReady] = useState<boolean>(false)
 	const resizer = useRef<ResizeObserver>()
-	const ready = () => setReady(true)
+	const timeout = useRef<NodeJS.Timeout>()
+	const max = useRef<number>(0)
+	const readyTimeout = useRef<NodeJS.Timeout>()
+	const getTarget = () => {
+		return -Math.floor((document.body.clientHeight - (img.current?.clientHeight || 0)) * (document.body.scrollTop / (document.body.scrollHeight - document.body.clientHeight))) + document.body.clientHeight - (img.current?.clientHeight || 0)
+	}
 	const adjustTop = () => {
-	  setTop(typeof window !== 'undefined' ? window.scrollY / (document.body.clientHeight - window.innerHeight) * (window.innerHeight - (img.current?.clientHeight || 0)) : 0)
+		if (typeof window !== 'undefined'){
+			const getCloser = () => {
+				clearTimeout(timeout.current)
+				const top = parseInt(img.current?.style.top || '0')
+				const diff = getTarget() - top
+				if (Math.abs(diff) > 3 && isReady){
+					// console.log(top + diff * .1)
+					setTop(top + diff * .5)
+					timeout.current = setTimeout(getCloser, 40)
+				} else {
+					setTop(getTarget())
+				}
+			}
+			getCloser()
+		}
 	}
 	const img = useRef<HTMLImageElement>(null)
-	useEffectDelay({"onStart": adjustTop, onEnd: adjustTop, 'delay': 40}, [scrollY])
+	const adjust = useDelay({"onStart": adjustTop, onEnd: adjustTop}, 40)
+	const ready = () => {
+		adjust()
+		clearTimeout(readyTimeout.current)
+		readyTimeout.current = setTimeout(() => {
+			setReady(true)
+		}, 40)
+	}
 	useEffect(() => {
+		max.current = document.body.clientHeight * (document.body.clientHeight / (img.current?.clientHeight || 0)) - document.body.clientHeight
 		const imag = img.current;
-	  const scrollListener = () => {
-		setScrollY(window.scrollY)
-	  }
 	  if (!isReady){
 		if (imag?.complete) {
 			ready()
@@ -27,11 +50,14 @@ const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 			imag?.addEventListener('load', ready)
 		}
 	}
-		resizer.current = new ResizeObserver(adjustTop)
-	  window.addEventListener('scroll', scrollListener)
+		resizer.current = new ResizeObserver(() => {
+			max.current = -(document.body.clientHeight * (document.body.clientHeight / (img.current?.clientHeight || 0)) - document.body.clientHeight)
+			adjust()
+		})
+		document.body.addEventListener('scroll', adjust)
 	  return () => {
+		document.body.removeEventListener('scroll', adjust)
 		resizer.current?.disconnect()
-		window.removeEventListener('scroll', scrollListener)
 		imag?.removeEventListener('load', ready)
 		}
 	}, [isReady])

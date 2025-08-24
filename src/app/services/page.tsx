@@ -2,7 +2,7 @@
 import { FC } from "react"
 import Links from "~/Links"
 import SlidingSection from "~/SlidingSection"
-import style from './Services.module.scss'
+import style from './scss/Services.module.scss'
 import { fe, fs, be, mentor, consult, letsGo} from "~/images";
 
 const Services: FC = () => <>

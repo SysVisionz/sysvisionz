@@ -1,6 +1,6 @@
 // 'use client'
 import type { Metadata } from "next";
-import style from "./Style.module.scss";
+import style from "./scss/Style.module.scss";
 import SiteProvider from "../contexts/site";
 import Footer from "~/Footer";
 import Parallax from "~/Parallax";

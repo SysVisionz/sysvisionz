@@ -1,0 +1,15 @@
+.container {
+	overflow: hidden;
+	transition: height 200ms ease, width 200ms ease, padding 200ms ease;
+	padding:5px;
+	position: relative;
+	.content{
+		position: absolute;
+		right: 0;
+		top: 0;
+		&.left{
+			right: unset;
+			left: 0;
+		}
+	}
+}

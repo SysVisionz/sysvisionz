@@ -2,7 +2,7 @@
 @use 'sass:map';
 
 .button {
-	background: map.get(forward.$blue, light);
+	background: map.get(forward.$blue, default);
 	color: map.get(forward.$grey, xlight);
 	border: none;
 	padding: 10px 20px;
@@ -16,7 +16,6 @@
 	}
 	.content {
 		transition: text-shadow 200ms ease;
-		text-shadow: map.get(forward.$shadow, clicked);
 		text-align: center;
 	}
 	h1, h2, h3, h4, h5, h6 {

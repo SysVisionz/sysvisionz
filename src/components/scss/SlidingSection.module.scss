@@ -1,24 +1,21 @@
 @use "forward.scss";
 @use "sass:map";
 .section{
-	box-shadow: map.get(forward.$shadow, default);
 	position: relative;
 	width: 85%;
 	display: flex;
 	justify-content: center;
-	margin: 20px 0 20px 25%;
-	padding: 5px 20px 20px calc(15% + 20px);
 	box-sizing: border-box;
 	position: relative;
 	background: map.get(forward.$grey, xlight);
 	margin: 20px 0;
 	border-radius: 0 5px 5px 0;
+	background-color: map.get(forward.$blue, xlight);
 	.mobile{
 		display: none;
 	}
 	@include forward.mobile{
 		width: 95%;
-		padding: 5px 20px 20px calc(5% + 20px);
 		.desktop{
 			display: none;
 		}
@@ -37,11 +34,13 @@
 		}
 	}
 	.with-image{
-		padding-right: 20%;
+		overflow: hidden;
+		padding-right: 40%;
 		display: flex;
 		>div:not(.image) {
-			width: 85%;
-			padding-right: 30%; 
+			box-sizing: border-box;
+			width: 100%;
+			padding: 20px 0 20px 0;
 			z-index: 1;
 			display: flex;
 			flex-direction: column;
@@ -51,38 +50,54 @@
 			top: 0;
 			z-index: 0;
 			height: 100%;
-			width: 50%;
+			width: 100%;
 			position: absolute;
 			overflow: hidden;
 			right: 0;
-			mask-image: linear-gradient(to right, transparent 0% 25%, black 70% 100%);
 			border-radius: 0 3px 3px 0;
 			img{
 				object-fit:cover;
+				object-position: 100%;
 			}
-
 		}
 		@include forward.mobile{
-			
 			>div:not(.image){
-				padding-right: 0;
+				padding: 20px 0 20px 0;
 			}
 			.image{
-				height: 100%;
+				width: 100%;
 				top: unset;
 				bottom:50%;
 				transform: translateY(50%);
-
 				padding-right: 0;
-				max-height: 220px;
-				mask-image: linear-gradient(to right, transparent 0% 35%, black 60% 100%);
 				img{
-					object-position: 70%;
+					object-position: 85%;
 				}
 			}
 		}
 	}
-	&:nth-child(4n), &:nth-child(4n+1){
+	>div{
+		box-sizing: border-box;
+		padding: 0px 5%;
+		width: 100%;
+		min-height: calc(100% + 20px);
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+	}
+	.content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		>div:not(.image){
+			transition: opacity 300ms ease;
+			opacity: 0;
+			>p{
+				width: 100%;
+			}
+		}
+	}
+	&:not(.flip):nth-child(4n-1), &:not(.flip):nth-child(4n), &.flip:nth-child(4n-3), &.flip:nth-child(4n-2){
 		text-align: right;
 		button {
 			h1, h2{
@@ -90,26 +105,24 @@
 			}
 		}
 		.with-image{
-			padding-right: unset;
-			padding-left: 20%;
+			padding-left: 40%;
+			padding-right: 40px;
 			>div:not(.image){
-				padding-right: unset;
-				padding-left: 15%;
-			}
+				align-items: flex-end;
+			}	
 			.image{
 				border-radius: 3px 0 0 3px;
 				right: unset;
-				left: 15%;
-				mask-image: linear-gradient(to left, transparent 0% 25%, black 70% 100%);
-		}
-			@include forward.mobile{
-				>div:not(.image){
-					padding-left:30%
+				left: 0;
+				img{
+					object-position: 20%;
 				}
-				.image{
-					img {
-						object-position: 30%;
-					}
+			}
+			@include forward.mobile{
+				padding-right: 10%;
+				padding-left: 45%;
+				>div:not(.image){
+					box-sizing: border-box;
 				}
 			}
 		}
@@ -117,25 +130,7 @@
 			text-align: right;
 		}
 	}
-	>div{
-		box-sizing: border-box;
-		padding: 0px 5%;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.content {
-		opacity: 0;
-		transition: opacity 300ms ease;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		>div>p{
-			width: 100%;
-		}
-	}
-	&.show .content{
+	&.show .content >div:not(.image){
 		opacity: 1;
 	}
 

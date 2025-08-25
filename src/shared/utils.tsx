@@ -128,7 +128,7 @@ export const useSearch = <T extends {[key: string]: string | number | boolean} =
 }
 
 export const random = (min: number = 0, max: number = 1000) => Math.floor(Math.random() * (max - min) + min)
-export const isDiff = (...values: ([number, number] | number)[]) => {
+export const isDiff = (...values: ([number | undefined, number] | number)[]) => {
 	const range = values.find(v => typeof v === 'number') || 5
-	values.every((v) => typeof v !== 'object' || Math.abs(v[0] - v[1]) > range)
+	values.every((v) => typeof v !== 'object' || typeof v[0] === 'undefined' ||  Math.abs(v[0] - v[1]) > range)
 }

@@ -17,9 +17,10 @@ const ExpandaBox: FCWC<{open: boolean, className: string, orientation?: 'right' 
 	const observer = useRef<ResizeObserver | null>(null);
 	useEffect(() => {
 		if (!observer.current){
-			observer.current = new ResizeObserver((entries) => {
+			observer.current = new ResizeObserver(() => {
 				const {height, width} = dimensions;
-				if (open && isDiff([ref.current?.clientWidth!, width], [ref.current?.clientHeight!, height], 15)){
+				const {clientWidth, clientHeight} = ref.current || {}
+				if (open && isDiff([clientWidth, width], [clientHeight, height], 15)){
 					setDimensions();
 				}
 			})

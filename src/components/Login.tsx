@@ -1,7 +1,6 @@
 import { FC, useContext, useRef, useState } from "react";
 import Button from "./Button";
 import style from "./scss/Login.module.scss";
-import { classNamer } from "~/shared/utils";
 import { notificationContext } from "~/contexts/notification";
 import ExpandaBox from "./ExpandaBox";
 

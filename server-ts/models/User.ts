@@ -87,7 +87,7 @@ const UserSchema = new Schema<
 					return new Proxy({master: false, admin: false, mod: false, user: false} as {[P in PrivLevel]: boolean}, {
 						get: (t, p, r) => {
 							const level = (v: PrivLevel) => typeof level === 'number' ? v
-							: {master: 3, admin: 2, mod: 1, user: 0}[v]
+							: {master: 4, admin: 3, mod: 2, client: 1, user: 0}[v]
 							return level(p as keyof typeof t) <= level(user.privs!)		 
 						}
 					})

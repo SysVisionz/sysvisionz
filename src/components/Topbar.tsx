@@ -1,7 +1,7 @@
 'use client'
 import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
-import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import Link from 'next/link';
 import { useDelay } from '~/shared/utils';
 import Login from './Login';

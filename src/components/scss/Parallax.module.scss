@@ -5,19 +5,26 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	opacity: 0;
-	transition: opacity 200ms ease;
+	animation-name: fallback;
+	animation-duration: 1000ms;
 	&.ready{
+		animation: none;
+		transition: opacity 200ms ease;
 		opacity: 1;
-		.dev-img{
-			transition: top 100ms ease;
-		}
+	}
+}
+@keyframes fallback {
+	0%, 75% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }
 .dev-img{
 	flex:2;
-	transition: top 0ms ease;
 	top: 0;
+	transition: top 40ms ease;
 	left: 75%;
 	position: fixed;
 	height: 100%;
@@ -28,13 +35,16 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 	mask-repeat: repeat-x;
 	z-index: -1;
 	@include forward.mobile{
-		left:78%;
-		width: calc(22% - 15px);
+		left:78%
 	}
 	>img{
 		min-width: 100%;
 		height: 110%;
 		width: auto;
 		position: absolute;
+		transform: translateX(-20%);
+		@include forward.mobile{
+			transform: translateX(-35%);
+		}
 	}
 }

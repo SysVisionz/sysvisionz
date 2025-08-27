@@ -37,14 +37,7 @@
 	}
 }
 #main-section{
-	@include forward.tablet {
-		color: map.get(forward.$grey, xlight);
-		text-shadow: 0 0 5px map.get(forward.$blue, xdark);
-		a img {
-			filter:brightness(0) invert(1);
-		}
-	}
-	.let-us{
+ 	.let-us{
 		h5{
 			margin: 0;
 		}
@@ -77,6 +70,9 @@
 	align-items: center;
 	.interested-links{
 		width: 50%;
+		@include forward.tablet {
+			width: 100%;
+		}
 	}
 }
 @keyframes reveallr{

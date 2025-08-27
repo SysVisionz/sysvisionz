@@ -84,7 +84,7 @@ const Topbar: FC = () => {
 			<div className={style.logo}><Link href="/"><Logo color="blue" /></Link></div>
 			<div className={style.links}><div className={style.shadow}>
 				{links.map((v) => Array.isArray(v) ? <Link key={`topbar-links-${v[0]}`} href={v[1]}><h2>{v[0]}</h2></Link> : null)}
-				<Login />
+				{/* <Login /> */}
 			</div>
 			<div style={{display: 'none'}}>
 				{dropdown.length ? <div>{user.displayName}</div> : <Login />}

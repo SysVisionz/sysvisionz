@@ -11,6 +11,9 @@
 	font-weight: bold;
 	transition: color 200ms ease;
 	box-shadow: map.get(forward.$shadow, default);
+	@media( prefers-color-scheme: dark){
+		background: map.get(forward.$blue, dark);
+	}
 	@include forward.mobile{
 		padding: 5px 10px;
 	}

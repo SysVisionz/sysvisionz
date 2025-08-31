@@ -170,6 +170,10 @@
 	font-family: "Josefin Sans", sans-serif;
 	background: map.get(forward.$blue, default);
 	color: map.get(forward.$black, dark)	;
+	@media (prefers-color-scheme: dark){
+		background: map.get(forward.$blue, dark);
+		color: map.get(forward.$grey, xlight);
+	}
 	@include forward.mobile{
 		font-size: 10px;
 	}
@@ -192,7 +196,10 @@
 		z-index: 999999;
 	}
 	a{
-		color: map.get(forward.$blue, xdark)
+		color: map.get(forward.$blue, xdark);
+		@media (prefers-color-scheme: dark){
+			color: map.get(forward.$grey, default)
+		}
 	}
 }
 .main{

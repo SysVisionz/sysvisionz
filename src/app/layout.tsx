@@ -5,7 +5,7 @@ import SiteProvider from "../contexts/site";
 import Footer from "~/Footer";
 import Parallax from "~/Parallax";
 import { dev } from "~/images";
-import { ReactElement, 
+import { ReactNode, 
   // useEffect, useState 
 } from "react";
 import Topbar from "~/Topbar";
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children
 }: Readonly<{
-  children: ReactElement<HTMLDivElement>[];
+  children: ReactNode;
 }>) {
   // const [header, setHeader] = useState<number>(5);
   // const [body, setBody] = useState<number>(0);

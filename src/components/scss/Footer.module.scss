@@ -18,6 +18,10 @@
 		height: 100%;
 		width: 100%;
 		box-shadow: map.get(forward.$shadow, default);
+		@media (prefers-color-scheme: dark){
+			background-color: map.get(forward.$blue, default);
+			box-shadow: map.get(forward.$shadow, dark-mode);
+		}
 	}
 	h3{
 		margin: 5px;
@@ -51,6 +55,11 @@
 			align-items: center;
 			flex-direction: column;
 			text-align: center;
+			color: map.get(forward.$grey, xlight);
+			a {
+				color: map.get(forward.$grey, xlight );
+			}
+
 		}
 	}
 }

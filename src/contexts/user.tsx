@@ -1,30 +1,26 @@
-import { createContext, useState, useContext } from "react"
+import { createContext, useState, useContext, useMemo } from "react"
 import { useSiteNotify } from "./notification"
 
 interface UserContext {
-	user: {
-		displayName: string,
-		email: "" | `${string}@${string}.${string}`,
-		privLevel: PrivLevel | null
-	}
+	user: User<'fe'>;
 	login: (displayNameOrEmail: UserContext["user"]["displayName"] | UserContext["user"]["email"], pass?: string) => void
+	logout: () => void;
 }
 
 export const userContext = createContext<UserContext>({
 	user: {
 		displayName:"",
 		email: "",
-		privLevel: null,
 	},
-	login: () => {}
+	login: () => {},
+	logout: () => {}
 })
 
 
-const NotificationProvider: FCWC = ({children}) => {
+const UserContext: FCWC = ({children}) => {
 	const [user, setUser] = useState<UserContext["user"]>({
 		displayName: "",
 		email: "",
-		privLevel: null
 	})
 	const notify = useSiteNotify()
 	const login = (displayNameOrEmail: UserContext["user"]["displayName"] | UserContext["user"]["email"], pass?: string ) => {
@@ -44,12 +40,25 @@ const NotificationProvider: FCWC = ({children}) => {
 			} 
 		}))
 	}
-	return <userContext.Provider value={{user, login}}>
+	const logout = () => {
+		fetch('/user', {
+			method: 'DELETE'
+		}).then((ret) => ret.json().then((newUser: UserContext["user"]) => {
+			if (newUser){
+				notify.success(`Goodbye, ${newUser.displayName || newUser.email}`)
+				setUser(newUser)
+			}
+			else {
+				notify.error(`Invalid user name or password.`)
+			} 
+		}))
+	}
+	return <userContext.Provider value={{user, login, logout}}>
 		{children}
 	</userContext.Provider>
 }
 
-export default NotificationProvider
+export default UserContext
 
 export function useHasAtLeast (privLevel: PrivLevel, callback: () => boolean): boolean
 export function useHasAtLeast (privLevel: {[Priv in PrivLevel]?: () => boolean}): boolean

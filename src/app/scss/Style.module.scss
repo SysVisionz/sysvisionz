@@ -4,25 +4,25 @@
 	font-family: "Josefin Sans";
 	src:
 		local("Josefin Sans"),
-		url("../fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf") format("truetype");
+		url("../../fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf") format("truetype");
 }
 @font-face {
 	font-family: "Krona One";
 	src:
 		local("Krona One"),
-		url("../fonts/Krona_One/KronaOne-Regular.ttf") format("truetype");
+		url("../../fonts/Krona_One/KronaOne-Regular.ttf") format("truetype");
 }
 @font-face {
 	font-family: "Markazi Text";
 	src:
 		local("Markazi Text"),
-		url("../fonts/Markazi_Text/MarkaziText-VariableFont_wght.ttf") format("truetype");
+		url("../../fonts/Markazi_Text/MarkaziText-VariableFont_wght.ttf") format("truetype");
 }
 @font-face {
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-Black.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-Black.ttf") format("truetype");
 	font-weight: 700;
 	font-style: normal;
 }
@@ -30,7 +30,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-Bold.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-Bold.ttf") format("truetype");
 	font-weight: 500;
 	font-style: normal;
 }
@@ -38,7 +38,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-Regular.ttf") format("truetype");
 	font-weight: 300;
 	font-style: normal;
 }
@@ -46,7 +46,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-Light.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-Light.ttf") format("truetype");
 	font-weight: 100;
 	font-style: normal;
 }
@@ -54,7 +54,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-BlackItalic.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-BlackItalic.ttf") format("truetype");
 	font-weight: 700;
 	font-style: italic;
 }
@@ -62,7 +62,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-BoldItalic.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-BoldItalic.ttf") format("truetype");
 	font-weight: 500;
 	font-style: italic;
 }
@@ -70,7 +70,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-RegularItalic.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-RegularItalic.ttf") format("truetype");
 	font-weight: 300;
 	font-style: italic;
 }
@@ -78,7 +78,7 @@
 	font-family: "Merriweather";
 	src:
 		local("Merriweather"),
-		url("../fonts/Merriweather/Merriweather-LightItalic.ttf") format("truetype");
+		url("../../fonts/Merriweather/Merriweather-LightItalic.ttf") format("truetype");
 	font-weight: 100;
 	font-style: italic;
 }
@@ -86,19 +86,19 @@
 	font-family: "Red Rose";
 	src:
 	local("Red Rose"),
-	url("../fonts/Red_Rose/RedRose-VariableFont_wght.ttf") format("truetype");
+	url("../../fonts/Red_Rose/RedRose-VariableFont_wght.ttf") format("truetype");
 }
 @font-face {
 	font-family: "Roboto";
 	src:
 		local("Roboto"),
-		url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format("truetype");
+		url("../../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format("truetype");
 }
 @font-face {
 	font-family: "Sree Krushnadevaraya";
 	src: 
 		local("Sree Krushnadevaraya"),
-		url("../fonts/Sree_Krushnadevaraya/SreeKrushnadevaraya-Regular.ttf") format("truetype");
+		url("../../fonts/Sree_Krushnadevaraya/SreeKrushnadevaraya-Regular.ttf") format("truetype");
 }
 
 
@@ -169,7 +169,11 @@
 	font-size: 24px;
 	font-family: "Josefin Sans", sans-serif;
 	background: map.get(forward.$blue, default);
-	color: map.get(forward.$blue, xdark)	;
+	color: map.get(forward.$black, dark)	;
+	@media (prefers-color-scheme: dark){
+		background: map.get(forward.$blue, dark);
+		color: map.get(forward.$grey, xlight);
+	}
 	@include forward.mobile{
 		font-size: 10px;
 	}
@@ -192,7 +196,10 @@
 		z-index: 999999;
 	}
 	a{
-		color: map.get(forward.$blue, xdark)
+		color: map.get(forward.$blue, xdark);
+		@media (prefers-color-scheme: dark){
+			color: map.get(forward.$grey, default)
+		}
 	}
 }
 .main{
@@ -210,9 +217,6 @@
 	>div {
 		width: 100%;
 	}
-	p, span {
-		font-size: 1.2em;
-	}
 	@include fonts("header");	
 	h1{
 		font-size: 2.5em;
@@ -225,13 +229,12 @@
 	}
 	h3{
 		text-align: center;
-		font-size: 2em;
 		font-weight: bold;
 	}
 	h4{
-		font-size: 1.9em;
+		font-size: 1.6em;
 	}
 	h5{
-		font-size: 1.3em;
+		font-size: 1.1em;
 	}
 }

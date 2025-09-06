@@ -7,10 +7,12 @@
 	justify-content: center;
 	box-sizing: border-box;
 	position: relative;
-	background: map.get(forward.$grey, xlight);
 	margin: 20px 0;
 	border-radius: 0 5px 5px 0;
-	background-color: map.get(forward.$blue, xlight);
+	background-color: map.get(forward.$grey, xlight);
+	@media (prefers-color-scheme: dark){
+		background-color: map.get(forward.$blue, xdark);
+	}
 	.mobile{
 		display: none;
 	}
@@ -70,9 +72,6 @@
 				bottom:50%;
 				transform: translateY(50%);
 				padding-right: 0;
-				img{
-					object-position: 85%;
-				}
 			}
 		}
 	}

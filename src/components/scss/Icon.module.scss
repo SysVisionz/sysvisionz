@@ -4,5 +4,8 @@
 	position: relative;
 	> img {
 		filter: invert(16%) sepia(29%) saturate(5071%) hue-rotate(203deg) brightness(96%) contrast(97%);
+		@media (prefers-color-scheme: dark){
+			filter: invert(1)
+		}
 	}
 }

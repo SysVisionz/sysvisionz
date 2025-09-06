@@ -37,26 +37,7 @@
 	}
 }
 #main-section{
-	position: relative;
-	display: flex;
-	justify-content: space-between;
-	@include forward.tablet {
-		color: map.get(forward.$grey, xlight);
-		text-shadow: 0 0 5px map.get(forward.$blue, xdark);
-		a img {
-			filter:brightness(0) invert(1);
-		}
-	}
-	>div{
-		padding-left: 45%;
-		>div{
-			height:100%;
-			img{
-				object-position: 35%;
-			}
-		}
-	}
-	.let-us{
+ 	.let-us{
 		h5{
 			margin: 0;
 		}
@@ -89,6 +70,9 @@
 	align-items: center;
 	.interested-links{
 		width: 50%;
+		@include forward.tablet {
+			width: 100%;
+		}
 	}
 }
 @keyframes reveallr{

@@ -9,13 +9,17 @@ const Login: FC = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const u= useRef<HTMLInputElement>(null);
 	const {push} = useContext(notificationContext);
+	const button = useRef<HTMLButtonElement>(null)
+	const loginBox = useRef<HTMLDivElement>(null)
 	const close =(e: MouseEvent) => {
 		e.stopPropagation();
-		document.body.removeEventListener('click', close);
-		setOpen(false);
+		if (e.target && !loginBox.current?.contains?.(e.target as Node)) {
+			document.body.removeEventListener('click', close);
+			setOpen(false);
+		}
 	}
 	  return <div className={style.login}>
-		<Button onClick={() => {
+		<Button ref={button} className={`${style.button}${open ? ` ${style.open}` : ''}`} onClick={() => {
 			if (!open){
 				setOpen(true);
 				if (u.current){
@@ -26,7 +30,7 @@ const Login: FC = () => {
 				}
 			}
 		}}>Login</Button>
-		<ExpandaBox className={style["login-box"]} open= {open}>
+		<ExpandaBox className={style["login-box"]} ref={loginBox} min={{width: button.current?.clientWidth}} open= {open}>
 			<form onSubmit={(e) => {
 				e.preventDefault();
 				fetch('/api/login', {

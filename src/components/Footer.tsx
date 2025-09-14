@@ -4,7 +4,7 @@ import Socials from './Socials'
 import Testimonials from './Testimonials'
 import Button from './Button'
 import { ReactNode, useEffect, useRef, useState } from 'react'
-import { useDelay } from '~/shared/utils'
+import { useDelay } from '~/shared/FE'
 
 const Footer = () => {
 	const footer = useRef<HTMLDivElement>(null)

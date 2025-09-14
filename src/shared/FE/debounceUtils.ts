@@ -1,6 +1,4 @@
-'use client'
-import { useEffect, useRef, useState } from "react"
-
+import { useRef, useEffect } from "react";
 
 type UseEffectDelayParameters = {
 	onStart?: () => void,
@@ -8,16 +6,6 @@ type UseEffectDelayParameters = {
 	resets?: boolean,
 	delay?: number
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const cleanObject = <T extends object >(object: T, test?: (val: any) => boolean) => Object.keys(object).reduce((newObj: Partial<T>, key: string) => {
-		if (test ? test(object[key as keyof T]) : object[key as keyof T] !== undefined){
-			newObj[key as keyof T] = object[key as keyof T]
-		}
-		return newObj
-}, {})
-
-export const makeHeaders = (headers: {[key: string]: string|number|boolean}) => new Headers(Object.keys(headers).map(v => [v, String(headers[v])]))
 
 export function useEffectDelay (parameters: UseEffectDelayParameters, 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,35 +88,4 @@ E extends (...args: T) => void = S>(parametersOrFunc: {onStart?: S, onEnd?: E, r
 			}, delay)
 		}
 	}
-}
-
-export const classNamer = (...args: (string | undefined | false | null)[]) => args.filter(v => v).join(' ')
-
-type SearchObject<T> = T & {toSearchString: () => string}
-
-export const useSearch = <T extends {[key: string]: string | number | boolean} = {[key: string]: string | number | boolean}>(): SearchObject<T> => {
-	const [search, setSearch] = useState<SearchObject<T>>({} as SearchObject<T>)
-	useEffect(() => {
-		if (typeof window !== 'undefined'){
-			setSearch(() => {
-				const s: SearchObject<T>  = location.search.slice(1).split('&').reduce((obj: SearchObject<T>, v) => {
-					const [key, value] = v.split('=').map(decodeURIComponent)
-					obj[key as keyof SearchObject<T>] = (!isNaN(Number(value)) ? Number(value)
-						: value === 'true' ? true
-						: value === 'false' ? false
-						: value) as SearchObject<T>[keyof SearchObject<T>]
-					return obj
-				}, {} as SearchObject<T>)
-				s.toSearchString = () => `?${Object.entries(s).map(v => `${encodeURIComponent(v[0])}=${encodeURIComponent(v[1].toString())}`).join('&')}`
-				return s
-			})
-		}
-	}, [])
-	return search
-}
-
-export const random = (min: number = 0, max: number = 1000) => Math.floor(Math.random() * (max - min) + min)
-export const isDiff = (...values: ([number | undefined, number] | number)[]) => {
-	const range = values.find(v => typeof v === 'number') || 5
-	values.every((v) => typeof v !== 'object' || typeof v[0] === 'undefined' ||  Math.abs(v[0] - v[1]) > range)
 }

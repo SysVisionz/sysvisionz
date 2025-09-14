@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import style from './scss/ExpandaBox.module.scss'
-import { isDiff, classNamer, useDelay } from "~/shared/utils";
+import { minPixDelta, classNamer } from "~/shared/FE";
+import { useDelay } from "~/shared/FE";
 
 const ExpandaBox: FCWC<{open: boolean, className: string, orientation?: 'right' | 'left'}> = ({children, open, className, orientation = 'right'}) => {
 	const ref = useRef<HTMLDivElement>(null);
@@ -19,7 +20,7 @@ const ExpandaBox: FCWC<{open: boolean, className: string, orientation?: 'right' 
 		if (!observer.current){
 			observer.current = new ResizeObserver((entries) => {
 				const {height, width} = dimensions;
-				if (open && isDiff([ref.current?.clientWidth!, width], [ref.current?.clientHeight!, height], 15)){
+				if (open && minPixDelta([ref.current?.clientWidth!, width], [ref.current?.clientHeight!, height], 15)){
 					setDimensions();
 				}
 			})

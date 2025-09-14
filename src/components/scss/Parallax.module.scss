@@ -19,9 +19,6 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 	}
 	100% {
 		opacity: 1;
-		.dev-img{
-			transition: top 100ms ease;
-		}
 	}
 }
 .dev-img{
@@ -47,4 +44,7 @@ $bgWiresmask: url("../../images/bgWires-mask.jpg");
 		width: auto;
 		position: absolute;
 	}
+}
+.ready .dev-img {
+	transition: top 100ms ease;
 }

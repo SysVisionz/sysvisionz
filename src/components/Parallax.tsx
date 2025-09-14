@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from "react";
-import { useDelay } from "~/shared/utils";
+import { useDelay } from "~/shared/FE";
 import style from './scss/Parallax.module.scss'
 const Parallax: FCWC<{image: Image}> = ({image, children}) => {
 	const [top, setTop] = useState<number>(0)

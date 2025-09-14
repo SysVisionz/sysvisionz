@@ -1,8 +1,4 @@
-import validator from 'validator';
 import mongoose, {Schema, Document, Model, ObjectId, FlatRecord } from 'mongoose';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import { hashTag } from '../db/dataConfig';
 
 export interface ProjectObj extends Document{
 	_id: ObjectId,

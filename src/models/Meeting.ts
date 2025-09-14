@@ -1,4 +1,4 @@
-import mongoose, {Schema, Document, ObjectId, Model, mongo} from 'mongoose'
+import mongoose, {Schema, Document, ObjectId, Model} from 'mongoose'
 
 export interface MeetingDetails {
 	user: ObjectId | {

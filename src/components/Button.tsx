@@ -1,6 +1,6 @@
 import { cloneElement, FC, MouseEventHandler, ReactElement } from "react"
 import style from './scss/Button.module.scss'
-import { classNamer } from "~/shared/utils"
+import { classNamer } from "~/shared/FE"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Button: FC<{navigate?: string, children: string | number | ReactElement<any, any>, onClick?: MouseEventHandler<HTMLButtonElement>, className?: string}> = ({className, children, onClick, navigate}) => {
 	let theChildren =['string', 'number'].includes(typeof children) 

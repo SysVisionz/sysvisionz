@@ -1,6 +1,5 @@
 import mongoose, {Schema, Document, ObjectId, Model} from 'mongoose'
 
-const {Types: {ObjectId: oID}} = mongoose
 
 const invoice= {
 	company: {

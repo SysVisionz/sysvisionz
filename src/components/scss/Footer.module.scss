@@ -19,7 +19,7 @@
 		width: 100%;
 		box-shadow: map.get(forward.$shadow, default);
 		@media (prefers-color-scheme: dark){
-			background-color: map.get(forward.$blue, default);
+			background-color: map.get(forward.$blue, xdark);
 			box-shadow: map.get(forward.$shadow, dark-mode);
 		}
 	}

@@ -4,7 +4,7 @@ import { minPixDelta, classNamer } from "~/shared/FE";
 import { useDelay } from "~/shared/FE";
 
 const ExpandaBox: FCWC<{open: boolean, className: string, ref?: RefObject<HTMLDivElement>, orientation?: 'right' | 'left', min?: {width?: number, height?: number}}> = ({children, open, className, orientation = 'right', min, ref}) => {
-	ref = ref || useRef<HTMLDivElement>(null);
+	ref = useRef<HTMLDivElement>(ref);
 	const [dimensions, setTheDimensions] = useState<{height: number, width: number}>({height: min?.height || 0, width: min?.width || 0})
 	const setDimensions = useDelay(() => {
 		if (ref.current){

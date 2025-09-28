@@ -12,7 +12,6 @@ import Topbar from "~/Topbar";
 import "./global.css"
 import favicon from "./favicon.ico";
 // import Button from "~/Button";
-import nextSession from 'next-session'
 
 
 export const metadata: Metadata = {

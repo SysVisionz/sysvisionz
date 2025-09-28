@@ -46,7 +46,9 @@
     "@types/validator": "^13.12.2",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
+    "iron-session": "^8.0.4",
     "sass": "^1.80.6",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

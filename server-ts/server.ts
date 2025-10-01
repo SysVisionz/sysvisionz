@@ -49,6 +49,7 @@ app.prepare().then(() => {
   spdy.createServer(  {
     key: (dev || test) && fs.existsSync(`${name}.key`) ? fs.readFileSync(`${name}.key`) : fs.readFileSync(`/var/www/html/certs/${name}/privkey.pem`),
     cert: (dev || test) && fs.existsSync(`${name}.crt`) ? fs.readFileSync(`${name}.crt`) : fs.readFileSync(`/var/www/html/certs/${name}/fullchain.pem`),
+    ca: (dev || test) && fs.existsSync(`${name}.csr`) ? fs.readFileSync(`${name}.csr`) : fs.readFileSync(`/var/www/html/certs/${name}/chain.pem`)
   }, exp).listen(port, () => {
     console.log(`Listening on HTTPS port ${port}`);
   })

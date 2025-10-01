@@ -1,17 +1,21 @@
 import { SessionOptions } from "iron-session";
+import type { ObjectId } from "mongoose";
 
 export interface SessionData {
-  username: string;
+  user: {
+    id: ObjectId,
+    displayName: string
+  } | null
   isLoggedIn: boolean;
 }
 
 export const defaultSession: SessionData = {
-  username: "",
+  user: null,
   isLoggedIn: false,
 };
 
 export const sessionOptions: SessionOptions = {
-  password: process.env.NEXT_SESSION_PASSWORD,
+  password: process.env.NEXT_SESSION_PASSWORD!,
   cookieName: "sysvisionz-iron-cookie",
   cookieOptions: {
     secure: true,

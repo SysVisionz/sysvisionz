@@ -1,9 +1,9 @@
 'use client'
 import Logo from './Logo';
 import style from './scss/Topbar.module.scss'
-import { FC, useContext, useEffect, useRef, useState } from "react";
+import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from 'next/link';
-import { useDelay } from '~/shared/utils';
+import { useDelay } from '~/shared/FE';
 import Login from './Login';
 import { useHasAtLeast, userContext } from '~/contexts/user';
 
@@ -84,7 +84,7 @@ const Topbar: FC = () => {
 			<div className={style.logo}><Link href="/"><Logo color="blue" /></Link></div>
 			<div className={style.links}><div className={style.shadow}>
 				{links.map((v) => Array.isArray(v) ? <Link key={`topbar-links-${v[0]}`} href={v[1]}><h2>{v[0]}</h2></Link> : null)}
-				{/* <Login /> */}
+				<Login />
 			</div>
 			<div style={{display: 'none'}}>
 				{dropdown.length ? <div>{user.displayName}</div> : <Login />}

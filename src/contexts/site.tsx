@@ -1,6 +1,6 @@
 'use client'
 import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
-import { useDelay } from '~/shared/utils'
+import { useDelay } from '~/shared/FE'
 
 interface SiteContext {
 	theme: 'dark' | 'light'

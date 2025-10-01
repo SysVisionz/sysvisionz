@@ -1,0 +1,38 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug",
+			"runtimeArgs": ["-r", "ts-node/register"],
+			"args": ["server-ts/server.ts"],
+			"env": {
+				"TS_NODE_PROJECT": "tsconfig.server.json"
+			}
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Next: Chrome",
+			"url": "https://localhost:8082",
+			"runtimeExecutable": "/usr/bin/google-chrome",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"type": "node-terminal",
+			"request": "launch",
+			"name": "Next: Node",
+			"command": "npm run dev"
+		}
+	],
+	"compounds": [
+		{
+			"name": "Next: Full",
+			"configurations": ["Next: Node", "Next: Chrome"]
+		}
+	]
+}

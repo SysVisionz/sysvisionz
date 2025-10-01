@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, ReactElement, ReactNode } from "react";
 import style from './scss/SlidingSection.module.scss';
-import { classNamer, useDelay } from "~/shared/utils";
+import { classNamer, useDelay } from "~/shared/FE";
 import Image from 'next/image';
 function SlidingSection({children, className, id, image, title, mobile, flip}: {children: ReactNode, flip?: boolean,title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string}}): ReactElement
 function SlidingSection({children, className, id, image, title, mobile, flip}: {children: ReactNode, flip?: boolean, title?: string, mobile?: string, className?: string, id?: string, image?: {src: string, alt: string, height: number, width: number}}): ReactElement

@@ -1,6 +1,6 @@
 import { ReactNode, FC, useRef, useState, useEffect } from "react";
 import style from './scss/ExpandingList.module.scss'
-import { classNamer, random } from "~/shared/utils";
+import { classNamer, random } from "~/shared/FE";
 import EditButtons from "./EditButtons";
 import Button from "./Button";
 

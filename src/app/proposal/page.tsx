@@ -1,7 +1,7 @@
 'use client'
 import { FC, useEffect, useState } from "react";
 import { useSiteNotify } from "../../contexts/notification";
-import { useSearch } from "~/shared/utils";
+import useSearch from "use-search-hook";
 
 
 interface ProposalProps{

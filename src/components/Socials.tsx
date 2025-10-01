@@ -1,7 +1,7 @@
 import style from './scss/Socials.module.scss'
 import Icon from './Icon'
 import { FC } from 'react'
-import { classNamer } from '~/shared/utils'
+import { classNamer } from '~/shared/FE'
 const Socials: FC<{className?: string}> = ({className}) => {
 	return (
 		<div className={classNamer(style.socials, className)}>

@@ -24,7 +24,7 @@ $mobile-height: 55px;
 	transition: 200ms ease height, 200ms ease background-color, 200ms ease box-shadow;
 	height: 50px;
 	@media (prefers-color-scheme: dark){
-		background-color: map.get(forward.$blue, default);
+		background-color: map.get(forward.$blue, xdark);
 	}
 	@include forward.mobile {
 		height: $mobile-height;

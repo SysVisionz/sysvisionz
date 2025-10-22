@@ -14,7 +14,7 @@
 	  "jsx": "preserve",
 	  "incremental": true
 	},
-	"include": ["./server.ts", "db/**/*.ts", "middleware/**/*.ts", "models/**/*.ts", "../global.d.ts", "database.d.ts"],
-	"exclude": ["node_modules", "db/**/*.model.ts", "src"]
+	"include": ["./server.ts", "../global.d.ts"],
+	"exclude": ["node_modules", "src"]
   }
   

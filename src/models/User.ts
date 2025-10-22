@@ -1,0 +1,254 @@
+import validator from 'validator';
+import mongoose, {Schema, Document, Model, ObjectId, FlatRecord } from 'mongoose';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+// import { hashTag } from '../db/dataConfig';
+const hashTag = 'thehashtagplaceholderthing'
+export interface UserObj extends Document{
+	_id: ObjectId,
+	'email': string,
+	name: Name,
+	'password'?: string,
+	'invite'?: {
+		id: string
+		timestamp: Date
+	},
+	'persist'?: boolean,
+	'displayName'?: string,
+	'phone'?: number,
+	'privs': PrivLevel,
+	'tokens'?: string[],
+	'createdAt': Date,
+	'updatedAt': Date,
+	'verified'?: boolean,
+	'avatar'?: string,
+	'projects'?: {
+		id: ObjectId
+		name: string
+		company: string
+	}[],
+	'friendList'?: ObjectId[],
+	'messages'?: ObjectId,
+	'company'?: { _id: ObjectId, validated: boolean },
+	'alerts'?: {
+		message?: boolean;
+		project?: { [name: string]: boolean };
+		task?: boolean;
+	},
+	'hasAtLeast': {[P in PrivLevel]: boolean},
+	'generateAuthToken': () => Promise<string>,
+	'removeToken': (token: string) => void,
+	'findByToken': (token?: string, privLevel?: 'user' | 'mod' | 'admin' | 'master') => Promise<UserObj>,
+	'findByDisplayName': (displayName: string, token: string) => Promise<UserObj>,
+	'findByCredentials': ({email, displayName}: {email: string, displayName: string}, password: string) => Promise<UserObj>,
+	'toJSON': () => User<'fe'>
+}
+interface UserMethods {
+	generateAuthToken: () => Promise<string>,
+	removeToken: (token: string) => void,
+}
+
+export const levelFromPriv = (priv: PrivLevel) => {
+	const l = ['user', 'mod', 'admin', 'master'].indexOf(priv as string) as 0|1|2|3
+	return ~l ? l : null
+}
+
+type QueryReturn = Promise<
+  (Document<ObjectId, {}, FlatRecord<UserObj>> &
+    FlatRecord<UserObj> &
+    Required<{ _id: ObjectId }> & { __v?: number | undefined })
+>;
+
+interface QueryHelpers {
+	findByToken: (token?: string, privLevel?: 'user' | 'mod' | 'admin' | 'master') => QueryReturn
+	findByDisplayName: (displayName: string, token: string) => QueryReturn
+	findByCredentials: ({email, displayName}: {email: string, displayName: string}, password: string) => QueryReturn
+}
+
+const UserSchema = new Schema<
+	UserObj, 
+	Model<UserObj>,
+	UserMethods,
+	{},
+	{
+		hasAtLeast: {[P in PrivLevel]: boolean}
+	},
+	QueryHelpers
+>  (
+	{
+		persist: Boolean,
+		password: {	
+			type: String,
+			required: false,
+			minlength: 8
+		},
+		avatar: {
+			type: String,
+		},
+		email: {
+			type: String,
+			required: true,
+			trim: true,
+			minlength: 1,
+			unique: true,
+			validate: {
+				validator: 	v => validator.isEmail(v),
+				message: '{VALUE} is not a valid email.'
+			},
+		},
+		displayName: {
+			type: String,
+			required: false,
+			unique: true,
+			minlength: 4
+		},
+		tokens: [String],
+		privs: {
+			type: String,
+			enum: {values: ["admin", "mod", "client", "user", "master"], message: "only admin, mod, client, and user are acceptable privilege levels."}
+		},
+		name: {
+			first: {type: String},
+			last: {type: String},
+			middle: {type: String}
+		},
+	}, {
+		virtuals: {
+			hasAtLeast: {
+				get: function() {
+					const user = this;
+					return new Proxy({master: false, admin: false, mod: false, user: false} as {[P in PrivLevel]: boolean}, {
+						get: (t, p, r) => {
+							const level = (v: PrivLevel) => typeof level === 'number' ? v
+							: {master: 5, admin: 4, mod: 3, client: 2, user: 1, invite: 0}[v]
+							if (level === undefined){
+								return null
+							}
+							return level(p as keyof typeof t) <= level(user.privs!)
+						}
+					})
+				}
+			}
+		},
+		methods: {
+			toJSON: function() {
+				let {displayName, email, privs} = this;
+				return {displayName, email, privs}
+			},
+			generateAuthToken: function () {
+				let user = this;
+				var access = 'auth';
+				var token = jwt.sign({_id: user._id.toString(), access}, hashTag).toString();
+			
+				user.tokens = user.tokens?.concat(token);
+				return user.save().then(() => token);
+			},
+			removeToken: function (token: string) {
+				var user = this;
+				return user.updateOne({
+					$pull: {
+						tokens: token
+					}
+				})
+			},
+			priv: (level: "master" | "admin" | "mod" | "client" | "user") => 0 | 1 | 2 | 3 | 4
+		},
+		statics: {
+			findByCredentials: function ({email, displayName}: {email?: string, displayName?: string}, password: string) {
+				const User = this;
+				return User.findOne({$or:[{email}, {displayName}]}).then( (user) => {
+					if (!user) {
+						return Promise.reject({status: 404, message: "No matching user found"});
+					}
+					return new Promise((resolve, reject) => {
+						if (!user.password){
+							return reject({status: 403, message: "Invitation not yet accepted"})
+						}
+						bcrypt.compare(password, user.password, (err, res ) => {
+							if (res){
+								resolve (user);
+							}
+							else {
+								reject({status: 401, message: "Invalid credentials"});
+							}
+						})
+					})
+				});
+			},
+			findByToken: function (token?: string, privLevel?: 'user'|'mod'|'admin'|'master') {
+				const User = this;
+				return new Promise((res, rej) => {
+					let decoded: {_id: string};
+					if (!token){
+						rej({status: 403, message: "No token provided."})
+					}
+					try {
+						decoded = jwt.verify(token!, hashTag) as {_id: string}
+					}
+					catch (e) {
+						return Promise.reject({status: 403, message: 'Invalid token provided'});
+					}
+				
+					return User.findOne({
+						'_id': decoded._id,
+						'tokens.token': token,
+						'tokens.access': 'auth'
+					}).then(user => !privLevel || user?.hasAtLeast[privLevel] ? res(user!) : rej({status: 403, message: "Inadequate privileges to perform this action."}))
+				})
+			},
+			findByDisplayName: function ( displayName: string, token: string ) {
+				const User = this;
+				let decoded;
+			
+				try {
+					decoded = jwt.verify(token, hashTag) as {_id: string}
+				}
+				catch (e) {
+					return Promise.reject({status: 403, message: "Invalid token"});
+				}
+			
+				return User.findOne({
+					'_id': decoded._id,
+					'tokens.token': token,
+					'tokens.access': 'auth'
+				}).then((currentUser) => {
+					if (!currentUser) {
+						return Promise.reject({status: 403, message: "no user matching your access token"});
+					}
+					return User.findOne({
+						displayName
+					})
+					.then( (targetUser) => {
+						if (!targetUser) {
+							return Promise.reject({status: 404, message: "no user matching this displayNmae."});
+						}
+						return targetUser;
+					})
+				});
+			},
+		},
+		timestamps: true
+	}
+)
+
+UserSchema.pre('save', function (next) {
+	var user = this;
+	if (user.isModified('password')) {
+		const password = user.password
+		if (password){
+			bcrypt.genSalt(10, (err, salt) => {
+				bcrypt.hash(password, salt, (err, hash) => {
+					user.password = hash;
+					next();
+				}); 
+			});
+		}
+	}
+	else {
+		next();
+	}
+})
+
+const UserModel = mongoose.model('User', UserSchema);
+
+export default UserModel;

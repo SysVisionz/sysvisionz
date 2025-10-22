@@ -6,5 +6,18 @@
 		position: fixed;
 		right: 30px;
 		background-color: map.get(forward.$blue, xlight);
+		border-radius: 5px 0 5px 5px;
+		box-shadow:2px 2px 3px map.get(forward.$black, light );
+		@media( prefers-color-scheme: dark){
+			background: map.get(forward.$blue, dark);
+		}
+	}
+	.button{
+		transition: border 200ms 20ms ease;
+		&.open{
+			transition: border 20ms ease;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		}
 	}
 }

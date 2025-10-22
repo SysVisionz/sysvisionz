@@ -68,12 +68,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	.interested-links{
-		width: 50%;
-		@include forward.tablet {
-			width: 100%;
-		}
-	}
 }
 @keyframes reveallr{
 	from{

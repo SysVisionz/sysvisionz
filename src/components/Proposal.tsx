@@ -1,7 +1,8 @@
 'use client'
 import { ChangeEvent, Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { useSiteNotify } from "~/contexts/notification";
-import { cleanObject, useDelay } from "~/shared/utils";
+import { cleanObject } from "~/shared/FE";
+import { useDelay } from "~/shared/FE";
 import ChangingInput from "./Input";
 
 
